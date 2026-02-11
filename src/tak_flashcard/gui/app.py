@@ -105,6 +105,24 @@ def setup_gui():
                     max_value=100,
                     tag="text_size_slider",
                 )
+                dpg.add_color_edit(
+                    label="Text Color",
+                    default_value=settings.get("text_color", "#FFFFFF"),
+                    tag="text_color_picker",
+                    no_alpha=True,
+                )
+                dpg.add_color_edit(
+                    label="Primary Background Color",
+                    default_value=settings.get("primary_bg_color", "#1E1E1E"),
+                    tag="primary_bg_color_picker",
+                    no_alpha=True,
+                )
+                dpg.add_color_edit(
+                    label="Secondary Color (Buttons/Tabs)",
+                    default_value=settings.get("secondary_color", "#007ACC"),
+                    tag="secondary_color_picker",
+                    no_alpha=True,
+                )
                 dpg.add_checkbox(
                     label="Enable Animations",
                     default_value=settings.get("enable_animations", True),
@@ -163,10 +181,21 @@ def save_settings():
 
     # Get values from GUI
     text_size = dpg.get_value("text_size_slider")
+    text_color = dpg.get_value("text_color_picker")
+    primary_bg_color = dpg.get_value("primary_bg_color_picker")
+    secondary_color = dpg.get_value("secondary_color_picker")
     animations = dpg.get_value("animations_checkbox")
+
+    # Convert colors to hex format
+    text_color_hex = f"#{int(text_color[0]*255):02X}{int(text_color[1]*255):02X}{int(text_color[2]*255):02X}"
+    primary_bg_color_hex = f"#{int(primary_bg_color[0]*255):02X}{int(primary_bg_color[1]*255):02X}{int(primary_bg_color[2]*255):02X}"
+    secondary_color_hex = f"#{int(secondary_color[0]*255):02X}{int(secondary_color[1]*255):02X}{int(secondary_color[2]*255):02X}"
 
     # Update settings
     settings.set("text_size", text_size)
+    settings.set("text_color", text_color_hex)
+    settings.set("primary_bg_color", primary_bg_color_hex)
+    settings.set("secondary_color", secondary_color_hex)
     settings.set("enable_animations", animations)
     settings.save()
 

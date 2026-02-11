@@ -15,6 +15,9 @@ SETTINGS_FILE = SETTINGS_DIR / "settings.json"
 DEFAULT_SETTINGS = {
     "enable_animations": True,
     "text_size": 18,  # default text size in pixels (1-100 range)
+    "text_color": "#FFFFFF",  # white text
+    "primary_bg_color": "#1E1E1E",  # dark gray background
+    "secondary_color": "#007ACC",  # blue for buttons/tabs
     "default_mode": "Endless",
     "default_direction": "E->V",
     "default_difficulty": 1,
