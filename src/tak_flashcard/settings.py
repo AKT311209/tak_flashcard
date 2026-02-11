@@ -8,7 +8,7 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 # Settings file location
-SETTINGS_DIR = Path(__file__).parent.parent / "data"
+SETTINGS_DIR = Path(__file__).parent.parent.parent / "data"
 SETTINGS_FILE = SETTINGS_DIR / "settings.json"
 
 # Default settings

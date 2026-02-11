@@ -12,7 +12,7 @@ from .models import Base
 logger = logging.getLogger(__name__)
 
 # Database file location
-DB_DIR = Path(__file__).parent.parent / "data"
+DB_DIR = Path(__file__).parent.parent.parent / "data"
 DB_FILE = DB_DIR / "tak_flashcard.db"
 
 # SQLAlchemy engine and session
