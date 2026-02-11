@@ -1,9 +1,9 @@
 {
   "enable_animations": true,
-  "text_size": 18,
-  "text_color": "#FFFFFF",
-  "primary_bg_color": "#1E1E1E",
-  "secondary_color": "#007ACC",
+  "text_size": 25,
+  "text_color": "#4C9694109410",
+  "primary_bg_color": "#-FE010000",
+  "secondary_color": "#-FE010000",
   "default_mode": "Endless",
   "default_direction": "E->V",
   "default_difficulty": 1,

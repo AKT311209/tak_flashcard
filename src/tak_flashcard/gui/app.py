@@ -20,14 +20,34 @@ def setup_gui():
     """Set up the main GUI window and components."""
     dpg.create_context()
 
-    # Get text size from settings
+    # Get settings and apply colors
     settings = get_settings()
-    text_size = settings.get("text_size", 14)
+    text_size = settings.get("text_size", 18)
 
-    # Set global font scale (DearPyGui default font size is 18px)
+    # Set global font scale
     default_font_size = 18
     font_scale = text_size / default_font_size
     dpg.set_global_font_scale(font_scale)
+
+    # Create and apply custom theme with colors
+    text_color = settings.get("text_color", "#FFFFFF")
+    primary_bg_color = settings.get("primary_bg_color", "#1E1E1E")
+    secondary_color = settings.get("secondary_color", "#007ACC")
+
+    # Create theme
+    with dpg.theme(tag="custom_theme"):
+        with dpg.theme_component(dpg.mvThemeCat_Core):
+            dpg.add_theme_color(dpg.mvThemeCol_Text, text_color)
+            dpg.add_theme_color(dpg.mvThemeCol_WindowBg, primary_bg_color)
+            dpg.add_theme_color(dpg.mvThemeCol_Button, secondary_color)
+            dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, secondary_color)
+            dpg.add_theme_color(dpg.mvThemeCol_ButtonActive, secondary_color)
+            dpg.add_theme_color(dpg.mvThemeCol_Tab, secondary_color)
+            dpg.add_theme_color(dpg.mvThemeCol_TabHovered, secondary_color)
+            dpg.add_theme_color(dpg.mvThemeCol_TabActive, secondary_color)
+
+    # Apply the theme
+    dpg.bind_theme("custom_theme")
 
     # Main window
     with dpg.window(label="Tak Flashcard", tag="main_window"):
@@ -202,6 +222,25 @@ def save_settings():
     # Apply text size immediately
     font_scale = text_size / 18
     dpg.set_global_font_scale(font_scale)
+
+    # Update theme colors immediately
+    # Clear existing theme and create new one
+    dpg.clear_theme("custom_theme")
+    
+    # Create new theme with updated colors
+    with dpg.theme(tag="custom_theme"):
+        with dpg.theme_component(dpg.mvThemeCat_Core):
+            dpg.add_theme_color(dpg.mvThemeCol_Text, text_color)
+            dpg.add_theme_color(dpg.mvThemeCol_WindowBg, primary_bg_color)
+            dpg.add_theme_color(dpg.mvThemeCol_Button, secondary_color)
+            dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, secondary_color)
+            dpg.add_theme_color(dpg.mvThemeCol_ButtonActive, secondary_color)
+            dpg.add_theme_color(dpg.mvThemeCol_Tab, secondary_color)
+            dpg.add_theme_color(dpg.mvThemeCol_TabHovered, secondary_color)
+            dpg.add_theme_color(dpg.mvThemeCol_TabActive, secondary_color)
+
+    # Rebind the theme
+    dpg.bind_theme("custom_theme")
 
     logger.info("Settings saved")
     dpg.set_value("import_status", "Settings saved successfully!")
