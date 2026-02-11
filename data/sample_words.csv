@@ -1,0 +1,31 @@
+word,meaning_vn,pos,pronunciation,meaning_en,example_en,example_vn,difficulty,tags,frequency_rank
+hello,xin chào,interjection,həˈləʊ,a greeting,Hello! How are you?,Xin chào! Bạn khỏe không?,1,"greeting,common",100
+goodbye,tạm biệt,interjection,ɡʊdˈbaɪ,a parting phrase,Goodbye! See you later.,Tạm biệt! Hẹn gặp lại.,1,"greeting,common",150
+thank,cảm ơn,verb,θæŋk,to express gratitude,Thank you for your help.,Cảm ơn bạn đã giúp đỡ.,1,"politeness,common",200
+please,làm ơn,adverb,pliːz,used in polite requests,Please help me.,Làm ơn giúp tôi.,1,"politeness,common",180
+sorry,xin lỗi,interjection,ˈsɒri,expressing regret,I am sorry for being late.,Tôi xin lỗi vì đến muộn.,1,"politeness,common",220
+yes,vâng,interjection,jes,affirmative reply,Yes I agree.,Vâng tôi đồng ý.,1,"common,basic",50
+no,không,adverb,nəʊ,negative reply,No I don't think so.,Không tôi không nghĩ vậy.,1,"common,basic",60
+friend,bạn bè,noun,frend,a person you know well and like,She is my best friend.,Cô ấy là bạn thân nhất của tôi.,1,"relationship,common",300
+family,gia đình,noun,ˈfæməli,a group of people related by blood,I love my family.,Tôi yêu gia đình tôi.,1,"relationship,common",350
+love,yêu,verb,lʌv,to have deep affection for,I love Vietnamese food.,Tôi yêu món ăn Việt Nam.,1,"emotion,common",250
+happy,hạnh phúc,adjective,ˈhæpi,feeling pleasure or contentment,I am happy to see you.,Tôi rất vui được gặp bạn.,1,"emotion,common",400
+sad,buồn,adjective,sæd,feeling sorrow,I feel sad today.,Hôm nay tôi cảm thấy buồn.,1,"emotion,common",420
+beautiful,đẹp,adjective,ˈbjuːtɪfl,pleasing to the senses,She has a beautiful smile.,Cô ấy có nụ cười đẹp.,2,"adjective,common",500
+good,tốt,adjective,ɡʊd,of high quality,This is a good book.,Đây là một quyển sách hay.,1,"adjective,common",80
+bad,xấu,adjective,bæd,of poor quality,That was a bad decision.,Đó là một quyết định tồi.,1,"adjective,common",90
+big,to,adjective,bɪɡ,of large size,This is a big house.,Đây là một ngôi nhà lớn.,1,"adjective,common",120
+small,nhỏ,adjective,smɔːl,of little size,She has a small dog.,Cô ấy có một chú chó nhỏ.,1,"adjective,common",130
+eat,ăn,verb,iːt,to consume food,Let's eat dinner together.,Hãy ăn tối cùng nhau.,1,"action,common",280
+drink,uống,verb,drɪŋk,to consume liquid,I want to drink water.,Tôi muốn uống nước.,1,"action,common",290
+sleep,ngủ,verb,sliːp,to rest,I need to sleep now.,Tôi cần ngủ bây giờ.,1,"action,common",310
+learn,học,verb,lɜːn,to acquire knowledge or skill,I want to learn Vietnamese.,Tôi muốn học tiếng Việt.,2,"education,common",600
+teach,dạy,verb,tiːtʃ,to impart knowledge,She teaches English.,Cô ấy dạy tiếng Anh.,2,"education,common",620
+understand,hiểu,verb,ʌndəˈstænd,to comprehend,Do you understand me?,Bạn có hiểu tôi không?,2,"communication,common",700
+speak,nói,verb,spiːk,to talk,Can you speak Vietnamese?,Bạn có thể nói tiếng Việt không?,2,"communication,common",320
+read,đọc,verb,riːd,to look at and understand written words,I like to read books.,Tôi thích đọc sách.,1,"action,common",340
+write,viết,verb,raɪt,to mark on a surface,Please write your name here.,Vui lòng viết tên của bạn ở đây.,2,"action,common",360
+work,làm việc,verb,wɜːk,to do a job,I work at a company.,Tôi làm việc tại một công ty.,2,"action,common",450
+study,học,verb,ˈstʌdi,to learn about a subject,I study every day.,Tôi học mỗi ngày.,2,"education,common",480
+important,quan trọng,adjective,ɪmˈpɔːtnt,of great significance,This is very important.,Điều này rất quan trọng.,2,"adjective,common",800
+difficult,khó,adjective,ˈdɪfɪkəlt,hard to do or understand,This lesson is difficult.,Bài học này khó.,2,"adjective,common",750
