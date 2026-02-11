@@ -89,13 +89,6 @@ def setup_gui():
                 dpg.add_separator()
 
                 settings = get_settings()
-                dpg.add_slider_float(
-                    label="Volume",
-                    default_value=settings.get("volume", 0.7),
-                    min_value=0.0,
-                    max_value=1.0,
-                    tag="volume_slider",
-                )
                 dpg.add_checkbox(
                     label="Enable Animations",
                     default_value=settings.get("enable_animations", True),
@@ -153,11 +146,9 @@ def save_settings():
     settings = get_settings()
 
     # Get values from GUI
-    volume = dpg.get_value("volume_slider")
     animations = dpg.get_value("animations_checkbox")
 
     # Update settings
-    settings.set("volume", volume)
     settings.set("enable_animations", animations)
     settings.save()
 

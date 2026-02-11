@@ -13,7 +13,6 @@ SETTINGS_FILE = SETTINGS_DIR / "settings.json"
 
 # Default settings
 DEFAULT_SETTINGS = {
-    "volume": 0.7,
     "enable_animations": True,
     "default_mode": "Endless",
     "default_direction": "E->V",
