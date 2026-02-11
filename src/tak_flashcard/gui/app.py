@@ -89,6 +89,13 @@ def setup_gui():
                 dpg.add_separator()
 
                 settings = get_settings()
+                dpg.add_slider_int(
+                    label="Text Size",
+                    default_value=settings.get("text_size", 14),
+                    min_value=10,
+                    max_value=24,
+                    tag="text_size_slider",
+                )
                 dpg.add_checkbox(
                     label="Enable Animations",
                     default_value=settings.get("enable_animations", True),
@@ -146,9 +153,11 @@ def save_settings():
     settings = get_settings()
 
     # Get values from GUI
+    text_size = dpg.get_value("text_size_slider")
     animations = dpg.get_value("animations_checkbox")
 
     # Update settings
+    settings.set("text_size", text_size)
     settings.set("enable_animations", animations)
     settings.save()
 
