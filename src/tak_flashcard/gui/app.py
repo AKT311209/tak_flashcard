@@ -24,11 +24,10 @@ def setup_gui():
     settings = get_settings()
     text_size = settings.get("text_size", 14)
 
-    # Set global font size (DearPyGui uses font scale factor)
-    # The default font size is 18px, so we need to calculate scale factor
+    # Set global font scale (DearPyGui default font size is 18px)
     default_font_size = 18
     font_scale = text_size / default_font_size
-    dpg.set_font_scale(font_scale)
+    dpg.set_global_font_scale(font_scale)
 
     # Main window
     with dpg.window(label="Tak Flashcard", tag="main_window"):
