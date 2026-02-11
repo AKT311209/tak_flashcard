@@ -100,9 +100,9 @@ def setup_gui():
                 settings = get_settings()
                 dpg.add_slider_int(
                     label="Text Size",
-                    default_value=settings.get("text_size", 14),
-                    min_value=10,
-                    max_value=24,
+                    default_value=settings.get("text_size", 18),
+                    min_value=1,
+                    max_value=100,
                     tag="text_size_slider",
                 )
                 dpg.add_checkbox(
@@ -172,7 +172,7 @@ def save_settings():
 
     # Apply text size immediately
     font_scale = text_size / 18
-    dpg.set_font_scale(font_scale)
+    dpg.set_global_font_scale(font_scale)
 
     logger.info("Settings saved")
     dpg.set_value("import_status", "Settings saved successfully!")

@@ -1,6 +1,6 @@
 {
   "enable_animations": true,
-  "text_size": 23,
+  "text_size": 18,
   "default_mode": "Endless",
   "default_direction": "E->V",
   "default_difficulty": 1,

@@ -14,7 +14,7 @@ SETTINGS_FILE = SETTINGS_DIR / "settings.json"
 # Default settings
 DEFAULT_SETTINGS = {
     "enable_animations": True,
-    "text_size": 14,  # default text size in pixels
+    "text_size": 18,  # default text size in pixels (1-100 range)
     "default_mode": "Endless",
     "default_direction": "E->V",
     "default_difficulty": 1,
