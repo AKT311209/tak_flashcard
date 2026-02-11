@@ -171,6 +171,10 @@ def save_settings():
     settings.set("enable_animations", animations)
     settings.save()
 
+    # Apply text size immediately
+    font_scale = text_size / 18
+    dpg.set_font_scale(font_scale)
+
     logger.info("Settings saved")
     dpg.set_value("import_status", "Settings saved successfully!")
 
