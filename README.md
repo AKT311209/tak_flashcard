@@ -75,10 +75,7 @@ source .venv/bin/activate  # On Unix/macOS
 pip install -r requirements.txt
 ```
 
-4. (Optional) Install development dependencies:
-```bash
-pip install -r requirements-dev.txt
-```
+4. (Optional) Install development dependencies: (this repository does not include a dev requirements file)
 
 5. Initialize the database:
 ```bash
@@ -112,26 +109,20 @@ You can import vocabulary from CSV or XLSX files. The file should have the follo
 
 **Required columns:**
 - `word`: English word
-- `meaning_vn`: Vietnamese meaning
+- `english`: English definition
+- `vietnamese`: Vietnamese translation
 
 **Optional columns:**
 - `pos`: Part of speech (noun, verb, adjective, etc.)
 - `pronunciation`: Pronunciation guide (IPA)
-- `meaning_en`: English definition
-- `example_en`: English example sentence
-- `example_vn`: Vietnamese example sentence
-- `audio_url`: URL to audio file
-- `image_url`: URL to image file
 - `difficulty`: Difficulty level (1-5)
-- `tags`: Comma-separated tags
-- `frequency_rank`: Word frequency rank
 
 Example CSV:
 ```csv
-word,meaning_vn,pos,difficulty
-hello,xin chào,interjection,1
-goodbye,tạm biệt,interjection,1
-friend,bạn bè,noun,1
+word,english,vietnamese,pos,difficulty
+hello,a greeting,xin chào,interjection,1
+goodbye,a farewell,tạm biệt,interjection,1
+friend,a person you know well,bạn bè,noun,1
 ```
 
 Import via script:
@@ -159,19 +150,7 @@ Or use the Import tab in the GUI.
 
 ### Running Tests
 
-```bash
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=tak_flashcard --cov-report=html
-
-# Run specific test file
-pytest tests/test_models.py
-
-# Run specific test
-pytest tests/test_models.py::test_create_word
-```
+This project does not include a test suite. Test files and related configuration were removed from the repository.
 
 ### Code Formatting and Linting
 

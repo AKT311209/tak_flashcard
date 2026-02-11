@@ -36,13 +36,6 @@ env/
 *.swo
 *~
 
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-*.cover
-.hypothesis/
-
 # Database
 *.db
 *.sqlite

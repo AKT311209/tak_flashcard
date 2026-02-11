@@ -134,8 +134,8 @@ CONTROLS:
 
 IMPORT:
 - Import vocabulary from CSV or XLSX files
-- Required columns: word, meaning_vn
-- Optional columns: pos, pronunciation, difficulty, etc.
+- Required columns: word, english, vietnamese
+- Optional columns: pos, pronunciation, difficulty
 
 For more information, visit the project documentation.
                     """,

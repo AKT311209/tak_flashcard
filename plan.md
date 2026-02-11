@@ -92,13 +92,13 @@ Database system
 - Tables (concise schema):
 
 ```
-words(id PK, word TEXT, pos TEXT, pronunciation TEXT, meaning_vn TEXT, meaning_en TEXT, example_en TEXT, example_vn TEXT, audio_url TEXT, image_url TEXT, difficulty INT, tags TEXT, frequency_rank INT)
+words(id PK, word TEXT, pos TEXT, pronunciation TEXT, english TEXT, vietnamese TEXT, difficulty INT)
 sessions(id PK, mode TEXT, direction TEXT, start_ts TEXT, end_ts TEXT, score INT, total_questions INT)
 session_results(id PK, session_id FK, word_id FK, asked_text TEXT, expected_answer TEXT, given_answer TEXT, correct INT, revealed INT, penalty INT)
 settings(key PK, value TEXT)
 ```
 
-- Indexes: create indexes on `words.word`, `words.difficulty`, and `words.tags`.
+- Indexes: create indexes on `words.word` and `words.difficulty`.
 - Concurrency: use one SQLAlchemy Session per thread; avoid sharing sessions across threads. Use `connect_args={'check_same_thread': False}` for SQLite.
 - Import/seed scripts: `scripts/import_csv.py` and `scripts/seed_db.py` to populate `words` from `data/sample_words.csv`.
 - Backup & export: `scripts/backup_db.py` and `scripts/export_csv.py` for safe copies and exports.

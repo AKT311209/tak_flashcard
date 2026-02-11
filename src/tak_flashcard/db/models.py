@@ -13,17 +13,11 @@ class Word(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     word = Column(String(255), nullable=False, index=True)
-    pos = Column(String(50))  # part of speech
-    pronunciation = Column(String(255))
-    meaning_vn = Column(Text, nullable=False)
-    meaning_en = Column(Text)
-    example_en = Column(Text)
-    example_vn = Column(Text)
-    audio_url = Column(String(512))
-    image_url = Column(String(512))
+    pos = Column(String(50))  # part of speech (noun, verb, adjective, etc.)
+    pronunciation = Column(String(255))  # pronunciation guide (IPA)
+    vietnamese = Column(Text, nullable=False)  # Vietnamese translation
+    english = Column(Text, nullable=False)  # English definition
     difficulty = Column(Integer, default=1, index=True)  # 1-5 scale
-    tags = Column(Text, index=True)  # comma-separated tags
-    frequency_rank = Column(Integer)
 
     # Relationship
     session_results = relationship("SessionResult", back_populates="word")

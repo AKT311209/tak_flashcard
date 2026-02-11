@@ -16,17 +16,11 @@ def import_csv(
 
     Expected columns (case-insensitive):
     - word (required): English word
-    - meaning_vn (required): Vietnamese meaning
+    - english (required): English definition
+    - vietnamese (required): Vietnamese translation
     - pos (optional): Part of speech
-    - pronunciation (optional): Pronunciation guide
-    - meaning_en (optional): English meaning/definition
-    - example_en (optional): English example sentence
-    - example_vn (optional): Vietnamese example sentence
-    - audio_url (optional): URL to audio file
-    - image_url (optional): URL to image file
+    - pronunciation (optional): Pronunciation guide (IPA)
     - difficulty (optional): Difficulty level (1-5)
-    - tags (optional): Comma-separated tags
-    - frequency_rank (optional): Frequency rank
 
     Args:
         file_path: Path to CSV or XLSX file
@@ -58,11 +52,11 @@ def import_csv(
             df.columns = df.columns.str.lower().str.strip()
 
             # Check required columns
-            if "word" not in df.columns or "meaning_vn" not in df.columns:
-                raise ValueError("Required columns 'word' and 'meaning_vn' not found")
+            if "word" not in df.columns or "english" not in df.columns or "vietnamese" not in df.columns:
+                raise ValueError("Required columns 'word', 'english', and 'vietnamese' not found")
 
             # Drop empty rows and duplicates
-            df = df.dropna(subset=["word", "meaning_vn"])
+            df = df.dropna(subset=["word", "english", "vietnamese"])
             df = df.drop_duplicates(subset=["word"], keep="first")
 
             # Process in batches
@@ -84,20 +78,12 @@ def import_csv(
                     # Create new word
                     word = Word(
                         word=word_text,
-                        meaning_vn=str(row["meaning_vn"]).strip(),
+                        english=str(row["english"]).strip(),
+                        vietnamese=str(row["vietnamese"]).strip(),
                         pos=str(row.get("pos", "")).strip() or None,
                         pronunciation=str(row.get("pronunciation", "")).strip()
                         or None,
-                        meaning_en=str(row.get("meaning_en", "")).strip() or None,
-                        example_en=str(row.get("example_en", "")).strip() or None,
-                        example_vn=str(row.get("example_vn", "")).strip() or None,
-                        audio_url=str(row.get("audio_url", "")).strip() or None,
-                        image_url=str(row.get("image_url", "")).strip() or None,
                         difficulty=int(row.get("difficulty", 1)),
-                        tags=str(row.get("tags", "")).strip() or None,
-                        frequency_rank=int(row.get("frequency_rank", 0))
-                        if pd.notna(row.get("frequency_rank"))
-                        else None,
                     )
 
                     batch.append(word)
@@ -127,13 +113,14 @@ def import_csv(
                 reader = csv.DictReader(f)
 
                 # Normalize column names
-                reader.fieldnames = [
-                    name.lower().strip() for name in reader.fieldnames
-                ]
+                if reader.fieldnames:
+                    reader.fieldnames = [
+                        name.lower().strip() for name in reader.fieldnames
+                    ]
 
                 # Check required columns
-                if "word" not in reader.fieldnames or "meaning_vn" not in reader.fieldnames:
-                    raise ValueError("Required columns 'word' and 'meaning_vn' not found")
+                if not reader.fieldnames or "word" not in reader.fieldnames or "english" not in reader.fieldnames or "vietnamese" not in reader.fieldnames:
+                    raise ValueError("Required columns 'word', 'english', and 'vietnamese' not found")
 
                 batch = []
                 for row in reader:
@@ -156,20 +143,12 @@ def import_csv(
                         # Create new word
                         word = Word(
                             word=word_text,
-                            meaning_vn=row["meaning_vn"].strip(),
+                            english=row["english"].strip(),
+                            vietnamese=row["vietnamese"].strip(),
                             pos=row.get("pos", "").strip() or None,
                             pronunciation=row.get("pronunciation", "").strip()
                             or None,
-                            meaning_en=row.get("meaning_en", "").strip() or None,
-                            example_en=row.get("example_en", "").strip() or None,
-                            example_vn=row.get("example_vn", "").strip() or None,
-                            audio_url=row.get("audio_url", "").strip() or None,
-                            image_url=row.get("image_url", "").strip() or None,
                             difficulty=int(row.get("difficulty", 1)),
-                            tags=row.get("tags", "").strip() or None,
-                            frequency_rank=int(row.get("frequency_rank", 0))
-                            if row.get("frequency_rank")
-                            else None,
                         )
 
                         batch.append(word)

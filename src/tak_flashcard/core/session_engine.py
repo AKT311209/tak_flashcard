@@ -223,16 +223,16 @@ def create_session(db_session, options: SessionOptions) -> Session:
     for word in words:
         if options.direction == "E->V":
             prompt = word.word
-            answer = word.meaning_vn
+            answer = word.vietnamese
         elif options.direction == "V->E":
-            prompt = word.meaning_vn
+            prompt = word.vietnamese
             answer = word.word
         else:  # Mixed
             if random.choice([True, False]):
                 prompt = word.word
-                answer = word.meaning_vn
+                answer = word.vietnamese
             else:
-                prompt = word.meaning_vn
+                prompt = word.vietnamese
                 answer = word.word
 
         question = Question(
