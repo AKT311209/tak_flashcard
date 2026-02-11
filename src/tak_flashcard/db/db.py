@@ -12,7 +12,7 @@ from .models import Base
 logger = logging.getLogger(__name__)
 
 # Database file location
-DB_DIR = Path.home() / ".tak_flashcard"
+DB_DIR = Path(__file__).parent.parent / "data"
 DB_FILE = DB_DIR / "tak_flashcard.db"
 
 # SQLAlchemy engine and session
@@ -36,7 +36,7 @@ def init_db(db_path: str = None) -> None:
     global engine, SessionLocal
 
     if db_path is None:
-        db_path = get_db_path()
+        db_path = str(get_db_path())  # Convert Path to string
 
     # Create engine with SQLite-specific settings
     database_url = f"sqlite:///{db_path}"

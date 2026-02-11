@@ -1,0 +1,12 @@
+{
+  "enable_animations": true,
+  "text_size": 23,
+  "default_mode": "Endless",
+  "default_direction": "E->V",
+  "default_difficulty": 1,
+  "default_question_count": 10,
+  "default_time_per_question": 30,
+  "reveal_penalty_points": 5,
+  "reveal_penalty_time": 10,
+  "initial_hp": 3
+}
