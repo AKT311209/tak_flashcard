@@ -20,6 +20,16 @@ def setup_gui():
     """Set up the main GUI window and components."""
     dpg.create_context()
 
+    # Get text size from settings
+    settings = get_settings()
+    text_size = settings.get("text_size", 14)
+
+    # Set global font size (DearPyGui uses font scale factor)
+    # The default font size is 18px, so we need to calculate scale factor
+    default_font_size = 18
+    font_scale = text_size / default_font_size
+    dpg.set_font_scale(font_scale)
+
     # Main window
     with dpg.window(label="Tak Flashcard", tag="main_window"):
         dpg.add_text("Welcome to Tak Flashcard!", tag="welcome_text")
