@@ -24,6 +24,6 @@ def create_toolbar(
             dpg.add_button(label="← Back", callback=on_back, width=100)
 
         if show_home and on_home:
-            dpg.add_button(label="🏠 Home", callback=on_home, width=100)
+            dpg.add_button(label="Home", callback=on_home, width=100)
 
         dpg.add_spacer(width=10)
