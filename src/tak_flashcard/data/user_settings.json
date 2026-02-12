@@ -1,0 +1,18 @@
+{
+  "appearance": {
+    "theme": "light",
+    "font_size": "large",
+    "window_width": 1920,
+    "window_height": 1080
+  },
+  "defaults": {
+    "flashcard_mode": "endless",
+    "difficulty_level": 3,
+    "question_count": 20,
+    "time_limit": 300
+  },
+  "preferences": {
+    "sound_enabled": false,
+    "animation_speed": "normal"
+  }
+}
