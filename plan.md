@@ -1,104 +1,331 @@
-Project structure
+# Implementation Plan
+
+## Phase 1: Data Layer & Import
+
+### 1.1 Database Setup
+- [ ] Create SQLAlchemy models (`db/models.py`)
+  - Word model with all 7 fields
+  - Session model (optional, for history tracking)
+- [ ] Setup database session management (`db/session.py`)
+- [ ] Create repository layer for queries (`db/repo.py`)
+  - Get words by difficulty
+  - Get words by part of speech
+  - Update display/correct counts
+  - Search words
+
+### 1.2 Data Import
+- [ ] Find/prepare CSV with ≥1000 English-Vietnamese words
+  - Required columns: `english`, `pronunciation`, `vietnamese`, `part_of_speech`
+  - Source: GitHub vocabulary lists, public datasets
+- [ ] Implement importer (`data/seed/importer.py`)
+  - Parse CSV/TSV files
+  - Validate data format
+  - Bulk insert to database
+  - Show import progress
+- [ ] Add startup validation
+  - Check if DB has ≥1000 words
+  - Trigger import if needed
+  - Display error if import fails
+
+### 1.3 Testing
+- [ ] Verify database schema
+- [ ] Test import with sample CSV
+- [ ] Confirm ≥1000 words loaded correctly
+
+---
+
+## Phase 2: Core Logic
+
+### 2.1 Difficulty Calculation
+- [ ] Implement difficulty formula (`core/difficulty.py`)
+  ```python
+  difficulty = 1 - (correct_count / (display_count + epsilon))
+  ```
+- [ ] Normalize difficulty to 0-1 scale for each word
+- [ ] No filtering - all words remain available
+
+### 2.2 Question Selection
+- [ ] Implement card selector (`core/selectors.py`)
+  - Weighted selection based on difficulty setting (1-5)
+  - Higher setting → higher probability of high-difficulty words
+  - Select by direction (Eng→Vn, Vn→Eng, Mixed)
+  - Randomization with weighted probabilities
+  - Avoid immediate repetition
+
+### 2.3 Scoring & Penalty System
+- [ ] Implement scoring logic (`core/scoring.py`)
+  - Base points for correct answer
+  - Bonus points for speed (Speed mode)
+  - Penalty for wrong answer
+- [ ] Implement penalty mechanisms
+  - Score deduction
+  - Time penalty (reduce remaining time)
+  - HP/show answer limit
+- [ ] Track session statistics
+
+### 2.4 Timer Logic
+- [ ] Implement countdown timer (`core/scheduler.py`)
+  - For Speed mode
+  - Timer callbacks
+  - Pause/resume functionality
+
+---
+
+## Phase 3: GUI Foundation (Week 3)
+
+### 3.1 DearPyGui Setup
+- [ ] Initialize DearPyGui application (`gui/app.py`)
+- [ ] Setup main window with theme
+- [ ] Create navigation system between views
+- [ ] Define window layout (header, content, footer)
+
+### 3.2 Home View
+- [ ] Create home view (`gui/views/home_view.py`)
+- [ ] Add navigation buttons:
+  - Flashcard
+  - Dictionary
+  - Guide
+  - Settings
+  - Exit
+- [ ] Display app title and brief instructions
+
+### 3.3 Reusable Components
+- [ ] Toolbar component (`gui/components/toolbar.py`)
+  - Back button
+  - Home button
+  - Settings button (optional)
+- [ ] Create consistent styling/theme
+
+---
+
+## Phase 4: Flashcard Feature
+
+### 4.1 Configuration Panel
+- [ ] Create option panel (`gui/components/option_panels.py`)
+- [ ] Mode selection: Endless / Speed / Testing
+- [ ] Direction selection: Eng→Vn / Vn→Eng / Mixed
+- [ ] Difficulty slider: 1 (easiest) to 5 (hardest)
+- [ ] Additional settings:
+  - Question count (Testing mode)
+  - Time limit (Speed mode)
+  - Enable Show Answer (Endless/Speed)
+  - Penalty type (if Show Answer enabled)
+
+### 4.2 Endless Mode
+- [ ] Implement Endless controller (`features/flashcard/controller.py`)
+- [ ] Create flashcard view (`gui/views/flashcard_view.py`)
+  - Display question
+  - Input area or multiple choice
+  - Submit button
+  - Next button
+  - Show Answer button (optional)
+- [ ] Implement state machine (`features/flashcard/states.py`)
+  - Question → Answer → Result → Next Question
+- [ ] Track statistics (no time limit)
+- [ ] No automatic ending
+
+### 4.3 Speed/Timer Mode
+- [ ] Extend controller for Speed mode
+- [ ] Add countdown timer display
+- [ ] Implement time penalties for Show Answer
+- [ ] Auto-end when time runs out
+- [ ] Display score during session
+
+### 4.4 Testing/Exam Mode
+- [ ] Extend controller for Testing mode
+- [ ] Display question counter (e.g., "5/20")
+- [ ] No Show Answer option
+- [ ] Implement scoring system
+- [ ] Create results view (`gui/views/results_view.py`)
+  - Total score
+  - Correct/Wrong count
+  - Breakdown by direction
+  - Review wrong answers (optional)
+  - Retry button
+  - Back to home button
+
+### 4.5 Answer Validation
+- [ ] Implement answer checking logic
+  - Case-insensitive comparison
+  - Trim whitespace
+  - Partial match (optional, for Vietnamese diacritics)
+- [ ] Update word statistics (display_count, correct_count)
+
+---
+
+## Phase 5: Dictionary Feature
+
+### 5.1 Dictionary View
+- [ ] Create dictionary view (`gui/views/dictionary_view.py`)
+- [ ] Display all words in table/list
+  - Columns: English, Pronunciation, Vietnamese, Part of Speech
+- [ ] Implement search functionality
+  - Search by English word
+  - Search by Vietnamese word
+- [ ] Add filters
+  - Filter by Part of Speech
+  - Filter by difficulty level (optional)
+- [ ] Add sorting
+  - Sort by English alphabetically
+  - Sort by difficulty
+
+### 5.2 Dictionary Service
+- [ ] Implement dictionary service (`features/dictionary/service.py`)
+  - Fetch all words
+  - Search words
+  - Filter/sort logic
+
+---
+
+## Phase 6: Guide Feature
+
+### 6.1 Guide View
+- [ ] Create guide view (`gui/views/guide_view.py`)
+- [ ] Display static guide content
+
+### 6.2 Guide Content
+- [ ] Write comprehensive guide (`features/guide/content.py`)
+  - Introduction to app
+  - Flashcard modes explanation
+    - Endless mode
+    - Speed/Timer mode
+    - Testing/Exam mode
+  - Direction types (Eng→Vn, Vn→Eng, Mixed)
+  - Difficulty levels
+  - Penalty system
+  - Scoring rules
+  - Tips for effective learning
+
+---
+
+## Phase 6.5: Settings Feature (Week 6)
+
+### 6.5.1 Settings Data Management
+- [ ] Create settings manager (`core/settings.py`)
+  - Load settings from JSON file
+  - Save settings to JSON file
+  - Provide default settings
+  - Validate setting values
+- [ ] Define settings schema in `data/user_settings.json`
+  ```json
+  {
+    "appearance": {
+      "theme": "light",
+      "font_size": "medium",
+      "window_width": 800,
+      "window_height": 600
+    },
+    "defaults": {
+      "flashcard_mode": "endless",
+      "difficulty_level": 3,
+      "question_count": 20,
+      "time_limit": 300
+    },
+    "preferences": {
+      "sound_enabled": false,
+      "animation_speed": "normal"
+    }
+  }
+  ```
+
+### 6.5.2 Settings View
+- [ ] Create settings view (`gui/views/settings_view.py`)
+- [ ] Implement appearance settings section
+  - Theme selector (Light/Dark/Custom)
+  - Font size slider/dropdown
+  - Window size inputs
+- [ ] Implement default preferences section
+  - Default flashcard mode
+  - Default difficulty level
+  - Default question count
+  - Default time limit
+- [ ] Implement UI preferences section
+  - Sound effects toggle
+  - Animation speed selector
+- [ ] Add Save/Apply/Reset buttons
+- [ ] Add Back button to return to home
+
+### 6.5.3 Settings Integration
+- [ ] Apply theme settings to all views
+- [ ] Apply font size to all text elements
+- [ ] Load default values in Flashcard configuration
+- [ ] Persist settings on app close
+- [ ] Load settings on app start
+
+---
+
+## Phase 7: Polish & Testing (Week 7)
+
+### 7.1 Windows Compatibility
+- [ ] Test on Windows OS
+- [ ] Verify all file paths work on Windows
+- [ ] Check DearPyGui rendering on Windows
+- [ ] Bundle dependencies with `requirements.txt`
+
+### 7.2 Error Handling
+- [ ] Add try-catch blocks for file operations
+- [ ] Validate user inputs
+- [ ] Handle edge cases:
+  - No words in database
+  - Invalid CSV format
+  - Database connection errors
+
+### 7.3 User Experience
+- [ ] Ensure readable text in all views
+- [ ] Test navigation flows
+- [ ] Add loading indicators for long operations
+- [ ] Optimize performance for large datasets
+
+### 7.4 Code Quality
+- [ ] Add docstrings to all functions
+- [ ] Clean up unused code
+- [ ] Consistent naming conventions
+- [ ] Code review
+
+---
+
+## Phase 8: Documentation & Video (Week 8)
+
+### 8.1 README
+- [ ] Write comprehensive README.md
+  - Project description
+  - Installation instructions
+  - How to run
+  - Feature list
+  - Screenshots (optional)
+
+### 8.2 Video Intro (≤5 minutes)
+- [ ] Script preparation
+  - 30s: Introduction and tech stack
+  - 2 min: Demo Flashcard modes (Endless + Speed)
+  - 1 min: Testing mode + results
+  - 30s: Dictionary + Guide
+  - 30s: Conclusion and highlights
+- [ ] Record on Windows OS
+- [ ] Edit video
+- [ ] Add captions (optional)
+
+---
+
+## Dependencies (requirements.txt)
 
 ```
-tak_flashcard/
-├─ src/
-│     ├─ gui/               # DearPyGui views and widgets
-│     ├─ core/              # session engine, scoring, session models
-│     ├─ db/                # db.py, models.py (SQLAlchemy), migrations
-│     ├─ importers/         # CSV/JSON/XLSX import helpers (pandas)
-│     ├─ assets/            # images, sounds, intro.mp4
-│     └─ settings.py        # persistent settings (JSON)
-├─ data/                    # sample import files
-│  └─ sample_words.csv
-├─ tests/
-├─ scripts/                 # seed, build, packaging helpers
-├─ requirements.txt
-└─ README.md
+dearpygui>=1.9.0
+sqlalchemy>=2.0.0
+pandas>=1.5.0
 ```
 
-Implementation steps (very detailed)
+---
 
-1) Scaffold project
-- Create virtualenv or use `poetry` and add `requirements.txt` with `dearpygui, pandas, SQLAlchemy, python-dotenv`.
-- Create folder structure and `__init__.py` files for packages.
-- Add simple entry point `src/tak_flashcard/gui/app.py` that starts DearPyGui.
+## Success Criteria
 
-2) Database layer
-- Design models in `src/tak_flashcard/db/models.py`: `words`, `sessions`, `session_results`, `settings`.
-- Implement `src/tak_flashcard/db/db.py` with `create_engine`, `SessionLocal`, `init_db()` and `connect_args={'check_same_thread': False}`.
-- Add `scripts/init_db.py` to call `init_db()` and create necessary indexes.
-
-3) Importer
-- Implement `src/tak_flashcard/importers/csv_importer.py`:
-  - Read CSV/XLSX with `pandas.read_csv/read_excel`; fallback to builtin `csv`.
-  - Normalize column names to lowercase; require `word` and `meaning_vn`.
-  - Trim whitespace, drop empty rows, drop duplicates (by normalized word).
-  - Batch-insert to DB with SQLAlchemy in chunks (e.g., 500 rows) inside transactions.
-  - Return `{added, skipped, errors}` and log summary.
-  - Provide CLI `scripts/import_csv.py` to run import from command line.
-
-4) Core session engine (`src/tak_flashcard/core/`)
-- Implement `Session` class (in-memory) with fields: `id, mode, direction, question_count, time_per_question, total_time, reveal_hp, score, queue, current_index, started_at, results`.
-- Functions to implement:
-  - `create_session(opts)` — build queue from DB filters (difficulty, tags), randomize if needed.
-  - `session_next(session)` — return next Question (word, prompt, choices if MCQ).
-  - `session_submit(session, answer)` — evaluate correctness (normalize & fuzzy options), update score, record result.
-  - `session_reveal(session)` — return answer and apply configured penalty (points/time/HP).
-  - `end_session(session)` — persist session summary and per-question results to DB.
-- Implement scoring rules and penalty behavior configurable by session options.
-- Ensure long operations run in worker threads; communicate with GUI via thread-safe queues or DearPyGui callbacks.
-
-5) GUI implementation (DearPyGui)
-- Main shell: top nav (Flashcard / Dictionary / Guide), Import button, Settings.
-- Import UI: file picker, start import in background, progress bar, final stats display.
-- Dictionary UI: searchable/paginated table (add_table) with filters; open WordDetail modal for details and edit.
-- Flashcard UI:
-  - Config panel: mode, direction, difficulty, question count, time settings, reveal options, penalty settings.
-  - Session view: card area (prompt), input or choices, Reveal button, Submit/Next, Timer bar (for Speed), Score/Hp display.
-  - Result modal: final score, accuracy, wrong list, buttons to review/export.
-- Guide view: load and render `assets/guide.md` (plain text or rendered HTML).
-- Settings modal: volume, animation toggle, default penalty presets; persist to `settings` table or JSON.
-
-6) Multimedia & assets
-- Integrate audio playback via `python-vlc` or OS audio APIs; expose volume control in Settings.
-- Load images and ensure card text sits on semi-opaque background to maintain readability.
-
-7) Persistence & utilities
-- Save session summaries to `sessions` and detailed rows to `session_results`.
-- Add utility scripts: `scripts/export_words.py`, `scripts/backup_db.py`.
-
-8) Tests & packaging
-- Unit tests (`pytest`) for importer, session engine, DB functions; use SQLite in-memory for tests.
-- Create `scripts/build_windows.bat` or `build_windows.sh` using PyInstaller to bundle app and assets into a Windows exe.
-
-Application flow
-
-- Launch: app opens main shell with Mode selector, Import, Settings.
-- Import flow: user picks CSV/XLSX -> clicks Import -> importer runs in background -> progress shown -> final stats shown.
-- Dictionary flow: user searches/filters -> selects word -> WordDetail modal (audio, image, edit/save).
-- Guide flow: user reads usage guide explaining modes and controls.
-- Flashcard flow (detailed):
-  1. Pre-config: user selects Mode (Endless/Speed/Testing), Direction (E->V/V->E/Mixed), Difficulty, Question count, Time settings, Reveal/penalty options.
-  2. Create session: app builds question queue from DB (worker thread), then starts session and timer if applicable.
-  3. Per question: show prompt; user answers (text or choose). If Reveal used, `session_reveal` applies penalty and decrements HP. On Submit, `session_submit` evaluates and updates score.
-  4. Progress: UI shows timer (Speed), score, remaining reveal HP, and question index.
-  5. End: when questions exhausted or time runs out, `end_session` persists results; UI shows summary with review/export options.
-
-Database system
-
-- Engine: SQLite file `tak_flashcard.db` stored in app folder or user data directory.
-- Access layer: SQLAlchemy ORM (`create_engine('sqlite:///path', connect_args={'check_same_thread': False})`, `SessionLocal = sessionmaker(bind=engine)`).
-- Tables (concise schema):
-
-```
-words(id PK, word TEXT, pos TEXT, pronunciation TEXT, english TEXT, vietnamese TEXT, difficulty INT)
-sessions(id PK, mode TEXT, direction TEXT, start_ts TEXT, end_ts TEXT, score INT, total_questions INT)
-session_results(id PK, session_id FK, word_id FK, asked_text TEXT, expected_answer TEXT, given_answer TEXT, correct INT, revealed INT, penalty INT)
-settings(key PK, value TEXT)
-```
-
-- Indexes: create indexes on `words.word` and `words.difficulty`.
-- Concurrency: use one SQLAlchemy Session per thread; avoid sharing sessions across threads. Use `connect_args={'check_same_thread': False}` for SQLite.
-- Import/seed scripts: `scripts/import_csv.py` and `scripts/seed_db.py` to populate `words` from `data/sample_words.csv`.
-- Backup & export: `scripts/backup_db.py` and `scripts/export_csv.py` for safe copies and exports.
+✅ Database contains ≥1000 words imported from external file  
+✅ Three main features: Flashcard, Dictionary, Guide  
+✅ Settings feature for user customization
+✅ 9 study modes (3 flashcard modes × 3 directions)  
+✅ Configurable difficulty, question count, time limit  
+✅ Penalty system for Show Answer feature  
+✅ Scoring and results display for Testing mode  
+✅ Persistent user settings (appearance and preferences)
+✅ Stable operation on Windows OS  
+✅ Video intro ≤5 minutes demonstrating all features
