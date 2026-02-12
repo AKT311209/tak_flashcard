@@ -19,20 +19,26 @@ def init_db():
     """
     global engine, SessionLocal
 
-    engine = create_engine(
-        f"sqlite:///{DB_PATH}",
-        connect_args={"check_same_thread": False},
-        echo=False
-    )
+    try:
+        engine = create_engine(
+            f"sqlite:///{DB_PATH}",
+            connect_args={"check_same_thread": False},
+            echo=False,
+            future=True,
+        )
 
-    Base.metadata.create_all(bind=engine)
+        # create tables if they don't exist
+        Base.metadata.create_all(bind=engine)
 
-    SessionLocal = scoped_session(
-        sessionmaker(autocommit=False, autoflush=False,
-                     bind=engine, expire_on_commit=False)
-    )
+        SessionLocal = scoped_session(
+            sessionmaker(autocommit=False, autoflush=False,
+                         bind=engine, expire_on_commit=False, future=True)
+        )
 
-    return engine
+        return engine
+    except Exception as e:
+        print(f"[tak_flashcard] Failed to initialize database engine: {e}")
+        raise
 
 
 def get_session():

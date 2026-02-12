@@ -1,5 +1,24 @@
 """Data formatting utilities."""
 
+import unicodedata
+
+
+def normalize_unicode(text: str) -> str:
+    """Normalize unicode text to NFC for consistent display and storage.
+
+    Args:
+        text: Input string
+
+    Returns:
+        NFC-normalized string (returns original if not a str)
+    """
+    if not isinstance(text, str):
+        return text
+    try:
+        return unicodedata.normalize("NFC", text)
+    except Exception:
+        return text
+
 
 def format_time(seconds: float) -> str:
     """

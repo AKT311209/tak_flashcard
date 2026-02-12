@@ -1,6 +1,7 @@
 """CSV importer for vocabulary data."""
 
 import csv
+import unicodedata
 from pathlib import Path
 from typing import List, Dict, Optional
 from tak_flashcard.db import get_session, close_session, WordRepository
@@ -35,8 +36,9 @@ class VocabularyImporter:
             with open(self.csv_path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f)
                 headers = reader.fieldnames
-                required_cols = ['english', 'pronunciation',
-                                 'vietnamese', 'part_of_speech']
+                if not headers:
+                    return False
+                required_cols = ['english', 'vietnamese', 'part_of_speech']
 
                 return all(col in headers for col in required_cols)
         except Exception:
@@ -56,10 +58,9 @@ class VocabularyImporter:
 
             for row in reader:
                 word_data = {
-                    'english': row['english'].strip(),
-                    'pronunciation': row['pronunciation'].strip(),
-                    'vietnamese': row['vietnamese'].strip(),
-                    'part_of_speech': row['part_of_speech'].strip(),
+                    'english': unicodedata.normalize("NFC", row['english'].strip()),
+                    'vietnamese': unicodedata.normalize("NFC", row['vietnamese'].strip()),
+                    'part_of_speech': unicodedata.normalize("NFC", row['part_of_speech'].strip()),
                     'display_count': 0,
                     'correct_count': 0,
                     'difficulty': 1.0

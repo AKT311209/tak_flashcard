@@ -1,1159 +1,1159 @@
-english,pronunciation,vietnamese,part_of_speech
-hello,həˈloʊ,xin chào,interjection
-goodbye,ɡʊdˈbaɪ,tạm biệt,interjection
-thank,θæŋk,cảm ơn,verb
-you,juː,bạn,pronoun
-please,pliːz,làm ơn,adverb
-yes,jɛs,vâng,interjection
-no,noʊ,không,interjection
-sorry,ˈsɑːri,xin lỗi,adjective
-excuse,ɪkˈskjuːz,bỏ qua,verb
-help,hɛlp,giúp đỡ,verb
-time,taɪm,thời gian,noun
-day,deɪ,ngày,noun
-week,wiːk,tuần,noun
-month,mʌnθ,tháng,noun
-year,jɪr,năm,noun
-today,təˈdeɪ,hôm nay,noun
-tomorrow,təˈmɑːroʊ,ngày mai,noun
-yesterday,ˈjɛstərdeɪ,hôm qua,noun
-morning,ˈmɔːrnɪŋ,buổi sáng,noun
-afternoon,ˌæftərˈnuːn,buổi chiều,noun
-evening,ˈiːvnɪŋ,buổi tối,noun
-night,naɪt,đêm,noun
-water,ˈwɔːtər,nước,noun
-food,fuːd,thức ăn,noun
-bread,brɛd,bánh mì,noun
-rice,raɪs,cơm,noun
-meat,miːt,thịt,noun
-fish,fɪʃ,cá,noun
-chicken,ˈtʃɪkɪn,gà,noun
-egg,ɛɡ,trứng,noun
-milk,mɪlk,sữa,noun
-coffee,ˈkɔːfi,cà phê,noun
-tea,tiː,trà,noun
-fruit,fruːt,trái cây,noun
-vegetable,ˈvɛdʒtəbəl,rau,noun
-apple,ˈæpəl,táo,noun
-banana,bəˈnænə,chuối,noun
-orange,ˈɔːrɪndʒ,cam,noun
-house,haʊs,nhà,noun
-home,hoʊm,nhà,noun
-door,dɔːr,cửa,noun
-window,ˈwɪndoʊ,cửa sổ,noun
-room,ruːm,phòng,noun
-kitchen,ˈkɪtʃɪn,nhà bếp,noun
-bathroom,ˈbæθruːm,phòng tắm,noun
-bedroom,ˈbɛdruːm,phòng ngủ,noun
-family,ˈfæməli,gia đình,noun
-mother,ˈmʌðər,mẹ,noun
-father,ˈfɑːðər,cha,noun
-parent,ˈpɛrənt,bố mẹ,noun
-child,tʃaɪld,con,noun
-son,sʌn,con trai,noun
-daughter,ˈdɔːtər,con gái,noun
-brother,ˈbrʌðər,anh trai,noun
-sister,ˈsɪstər,chị gái,noun
-husband,ˈhʌzbənd,chồng,noun
-wife,waɪf,vợ,noun
-friend,frɛnd,bạn,noun
-person,ˈpɜːrsən,người,noun
-man,mæn,đàn ông,noun
-woman,ˈwʊmən,phụ nữ,noun
-boy,bɔɪ,con trai,noun
-girl,ɡɜːrl,con gái,noun
-baby,ˈbeɪbi,em bé,noun
-go,ɡoʊ,đi,verb
-come,kʌm,đến,verb
-see,siː,nhìn,verb
-look,lʊk,nhìn,verb
-hear,hɪr,nghe,verb
-listen,ˈlɪsən,nghe,verb
-speak,spiːk,nói,verb
-talk,tɔːk,nói chuyện,verb
-say,seɪ,nói,verb
-tell,tɛl,kể,verb
-ask,æsk,hỏi,verb
-answer,ˈænsər,trả lời,verb
-read,riːd,đọc,verb
-write,raɪt,viết,verb
-learn,lɜːrn,học,verb
-teach,tiːtʃ,dạy,verb
-study,ˈstʌdi,học tập,verb
-know,noʊ,biết,verb
-understand,ˌʌndərˈstænd,hiểu,verb
-think,θɪŋk,nghĩ,verb
-believe,bɪˈliːv,tin,verb
-remember,rɪˈmɛmbər,nhớ,verb
-forget,fərˈɡɛt,quên,verb
-want,wɑːnt,muốn,verb
-need,niːd,cần,verb
-like,laɪk,thích,verb
-love,lʌv,yêu,verb
-hate,heɪt,ghét,verb
-eat,iːt,ăn,verb
-drink,drɪŋk,uống,verb
-sleep,sliːp,ngủ,verb
-wake,weɪk,thức dậy,verb
-work,wɜːrk,làm việc,verb
-play,pleɪ,chơi,verb
-run,rʌn,chạy,verb
-walk,wɔːk,đi bộ,verb
-sit,sɪt,ngồi,verb
-stand,stænd,đứng,verb
-give,ɡɪv,cho,verb
-take,teɪk,lấy,verb
-bring,brɪŋ,mang,verb
-buy,baɪ,mua,verb
-sell,sɛl,bán,verb
-pay,peɪ,trả tiền,verb
-open,ˈoʊpən,mở,verb
-close,kloʊz,đóng,verb
-begin,bɪˈɡɪn,bắt đầu,verb
-start,stɑːrt,bắt đầu,verb
-finish,ˈfɪnɪʃ,kết thúc,verb
-end,ɛnd,kết thúc,verb
-stop,stɑːp,dừng,verb
-continue,kənˈtɪnjuː,tiếp tục,verb
-make,meɪk,làm,verb
-do,duː,làm,verb
-have,hæv,có,verb
-get,ɡɛt,lấy,verb
-put,pʊt,đặt,verb
-keep,kiːp,giữ,verb
-let,lɛt,để,verb
-seem,siːm,có vẻ,verb
-become,bɪˈkʌm,trở nên,verb
-feel,fiːl,cảm thấy,verb
-big,bɪɡ,to,adjective
-small,smɔːl,nhỏ,adjective
-large,lɑːrdʒ,lớn,adjective
-little,ˈlɪtəl,nhỏ,adjective
-long,lɔːŋ,dài,adjective
-short,ʃɔːrt,ngắn,adjective
-tall,tɔːl,cao,adjective
-high,haɪ,cao,adjective
-low,loʊ,thấp,adjective
-new,njuː,mới,adjective
-old,oʊld,cũ,adjective
-young,jʌŋ,trẻ,adjective
-good,ɡʊd,tốt,adjective
-bad,bæd,xấu,adjective
-great,ɡreɪt,tuyệt vời,adjective
-nice,naɪs,đẹp,adjective
-beautiful,ˈbjuːtɪfəl,xinh đẹp,adjective
-pretty,ˈprɪti,đẹp,adjective
-hot,hɑːt,nóng,adjective
-cold,koʊld,lạnh,adjective
-warm,wɔːrm,ấm,adjective
-cool,kuːl,mát,adjective
-happy,ˈhæpi,vui,adjective
-sad,sæd,buồn,adjective
-angry,ˈæŋɡri,tức giận,adjective
-tired,ˈtaɪərd,mệt,adjective
-hungry,ˈhʌŋɡri,đói,adjective
-thirsty,ˈθɜːrsti,khát,adjective
-sick,sɪk,ốm,adjective
-healthy,ˈhɛlθi,khỏe mạnh,adjective
-strong,strɔːŋ,mạnh,adjective
-weak,wiːk,yếu,adjective
-fast,fæst,nhanh,adjective
-slow,sloʊ,chậm,adjective
-easy,ˈiːzi,dễ,adjective
-difficult,ˈdɪfɪkəlt,khó,adjective
-hard,hɑːrd,khó,adjective
-simple,ˈsɪmpəl,đơn giản,adjective
-clean,kliːn,sạch,adjective
-dirty,ˈdɜːrti,bẩn,adjective
-full,fʊl,đầy,adjective
-empty,ˈɛmpti,trống,adjective
-rich,rɪtʃ,giàu,adjective
-poor,pʊr,nghèo,adjective
-expensive,ɪkˈspɛnsɪv,đắt,adjective
-cheap,tʃiːp,rẻ,adjective
-free,friː,miễn phí,adjective
-right,raɪt,đúng,adjective
-wrong,rɔːŋ,sai,adjective
-true,truː,thật,adjective
-false,fɔːls,sai,adjective
-same,seɪm,giống,adjective
-different,ˈdɪfərənt,khác,adjective
-near,nɪr,gần,adjective
-far,fɑːr,xa,adjective
-early,ˈɜːrli,sớm,adjective
-late,leɪt,muộn,adjective
-many,ˈmɛni,nhiều,adjective
-much,mʌtʃ,nhiều,adjective
-few,fjuː,ít,adjective
-little,ˈlɪtəl,ít,adjective
-all,ɔːl,tất cả,adjective
-some,sʌm,một số,adjective
-any,ˈɛni,bất kỳ,adjective
-every,ˈɛvri,mỗi,adjective
-other,ˈʌðər,khác,adjective
-here,hɪr,ở đây,adverb
-there,ðɛr,ở đó,adverb
-now,naʊ,bây giờ,adverb
-then,ðɛn,sau đó,adverb
-always,ˈɔːlweɪz,luôn luôn,adverb
-never,ˈnɛvər,không bao giờ,adverb
-often,ˈɔːfən,thường,adverb
-sometimes,ˈsʌmtaɪmz,đôi khi,adverb
-usually,ˈjuːʒuəli,thường,adverb
-very,ˈvɛri,rất,adverb
-too,tuː,quá,adverb
-so,soʊ,quá,adverb
-well,wɛl,tốt,adverb
-also,ˈɔːlsoʊ,cũng,adverb
-only,ˈoʊnli,chỉ,adverb
-just,dʒʌst,chỉ,adverb
-really,ˈriːəli,thực sự,adverb
-maybe,ˈmeɪbi,có thể,adverb
-perhaps,pərˈhæps,có lẽ,adverb
-probably,ˈprɑːbəbli,có lẽ,adverb
-almost,ˈɔːlmoʊst,gần như,adverb
-quite,kwaɪt,khá,adverb
-enough,ɪˈnʌf,đủ,adverb
-together,təˈɡɛðər,cùng nhau,adverb
-again,əˈɡɛn,lại,adverb
-once,wʌns,một lần,adverb
-twice,twaɪs,hai lần,adverb
-quickly,ˈkwɪkli,nhanh chóng,adverb
-slowly,ˈsloʊli,chậm,adverb
-carefully,ˈkɛrfəli,cẩn thận,adverb
-suddenly,ˈsʌdənli,đột nhiên,adverb
-finally,ˈfaɪnəli,cuối cùng,adverb
-I,aɪ,tôi,pronoun
-me,miː,tôi,pronoun
-my,maɪ,của tôi,pronoun
-mine,maɪn,của tôi,pronoun
-we,wiː,chúng tôi,pronoun
-us,ʌs,chúng tôi,pronoun
-our,ˈaʊər,của chúng tôi,pronoun
-ours,ˈaʊərz,của chúng tôi,pronoun
-he,hiː,anh ấy,pronoun
-him,hɪm,anh ấy,pronoun
-his,hɪz,của anh ấy,pronoun
-she,ʃiː,cô ấy,pronoun
-her,hɜːr,cô ấy,pronoun
-hers,hɜːrz,của cô ấy,pronoun
-it,ɪt,nó,pronoun
-its,ɪts,của nó,pronoun
-they,ðeɪ,họ,pronoun
-them,ðɛm,họ,pronoun
-their,ðɛr,của họ,pronoun
-theirs,ðɛrz,của họ,pronoun
-this,ðɪs,cái này,pronoun
-that,ðæt,cái đó,pronoun
-these,ðiːz,những cái này,pronoun
-those,ðoʊz,những cái đó,pronoun
-who,huː,ai,pronoun
-whom,huːm,ai,pronoun
-whose,huːz,của ai,pronoun
-what,wʌt,cái gì,pronoun
-which,wɪtʃ,cái nào,pronoun
-where,wɛr,ở đâu,pronoun
-when,wɛn,khi nào,pronoun
-why,waɪ,tại sao,pronoun
-how,haʊ,làm sao,pronoun
-and,ænd,và,conjunction
-but,bʌt,nhưng,conjunction
-or,ɔːr,hoặc,conjunction
-because,bɪˈkɔːz,vì,conjunction
-if,ɪf,nếu,conjunction
-when,wɛn,khi,conjunction
-while,waɪl,trong khi,conjunction
-although,ɔːlˈðoʊ,mặc dù,conjunction
-though,ðoʊ,mặc dù,conjunction
-so,soʊ,vì vậy,conjunction
-than,ðæn,hơn,conjunction
-as,æz,như,conjunction
-before,bɪˈfɔːr,trước,conjunction
-after,ˈæftər,sau,conjunction
-until,ənˈtɪl,cho đến khi,conjunction
-unless,ənˈlɉs,trừ khi,conjunction
-in,ɪn,trong,preposition
-on,ɑːn,trên,preposition
-at,æt,ở,preposition
-to,tuː,đến,preposition
-from,frɑːm,từ,preposition
-with,wɪð,với,preposition
-without,wɪðˈaʊt,không có,preposition
-by,baɪ,bằng,preposition
-for,fɔːr,cho,preposition
-about,əˈbaʊt,về,preposition
-of,ʌv,của,preposition
-off,ɔːf,tắt,preposition
-up,ʌp,lên,preposition
-down,daʊn,xuống,preposition
-over,ˈoʊvər,qua,preposition
-under,ˈʌndər,dưới,preposition
-above,əˈbʌv,trên,preposition
-below,bɪˈloʊ,dưới,preposition
-between,bɪˈtwiːn,giữa,preposition
-among,əˈmʌŋ,trong số,preposition
-through,θruː,qua,preposition
-across,əˈkrɔːs,băng qua,preposition
-into,ˈɪntuː,vào,preposition
-out,aʊt,ra,preposition
-inside,ɪnˈsaɪd,bên trong,preposition
-outside,ˌaʊtˈsaɪd,bên ngoài,preposition
-behind,bɪˈhaɪnd,đằng sau,preposition
-beside,bɪˈsaɪd,bên cạnh,preposition
-near,nɪr,gần,preposition
-toward,təˈwɔːrd,về phía,preposition
-against,əˈɡɛnst,chống lại,preposition
-during,ˈdʊrɪŋ,trong suốt,preposition
-since,sɪns,từ khi,preposition
-number,ˈnʌmbər,số,noun
-one,wʌn,một,number
-two,tuː,hai,number
-three,θriː,ba,number
-four,fɔːr,bốn,number
-five,faɪv,năm,number
-six,sɪks,sáu,number
-seven,ˈsɛvən,bảy,number
-eight,eɪt,tám,number
-nine,naɪn,chín,number
-ten,tɛn,mười,number
-eleven,ɪˈlɛvən,mười một,number
-twelve,twɛlv,mười hai,number
-thirteen,ˌθɜːrˈtiːn,mười ba,number
-fourteen,ˌfɔːrˈtiːn,mười bốn,number
-fifteen,ˌfɪfˈtiːn,mười lăm,number
-sixteen,ˌsɪksˈtiːn,mười sáu,number
-seventeen,ˌsɛvənˈtiːn,mười bảy,number
-eighteen,ˌeɪˈtiːn,mười tám,number
-nineteen,ˌnaɪnˈtiːn,mười chín,number
-twenty,ˈtwɛnti,hai mươi,number
-thirty,ˈθɜːrti,ba mươi,number
-forty,ˈfɔːrti,bốn mươi,number
-fifty,ˈfɪfti,năm mươi,number
-sixty,ˈsɪksti,sáu mươi,number
-seventy,ˈsɛvənti,bảy mươi,number
-eighty,ˈeɪti,tám mươi,number
-ninety,ˈnaɪnti,chín mươi,number
-hundred,ˈhʌndrəd,trăm,number
-thousand,ˈθaʊzənd,nghìn,number
-million,ˈmɪljən,triệu,number
-first,fɜːrst,thứ nhất,adjective
-second,ˈsɛkənd,thứ hai,adjective
-third,θɜːrd,thứ ba,adjective
-fourth,fɔːrθ,thứ tư,adjective
-fifth,fɪfθ,thứ năm,adjective
-last,læst,cuối cùng,adjective
-next,nɛkst,tiếp theo,adjective
-country,ˈkʌntri,đất nước,noun
-city,ˈsɪti,thành phố,noun
-town,taʊn,thị trấn,noun
-village,ˈvɪlɪdʒ,làng,noun
-street,striːt,đường phố,noun
-road,roʊd,đường,noun
-place,pleɪs,nơi,noun
-world,wɜːrld,thế giới,noun
-earth,ɜːrθ,trái đất,noun
-sea,siː,biển,noun
-ocean,ˈoʊʃən,đại dương,noun
-river,ˈrɪvər,sông,noun
-lake,leɪk,hồ,noun
-mountain,ˈmaʊntən,núi,noun
-hill,hɪl,đồi,noun
-forest,ˈfɔːrɪst,rừng,noun
-tree,triː,cây,noun
-flower,ˈflaʊər,hoa,noun
-grass,ɡræs,cỏ,noun
-plant,plænt,cây,noun
-animal,ˈænɪməl,động vật,noun
-bird,bɜːrd,chim,noun
-dog,dɔːɡ,chó,noun
-cat,kæt,mèo,noun
-horse,hɔːrs,ngựa,noun
-cow,kaʊ,bò,noun
-pig,pɪɡ,lợn,noun
-sheep,ʃiːp,cừu,noun
-goat,ɡoʊt,dê,noun
-lion,ˈlaɪən,sư tử,noun
-tiger,ˈtaɪɡər,hổ,noun
-elephant,ˈɛlɪfənt,voi,noun
-monkey,ˈmʌŋki,khỉ,noun
-snake,sneɪk,rắn,noun
-insect,ˈɪnsɛkt,côn trùng,noun
-fly,flaɪ,ruồi,noun
-bee,biː,ong,noun
-school,skuːl,trường học,noun
-class,klæs,lớp,noun
-student,ˈstuːdənt,học sinh,noun
-teacher,ˈtiːtʃər,giáo viên,noun
-book,bʊk,sách,noun
-pen,pɛn,bút,noun
-pencil,ˈpɛnsəl,bút chì,noun
-paper,ˈpeɪpər,giấy,noun
-desk,dɛsk,bàn,noun
-chair,tʃɛr,ghế,noun
-table,ˈteɪbəl,bàn,noun
-picture,ˈpɪktʃər,hình ảnh,noun
-photo,ˈfoʊtoʊ,ảnh,noun
-color,ˈkʌlər,màu sắc,noun
-white,waɪt,trắng,adjective
-black,blæk,đen,adjective
-red,rɛd,đỏ,adjective
-blue,bluː,xanh dương,adjective
-green,ɡriːn,xanh lá,adjective
-yellow,ˈjɛloʊ,vàng,adjective
-brown,braʊn,nâu,adjective
-gray,ɡreɪ,xám,adjective
-pink,pɪŋk,hồng,adjective
-purple,ˈpɜːrpəl,tím,adjective
-money,ˈmʌni,tiền,noun
-dollar,ˈdɑːlər,đô la,noun
-price,praɪs,giá,noun
-cost,kɔːst,chi phí,noun
-shop,ʃɑːp,cửa hàng,noun
-store,stɔːr,cửa hàng,noun
-market,ˈmɑːrkɪt,chợ,noun
-bank,bæŋk,ngân hàng,noun
-hospital,ˈhɑːspɪtəl,bệnh viện,noun
-doctor,ˈdɑːktər,bác sĩ,noun
-nurse,nɜːrs,y tá,noun
-medicine,ˈmɛdɪsən,thuốc,noun
-health,hɛlθ,sức khỏe,noun
-body,ˈbɑːdi,cơ thể,noun
-head,hɛd,đầu,noun
-face,feɪs,mặt,noun
-eye,aɪ,mắt,noun
-ear,ɪr,tai,noun
-nose,noʊz,mũi,noun
-mouth,maʊθ,miệng,noun
-tooth,tuːθ,răng,noun
-tongue,tʌŋ,lưỡi,noun
-hand,hænd,tay,noun
-arm,ɑːrm,cánh tay,noun
-finger,ˈfɪŋɡər,ngón tay,noun
-leg,lɛɡ,chân,noun
-foot,fʊt,bàn chân,noun
-knee,niː,đầu gối,noun
-back,bæk,lưng,noun
-stomach,ˈstʌmək,bụng,noun
-heart,hɑːrt,tim,noun
-blood,blʌd,máu,noun
-bone,boʊn,xương,noun
-skin,skɪn,da,noun
-hair,hɛr,tóc,noun
-car,kɑːr,xe hơi,noun
-bus,bʌs,xe buýt,noun
-train,treɪn,tàu hỏa,noun
-plane,pleɪn,máy bay,noun
-ship,ʃɪp,tàu thuyền,noun
-boat,boʊt,thuyền,noun
-bicycle,ˈbaɪsɪkəl,xe đạp,noun
-motorcycle,ˈmoʊtərsaɪkəl,xe máy,noun
-airport,ˈɛrpɔːrt,sân bay,noun
-station,ˈsteɪʃən,ga,noun
-ticket,ˈtɪkɪt,vé,noun
-travel,ˈtrævəl,du lịch,verb
-trip,trɪp,chuyến đi,noun
-visit,ˈvɪzɪt,thăm,verb
-hotel,hoʊˈtɛl,khách sạn,noun
-restaurant,ˈrɛstərɑːnt,nhà hàng,noun
-menu,ˈmɛnjuː,thực đơn,noun
-breakfast,ˈbrɛkfəst,bữa sáng,noun
-lunch,lʌntʃ,bữa trưa,noun
-dinner,ˈdɪnər,bữa tối,noun
-meal,miːl,bữa ăn,noun
-hungry,ˈhʌŋɡri,đói,adjective
-thirsty,ˈθɜːrsti,khát,adjective
-delicious,dɪˈlɪʃəs,ngon,adjective
-tasty,ˈteɪsti,ngon,adjective
-sweet,swiːt,ngọt,adjective
-sour,ˈsaʊər,chua,adjective
-salty,ˈsɔːlti,mặn,adjective
-bitter,ˈbɪtər,đắng,adjective
-spicy,ˈspaɪsi,cay,adjective
-fresh,frɛʃ,tươi,adjective
-weather,ˈwɛðər,thời tiết,noun
-sun,sʌn,mặt trời,noun
-moon,muːn,mặt trăng,noun
-star,stɑːr,ngôi sao,noun
-sky,skaɪ,bầu trời,noun
-cloud,klaʊd,mây,noun
-rain,reɪn,mưa,noun
-snow,snoʊ,tuyết,noun
-wind,wɪnd,gió,noun
-storm,stɔːrm,bão,noun
-sunny,ˈsʌni,nắng,adjective
-cloudy,ˈklaʊdi,nhiều mây,adjective
-rainy,ˈreɪni,mưa,adjective
-windy,ˈwɪndi,có gió,adjective
-season,ˈsiːzən,mùa,noun
-spring,sprɪŋ,mùa xuân,noun
-summer,ˈsʌmər,mùa hè,noun
-autumn,ˈɔːtəm,mùa thu,noun
-fall,fɔːl,mùa thu,noun
-winter,ˈwɪntər,mùa đông,noun
-job,dʒɑːb,công việc,noun
-work,wɜːrk,công việc,noun
-office,ˈɔːfɪs,văn phòng,noun
-company,ˈkʌmpəni,công ty,noun
-business,ˈbɪznəs,kinh doanh,noun
-manager,ˈmænɪdʒər,quản lý,noun
-boss,bɔːs,sếp,noun
-employee,ɪmˈplɔɪi,nhân viên,noun
-worker,ˈwɜːrkər,công nhân,noun
-meeting,ˈmiːtɪŋ,cuộc họp,noun
-project,ˈprɑːdʒɛkt,dự án,noun
-problem,ˈprɑːbləm,vấn đề,noun
-solution,səˈluːʃən,giải pháp,noun
-idea,aɪˈdiːə,ý tưởng,noun
-plan,plæn,kế hoạch,noun
-decision,dɪˈsɪʒən,quyết định,noun
-choice,tʃɔɪs,sự lựa chọn,noun
-change,tʃeɪndʒ,thay đổi,noun
-result,rɪˈzʌlt,kết quả,noun
-success,səkˈsɛs,thành công,noun
-fail,feɪl,thất bại,verb
-failure,ˈfeɪljər,thất bại,noun
-try,traɪ,cố gắng,verb
-attempt,əˈtɛmpt,thử,verb
-effort,ˈɛfərt,nỗ lực,noun
-hope,hoʊp,hy vọng,noun
-wish,wɪʃ,mong muốn,noun
-dream,driːm,giấc mơ,noun
-goal,ɡoʊl,mục tiêu,noun
-purpose,ˈpɜːrpəs,mục đích,noun
-reason,ˈriːzən,lý do,noun
-cause,kɔːz,nguyên nhân,noun
-effect,ɪˈfɛkt,hiệu ứng,noun
-important,ɪmˈpɔːrtənt,quan trọng,adjective
-necessary,ˈnɛsəsɛri,cần thiết,adjective
-useful,ˈjuːsfəl,hữu ích,adjective
-possible,ˈpɑːsəbəl,có thể,adjective
-impossible,ɪmˈpɑːsəbəl,không thể,adjective
-special,ˈspɛʃəl,đặc biệt,adjective
-strange,streɪndʒ,lạ,adjective
-common,ˈkɑːmən,phổ biến,adjective
-normal,ˈnɔːrməl,bình thường,adjective
-usual,ˈjuːʒuəl,thông thường,adjective
-regular,ˈrɛɡjələr,thường xuyên,adjective
-main,meɪn,chính,adjective
-private,ˈpraɪvət,riêng tư,adjective
-public,ˈpʌblɪk,công cộng,adjective
-general,ˈdʒɛnərəl,chung,adjective
-particular,pərˈtɪkjələr,đặc biệt,adjective
-certain,ˈsɜːrtən,chắc chắn,adjective
-sure,ʃʊr,chắc,adjective
-clear,klɪr,rõ ràng,adjective
-bright,braɪt,sáng,adjective
-dark,dɑːrk,tối,adjective
-light,laɪt,nhẹ,adjective
-heavy,ˈhɛvi,nặng,adjective
-thick,θɪk,dày,adjective
-thin,θɪn,mỏng,adjective
-wide,waɪd,rộng,adjective
-narrow,ˈnæroʊ,hẹp,adjective
-deep,diːp,sâu,adjective
-shallow,ˈʃæloʊ,nông,adjective
-round,raʊnd,tròn,adjective
-square,skwɛr,vuông,adjective
-flat,flæt,phẳng,adjective
-sharp,ʃɑːrp,sắc,adjective
-soft,sɔːft,mềm,adjective
-loud,laʊd,to,adjective
-quiet,ˈkwaɪət,yên,adjective
-silent,ˈsaɪlənt,im lặng,adjective
-safe,seɪf,an toàn,adjective
-dangerous,ˈdeɪndʒərəs,nguy hiểm,adjective
-careful,ˈkɛrfəl,cẩn thận,adjective
-busy,ˈbɪzi,bận rộn,adjective
-free,friː,rảnh,adjective
-ready,ˈrɛdi,sẵn sàng,adjective
-alive,əˈlaɪv,sống,adjective
-dead,dɛd,chết,adjective
-born,bɔːrn,sinh,verb
-die,daɪ,chết,verb
-live,lɪv,sống,verb
-life,laɪf,cuộc sống,noun
-death,dɛθ,cái chết,noun
-age,eɪdʒ,tuổi,noun
-birth,bɜːrθ,sinh,noun
-grow,ɡroʊ,phát triển,verb
-change,tʃeɪndʒ,thay đổi,verb
-turn,tɜːrn,quay,verb
-move,muːv,di chuyển,verb
-stay,steɪ,ở lại,verb
-leave,liːv,rời đi,verb
-arrive,əˈraɪv,đến,verb
-return,rɪˈtɜːrn,trở về,verb
-enter,ˈɛntər,vào,verb
-exit,ˈɛksɪt,thoát,verb
-follow,ˈfɑːloʊ,theo,verb
-lead,liːd,dẫn,verb
-meet,miːt,gặp,verb
-join,dʒɔɪn,tham gia,verb
-separate,ˈsɛpəreɪt,tách,verb
-pull,pʊl,kéo,verb
-push,pʊʃ,đẩy,verb
-throw,θroʊ,ném,verb
-catch,kætʃ,bắt,verb
-hold,hoʊld,giữ,verb
-carry,ˈkæri,mang,verb
-pick,pɪk,chọn,verb
-choose,tʃuːz,chọn lựa,verb
-find,faɪnd,tìm,verb
-search,sɜːrtʃ,tìm kiếm,verb
-lose,luːz,mất,verb
-win,wɪn,thắng,verb
-fight,faɪt,chiến đấu,verb
-war,wɔːr,chiến tranh,noun
-peace,piːs,hòa bình,noun
-army,ˈɑːrmi,quân đội,noun
-soldier,ˈsoʊldʒər,người lính,noun
-gun,ɡʌn,súng,noun
-weapon,ˈwɛpən,vũ khí,noun
-danger,ˈdeɪndʒər,nguy hiểm,noun
-fear,fɪr,sợ hãi,noun
-afraid,əˈfreɪd,sợ,adjective
-brave,breɪv,dũng cảm,adjective
-protect,prəˈtɛkt,bảo vệ,verb
-save,seɖv,cứu,verb
-help,hɛlp,giúp đỡ,verb
-support,səˈpɔːrt,hỗ trợ,verb
-serve,sɜːrv,phục vụ,verb
-use,juːz,sử dụng,verb
-useful,ˈjuːsfəl,hữu ích,adjective
-useless,ˈjuːsləs,vô ích,adjective
-break,breɪk,phá,verb
-fix,fɪks,sửa,verb
-repair,rɪˈpɛr,sửa chữa,verb
-build,bɪld,xây dựng,verb
-create,kriˈeɪt,tạo,verb
-destroy,dɪˈstrɔɪ,phá hủy,verb
-cut,kʌt,cắt,verb
-draw,drɔː,vẽ,verb
-paint,peɪnt,vẽ,verb
-art,ɑːrt,nghệ thuật,noun
-music,ˈmjuːzɪk,âm nhạc,noun
-song,sɔːŋ,bài hát,noun
-sing,sɪŋ,hát,verb
-dance,dæns,múa,verb
-movie,ˈmuːvi,phim,noun
-film,fɪlm,phim,noun
-watch,wɑːtʃ,xem,verb
-television,ˈtɛləvɪʒən,ti vi,noun
-TV,ˌtiːˈviː,ti vi,noun
-radio,ˈreɪdioʊ,đài,noun
-computer,kəmˈpjuːtər,máy tính,noun
-phone,foʊn,điện thoại,noun
-call,kɔːl,gọi,verb
-internet,ˈɪntərnɛt,internet,noun
-email,ˈiːmeɪl,thư điện tử,noun
-message,ˈmɛsɪdʒ,tin nhắn,noun
-send,sɛnd,gửi,verb
-receive,rɪˈsiːv,nhận,verb
-letter,ˈlɛtər,thư,noun
-mail,meɪl,thư,noun
-address,əˈdrɛs,địa chỉ,noun
-name,neɪm,tên,noun
-age,eɪdʒ,tuổi,noun
-old,oʊld,cũ,adjective
-year,jɪr,năm,noun
-birthday,ˈbɜːrθdeɪ,sinh nhật,noun
-celebrate,ˈsɛləbreɪt,ăn mừng,verb
-party,ˈpɑːrti,tiệc,noun
-gift,ɡɪft,quà,noun
-present,ˈprɛzənt,quà tặng,noun
-game,ɡeɪm,trò chơi,noun
-sport,spɔːrt,thể thao,noun
-football,ˈfʊtbɔːl,bóng đá,noun
-soccer,ˈsɑːkər,bóng đá,noun
-basketball,ˈbæskɪtbɔːl,bóng rổ,noun
-tennis,ˈtɛnɪs,quần vợt,noun
-swim,swɪm,bơi,verb
-jump,dʒʌmp,nhảy,verb
-exercise,ˈɛksərsaɪz,tập thể dục,verb
-practice,ˈpræktɪs,luyện tập,verb
-train,treɪn,tập luyện,verb
-compete,kəmˈpiːt,cạnh tranh,verb
-team,tiːm,đội,noun
-player,ˈpleɪər,người chơi,noun
-win,wɪn,thắng,verb
-lose,luːz,thua,verb
-score,skɔːr,điểm,noun
-point,pɔɪnt,điểm,noun
-rule,ruːl,quy tắc,noun
-law,lɔː,luật,noun
-right,raɪt,quyền,noun
-wrong,rɔːŋ,sai,adjective
-crime,kraɪm,tội phạm,noun
-police,pəˈliːs,cảnh sát,noun
-court,k ɔːrt,tòa án,noun
-judge,dʒʌdʒ,thẩm phán,noun
-lawyer,ˈlɔːjər,luật sư,noun
-guilty,ˈɡɪlti,có tội,adjective
-innocent,ˈɪnəsənt,vô tội,adjective
-prison,ˈprɪzən,nhà tù,noun
-freedom,ˈfriːdəm,tự do,noun
-government,ˈɡʌvərnmənt,chính phủ,noun
-president,ˈprɛzɪdənt,tổng thống,noun
-minister,ˈmɪnɪstər,bộ trưởng,noun
-leader,ˈliːdər,lãnh đạo,noun
-vote,voʊt,bỏ phiếu,verb
-election,ɪˈlɛkʃən,bầu cử,noun
-politics,ˈpɑːlətɪks,chính trị,noun
-power,ˈpaʊər,quyền lực,noun
-control,kənˈtroʊl,kiểm soát,verb
-order,ˈɔːrdər,trật tự,noun
-command,kəˈmænd,mệnh lệnh,noun
-obey,oʊˈbeɪ,tuân theo,verb
-respect,rɪˈspɛkt,tôn trọng,verb
-honor,ˈɑːnər,danh dự,noun
-proud,praʊd,tự hào,adjective
-shame,ʃeɪm,xấu hổ,noun
-embarrass,ɪmˈbærəs,làm xấu hổ,verb
-laugh,læf,cười,verb
-smile,smaɪl,mỉm cười,verb
-cry,kraɪ,khóc,verb
-tear,tɪr,nước mắt,noun
-joy,dʒɔɪ,niềm vui,noun
-pleasure,ˈplɛʒər,khoái cảm,noun
-pain,peɪn,đau,noun
-hurt,hɜːrt,làm tổn thương,verb
-suffer,ˈsʌfər,chịu đựng,verb
-worry,ˈwɜːri,lo lắng,verb
-care,kɛr,quan tâm,verb
-interest,ˈɪntrəst,sự quan tâm,noun
-attention,əˈtɛnʃən,sự chú ý,noun
-notice,ˈnoʊtɪs,chú ý,verb
-ignore,ɪɡˈnɔːr,phớt lờ,verb
-accept,əkˈsɛpt,chấp nhận,verb
-refuse,rɪˈfjuːz,từ chối,verb
-allow,əˈlaʊ,cho phép,verb
-permit,pərˈmɪt,cho phép,verb
-forbid,fərˈbɪd,cấm,verb
-prevent,prɪˈvɛnt,ngăn chặn,verb
-stop,stɑːp,dừng lại,verb
-wait,weɪt,đợi,verb
-expect,ɪkˈspɛkt,mong đợi,verb
-surprise,sərˈpraɪz,ngạc nhiên,verb
-wonder,ˈwʌndər,tò mò,verb
-curious,ˈkjʊriəs,tò mò,adjective
-doubt,daʊt,nghi ngờ,verb
-trust,trʌst,tin tưởng,verb
-promise,ˈprɑːmɪs,hứa,verb
-lie,laɪ,nói dối,verb
-truth,truːθ,sự thật,noun
-honest,ˈɑːnɪst,trung thực,adjective
-fair,fɛr,công bằng,adjective
-unfair,ʌnˈfɛr,không công bằng,adjective
-kind,kaɪnd,tốt bụng,adjective
-mean,miːn,xấu tính,adjective
-cruel,ˈkruːəl,độc ác,adjective
-generous,ˈdʒɛnərəs,hào phóng,adjective
-selfish,ˈsɛlfɪʃ,ích kỷ,adjective
-polite,pəˈlaɪt,lịch sự,adjective
-rude,ruːd,thô lỗ,adjective
-friendly,ˈfrɛndli,thân thiện,adjective
-unfriendly,ʌnˈfrɛndli,không thân thiện,adjective
-patient,ˈpeɪʃənt,kiên nhẫn,adjective
-impatient,ɪmˈpeɪʃənt,thiếu kiên nhẫn,adjective
-calm,kɑːm,bình tĩnh,adjective
-nervous,ˈnɜːrvəs,lo lắng,adjective
-relaxed,rɪˈlækst,thư giãn,adjective
-stressed,strɛst,căng thẳng,adjective
-comfortable,ˈkʌmftəbəl,thoải mái,adjective
-uncomfortable,ʌnˈkʌmftəbəl,không thoải mái,adjective
-excited,ɪkˈsaɪtɪd,phấn khích,adjective
-boring,ˈbɔːrɪŋ,nhàm chán,adjective
-interesting,ˈɪntrəstɪŋ,thú vị,adjective
-funny,ˈfʌni,buồn cười,adjective
-serious,ˈsɪriəs,nghiêm túc,adjective
-silly,ˈsɪli,ngớ ngẩn,adjective
-stupid,ˈstuːpɪd,ngu ngốc,adjective
-smart,smɑːrt,thông minh,adjective
-wise,waɪz,khôn ngoan,adjective
-clever,ˈklɛvər,thông minh,adjective
-intelligent,ɪnˈtɛlɪdʒənt,thông minh,adjective
-foolish,ˈfuːlɪʃ,khờ dại,adjective
-crazy,ˈkreɪzi,điên,adjective
-mad,mæd,điên,adjective
-strange,stre�ı ndʒ,kỳ lạ,adjective
-weird,wɪrd,kỳ quặc,adjective
-normal,ˈnɔːrməl,bình thường,adjective
-perfect,ˈpɜːrfɪkt,hoàn hảo,adjective
-terrible,ˈtɛrəbəl,tệ,adjective
-horrible,ˈhɔːrəbəl,kinh khủng,adjective
-awful,ˈɔːfəl,khủng khiếp,adjective
-wonderful,ˈwʌndərfəl,tuyệt vời,adjective
-excellent,ˈɛksələnt,xuất sắc,adjective
-fantastic,fænˈtæstɪk,tuyệt vời,adjective
-amazing,əˈmeɪzɪŋ,tuyệt vời,adjective
-incredible,ɪnˈkrɛdəbəl,đáng kinh ngạc,adjective
-ordinary,ˈɔːrdənɛri,bình thường,adjective
-extraordinary,ɪkˈstrɔːrdənɛri,phi thường,adjective
-modern,ˈmɑːdərn,hiện đại,adjective
-ancient,ˈeɪnʃənt,cổ đại,adjective
-future,ˈfjuːtʃər,tương lai,noun
-past,pæst,quá khứ,noun
-present,ˈprɛzənt,hiện tại,noun
-history,ˈhɪstəri,lịch sử,noun
-story,ˈstɔːri,câu chuyện,noun
-news,njuːz,tin tức,noun
-information,ˌɪnfərˈmeɪʃən,thông tin,noun
-fact,fækt,sự thật,noun
-opinion,əˈpɪnjən,ý kiến,noun
-thought,θɔːt,suy nghĩ,noun
-mind,maɪnd,trí óc,noun
-brain,breɪn,não,noun
-memory,ˈmɛməri,trí nhớ,noun
-imagination,ɪˌmædʒɪˈneɪʃən,trí tưởng tượng,noun
-dream,driːm,giấc mơ,noun
-reality,riˈæləti,thực tế,noun
-imagine,ɪˈmædʒɪn,tưởng tượng,verb
-suppose,səˈpoʊz,giả sử,verb
-pretend,prɪˈtɛnd,giả vờ,verb
-seem,siːm,có vẻ,verb
-appear,əˈpɪr,xuất hiện,verb
-disappear,ˌdɪsəˈpɪr,biến mất,verb
-exist,ɪɡˈzɪst,tồn tại,verb
-happen,ˈhæpən,xảy ra,verb
-occur,əˈkɜːr,xảy ra,verb
-event,ɪˈvɛnt,sự kiện,noun
-occasion,əˈkeɪʒən,dịp,noun
-chance,tʃæns,cơ hội,noun
-opportunity,ˌɑːpərˈtuːnəti,cơ hội,noun
-luck,lʌk,may mắn,noun
-lucky,ˈlʌki,may mắn,adjective
-unlucky,ʌnˈlʌki,không may,adjective
-fortune,ˈfɔːrtʃən,vận may,noun
-fate,feɪt,số phận,noun
-destiny,ˈdɛstəni,định mệnh,noun
-future,ˈfjuːtʃər,tương lai,noun
-plan,plæn,kế hoạch,noun
-prepare,prɪˈpɛr,chuẩn bị,verb
-ready,ˈrɛdi,sẵn sàng,adjective
-arrange,əˈreɪndʒ,sắp xếp,verb
-organize,ˈɔːrɡənaɪz,tổ chức,verb
-manage,ˈmænɪdʒ,quản lý,verb
-handle,ˈhændəl,xử lý,verb
-deal,diːl,giải quyết,verb
-solve,sɑːlv,giải quyết,verb
-answer,ˈænsər,câu trả lời,noun
-question,ˈkwɛstʃən,câu hỏi,noun
-ask,æsk,hỏi,verb
-reply,rɪˈplaɪ,trả lời,verb
-respond,rɪˈspɑːnd,phản hồi,verb
-explain,ɪkˈspleɪn,giải thích,verb
-describe,dɪˈskraɪb,mô tả,verb
-express,ɪkˈsprɛs,thể hiện,verb
-communicate,kəˈmjuːnɪkeɪt,giao tiếp,verb
-conversation,ˌkɑːnvərˈseɪʃən,hội thoại,noun
-discussion,dɪˈskʌʃən,thảo luận,noun
-argument,ˈɑːrɡjəmənt,tranh luận,noun
-agree,əˈɡriː,đồng ý,verb
-disagree,ˌdɪsəˈɡriː,không đồng ý,verb
-opinion,əˈpɪnjən,ý kiến,noun
-view,vjuː,quan điểm,noun
-attitude,ˈætɪtuːd,thái độ,noun
-behavior,bɪˈheɪvjər,hành vi,noun
-action,ˈækʃən,hành động,noun
-activity,ækˈtɪvəti,hoạt động,noun
-habit,ˈhæbɪt,thói quen,noun
-custom,ˈkʌstəm,phong tục,noun
-tradition,trəˈdɪʃən,truyền thống,noun
-culture,ˈkʌltʃər,văn hóa,noun
-society,səˈsaɪəti,xã hội,noun
-community,kəˈmjuːnəti,cộng đồng,noun
-group,ɡruːp,nhóm,noun
-organization,ˌɔːrɡənəˈzeɪʃən,tổ chức,noun
-association,əˌsoʊsiˈeɪʃən,hiệp hội,noun
-member,ˈmɛmbər,thành viên,noun
-belong,bɪˈlɔːŋ,thuộc về,verb
-own,oʊn,sở hữu,verb
-possess,pəˈzɛs,sở hữu,verb
-property,ˈprɑːpərti,tài sản,noun
-possession,pəˈzɛʃən,tài sản,noun
-thing,θɪŋ,vật,noun
-object,ˈɑːbdʒɪkt,đối tượng,noun
-item,ˈaɪtəm,món đồ,noun
-stuff,stʌf,đồ đạc,noun
-material,məˈtɪriəl,vật liệu,noun
-substance,ˈsʌbstəns,chất,noun
-matter,ˈmætər,vật chất,noun
-form,fɔːrm,hình dạng,noun
-shape,ʃeɪp,hình dạng,noun
-size,saɪz,kích thước,noun
-weight,weɪt,trọng lượng,noun
-measure,ˈmɛʒər,đo,verb
-count,kaʊnt,đếm,verb
-calculate,ˈkælkjəleɪt,tính toán,verb
-add,æd,cộng,verb
-subtract,səbˈtrækt,trừ,verb
-multiply,ˈmʌltɪplaɪ,nhân,verb
-divide,dɪˈvaɪd,chia,verb
-equal,ˈiːkwəl,bằng,adjective
-total,ˈtoʊtəl,tổng,noun
-sum,sʌm,tổng,noun
-amount,əˈmaʊnt,số lượng,noun
-quantity,ˈkwɑːntəti,số lượng,noun
-quality,ˈkwɑːləti,chất lượng,noun
-value,ˈvæljuː,giá trị,noun
-worth,wɜːrθ,giá trị,noun
-price,praɪs,giá cả,noun
-cheap,tʃiːp,rẻ,adjective
-expensive,ɪkˈspɛnsɪv,đắt,adjective
-valuable,ˈvæljuəbəl,quý giá,adjective
-worthless,ˈwɜːrθləs,vô giá trị,adjective
-advantage,ədˈvæntɪdʒ,lợi thế,noun
-disadvantage,ˌdɪsədˈvæntɪdʒ,bất lợi,noun
-benefit,ˈbɛnɪfɪt,lợi ích,noun
-profit,ˈprɑːfɪt,lợi nhuận,noun
-loss,lɔːs,mất mát,noun
-gain,ɡeɪn,đạt được,verb
-earn,ɜːrn,kiếm được,verb
-spend,spɛnd,chi tiêu,verb
-save,seɪv,tiết kiệm,verb
-waste,weɪst,lãng phí,verb
-use,juːz,sử dụng,verb
-employ,ɪmˈplɔɪ,sử dụng,verb
-apply,əˈplaɪ,áp dụng,verb
-practice,ˈpræktɪs,thực hành,verb
-perform,pərˈfɔːrm,thực hiện,verb
-achieve,əˈtʃiːv,đạt được,verb
-accomplish,əˈkɑːmplɪʃ,hoàn thành,verb
-complete,kəmˈpliːt,hoàn thành,verb
-finish,ˈfɪnɪʃ,kết thúc,verb
-conclude,kənˈkluːd,kết luận,verb
-end,ɛnd,kết thúc,verb
-final,ˈfaɪnəl,cuối cùng,adjective
-last,læst,cuối cùng,adjective
-ultimate,ˈʌltɪmət,cuối cùng,adjective
-maximum,ˈmæksɪməm,tối đa,adjective
-minimum,ˈmɪnɪməm,tối thiểu,adjective
-limit,ˈlɪmɪt,giới hạn,noun
-boundary,ˈbaʊndəri,ranh giới,noun
-border,ˈbɔːrdər,biên giới,noun
-edge,ɛdʒ,cạnh,noun
-corner,ˈkɔːrnər,góc,noun
-center,ˈsɛntər,trung tâm,noun
-middle,ˈmɪdəl,giữa,noun
-side,saɪd,bên,noun
-part,pɑːrt,phần,noun
-piece,piːs,mảnh,noun
-section,ˈsɛkʃən,phần,noun
-division,dɪˈvɪʒən,phân chia,noun
-whole,hoʊl,toàn bộ,adjective
-entire,ɪnˈtaɪər,toàn bộ,adjective
-complete,kəmˈpliːt,hoàn chỉnh,adjective
-partial,ˈpɑːrʃəl,một phần,adjective
-half,hæf,một nửa,noun
-quarter,ˈkwɔːrtər,một phần tư,noun
-double,ˈdʌbəl,gấp đôi,adjective
-single,ˈsɪŋɡəl,đơn,adjective
-pair,pɛr,cặp,noun
-couple,ˈkʌpəl,cặp,noun
-both,boʊθ,cả hai,adjective
-either,ˈiːðər,một trong hai,adjective
-neither,ˈniː ðər,không cái nào,adjective
-none,nʌn,không có,pronoun
-each,iːtʃ,mỗi,adjective
-every,ˈɛvri,mọi,adjective
-several,ˈsɛvərəl,một vài,adjective
-various,ˈvɛriəs,nhiều,adjective
-different,ˈdɪfərənt,khác nhau,adjective
-similar,ˈsɪmələr,tương tự,adjective
-alike,əˈlaɪk,giống nhau,adjective
-same,seɪm,giống,adjective
-compare,kəmˈpɛr,so sánh,verb
-contrast,ˈkɑːntræst,tương phản,verb
-differ,ˈdɪfər,khác,verb
-distinguish,dɪˈstɪŋɡwɪʃ,phân biệt,verb
-recognize,ˈrɛkəɡnaɪz,nhận ra,verb
-identify,aɪˈdɛntɪfaɖɪ,xác định,verb
-determine,dɪˈtɜːrmɪn,xác định,verb
-decide,dɪˈsaɪd,quyết định,verb
-choose,tʃuːz,chọn,verb
-select,səˈlɛkt,chọn lựa,verb
-prefer,prɪˈfɜːr,thích hơn,verb
-favor,ˈfeɪvər,ưa thích,verb
-appreciate,əˈpriːʃieɪt,đánh giá cao,verb
-admire,ədˈmaɪər,ngưỡng mộ,verb
-respect,rɪˈspɛkt,tôn trọng,verb
-worship,ˈwɜːrʃɪp,thờ cúng,verb
-praise,preɖɪz,khen ngợi,verb
-compliment,ˈkɑːmplɪmənt,khen,verb
-criticize,ˈkrɪtɪsaɪz,phê bình,verb
-blame,bleɪm,đổ lỗi,verb
-accuse,əˈkjuːz,buộc tội,verb
-forgive,fərˈɡɪv,tha thứ,verb
-pardon,ˈpɑːrdən,tha,verb
-apologize,əˈpɑːlədʒaɪz,xin lỗi,verb
-regret,rɪˈɡrɛt,hối tiếc,verb
-miss,mɪs,nhớ,verb
-remember,rɪˈmɛmbər,nhớ,verb
-recall,rɪˈkɔːl,nhớ lại,verb
-remind,rɪˈmaɪnd,nhắc nhở,verb
-warn,wɔːrn,cảnh báo,verb
-advise,ədˈvaɪz,khuyên,verb
-suggest,səˈdʒɛst,gợi ý,verb
-recommend,ˌrɛkəˈmɛnd,đề nghị,verb
-propose,prəˈpoʊz,đề xuất,verb
-offer,ˈɔːfər,đề nghị,verb
-provide,prəˈvaɪd,cung cấp,verb
-supply,səˈplaɪ,cung cấp,verb
-deliver,dɪˈlɪvər,giao,verb
-distribute,dɪˈstrɪbjuːt,phân phối,verb
-share,ʃɛr,chia sẻ,verb
-divide,dɪˈvaɪd,phân chia,verb
-separate,ˈsɛpəreɪt,tách,verb
-unite,juˈnaɪt,kết hợp,verb
-combine,kəmˈbaɪn,kết hợp,verb
-mix,mɪks,trộn,verb
-blend,blɛnd,trộn,verb
-join,dʒɔɪn,tham gia,verb
-connect,kəˈnɛkt,kết nối,verb
-attach,əˈtætʃ,đính kèm,verb
-fix,fɪks,sửa,verb
-fasten,ˈfæsən,buộc chặt,verb
-tie,taɪ,buộc,verb
-bind,baɪnd,trói,verb
-wrap,ræp,gói,verb
-cover,ˈkʌvər,che,verb
-hide,haɪd,giấu,verb
-reveal,rɪˈviːl,tiết lộ,verb
-show,ʃoʊ,cho xem,verb
-display,dɪˈspleɪ,hiển thị,verb
-demonstrate,ˈdɛmənstreɪt,trình bày,verb
-prove,pruːv,chứng minh,verb
-test,tɛst,thử nghiệm,verb
-examine,ɪɡˈzæmɪn,kiểm tra,verb
-check,tʃɛk,kiểm tra,verb
-inspect,ɪnˈspɛkt,thanh tra,verb
-investigate,ɪnˈvɛstɪɡeɪt,điều tra,verb
-explore,ɪkˈsplɔːr,khám phá,verb
-discover,dɪˈskʌvər,khám phá,verb
-invent,ɪnˈvɛnt,phát minh,verb
-develop,dɪˈvɛləp,phát triển,verb
-improve,ɪmˈpruːv,cải thiện,verb
-progress,ˈprɑːɡrɛs,tiến bộ,noun
-advance,ədˈvæns,tiến bộ,verb
-increase,ɪnˈkriːs,tăng,verb
-decrease,dɪˈkriːs,giảm,verb
-rise,raɪz,tăng,verb
-fall,fɔːl,giảm,verb
-grow,ɡroʊ,tăng trưởng,verb
-reduce,rɪˈduːs,giảm,verb
-lower,ˈloʊər,hạ,verb
-raise,reɪz,nâng,verb
-lift,lɪft,nâng,verb
-drop,drɑːp,thả,verb
-sink,sɪŋk,chìm,verb
-float,floʊt,nổi,verb
-fly,flaɪ,bay,verb
-crash,kræʃ,va chạm,verb
-hit,hɪt,đánh,verb
-strike,straɪk,đập,verb
-beat,biːt,đánh,verb
-knock,nɑːk,gõ,verb
-touch,tʌtʃ,chạm,verb
-feel,fiːl,cảm giác,verb
-press,prɛs,ấn,verb
-squeeze,skwiːz,bóp,verb
-twist,twɪst,xoắn,verb
-bend,bɛnd,uốn,verb
-fold,foʊld,gập,verb
-tear,tɛr,xé,verb
-rip,rɪp,xé,verb
-crack,kræk,nứt,verb
-split,splɪt,chia,verb
-shatter,ˈʃætər,vỡ,verb
-explosion,ɪkˈsploʊʒən,vụ nổ,noun
-explode,ɪkˈsploʊd,nổ,verb
-burn,bɜːrn,đốt,verb
-fire,ˈfaɪər,lửa,noun
-flame,fleɪm,ngọn lửa,noun
-smoke,smoʊk,khói,noun
-ash,æʃ,tro,noun
-dust,dʌst,bụi,noun
-dirt,dɜːrt,bụi bẩn,noun
-mud,mʌd,bùn,noun
-sand,sænd,cát,noun
-rock,rɑːk,đá,noun
-stone,stoʊn,đá,noun
-metal,ˈmɛtəl,kim loại,noun
-iron,ˈaɪərn,sắt,noun
-steel,stiːl,thép,noun
-gold,ɡoʊld,vàng,noun
-silver,ˈsɪlvər,bạc,noun
-copper,ˈkɑːpər,đồng,noun
-glass,ɡlæs,kính,noun
-plastic,ˈplæstɪk,nhựa,noun
-wood,wʊd,gỗ,noun
-paper,ˈpeɪpər,giấy,noun
-cloth,klɔːθ,vải,noun
-leather,ˈlɛðər,da,noun
-rubber,ˈrʌbər,cao su,noun
-oil,ɔɪl,dầu,noun
-gas,ɡæs,khí,noun
-fuel,ˈfjuːəl,nhiên liệu,noun
-energy,ˈɛnərdʒi,năng lượng,noun
-electricity,ɪˌlɛkˈtrɪsəti,điện,noun
-power,ˈpaʊər,sức mạnh,noun
-force,fɔːrs,lực,noun
-strength,strɛŋθ,sức mạnh,noun
-weak,wiːk,yếu,adjective
-powerful,ˈpaʊərfəl,mạnh mẽ,adjective
-intense,ɪnˈtɛns,mạnh mẽ,adjective
-gentle,ˈdʒɛntəl,nhẹ nhàng,adjective
-violent,ˈvaɪələnt,bạo lực,adjective
-rough,rʌf,thô,adjective
-smooth,smuːð,mịn,adjective
-hard,hɑːrd,cứng,adjective
-soft,sɔːft,mềm,adjective
-solid,ˈsɑːlɪd,rắn,adjective
-liquid,ˈlɪkwɪd,lỏng,adjective
-gas,ɡæs,khí,noun
-steam,stiːm,hơi nước,noun
-vapor,ˈveɪpər,hơi,noun
-bubble,ˈbʌbəl,bong bóng,noun
-wave,weɪv,sóng,noun
-current,ˈkɜːrənt,dòng,noun
-flow,floʊ,chảy,verb
-pour,pɔːr,đổ,verb
-spill,spɪl,tràn,verb
-leak,liːk,rò rỉ,verb
-drip,drɪp,nhỏ giọt,verb
-splash,splæʃ,bắn tung tóe,verb
-overflow,ˌoʊvərˈfloʊ,tràn,verb
-flood,flʌd,lũ lụt,noun
-drought,draʊt,hạn hán,noun
-desert,ˈdɛzərt,sa mạc,noun
-ice,aɪs,băng,noun
-frost,frɔːst,sương giá,noun
-freeze,friːz,đóng băng,verb
-melt,mɛlt,tan,verb
-heat,hiːt,nhiệt,noun
-temperature,ˈtɛmprətʃər,nhiệt độ,noun
-degree,dɪˈɡriː,độ,noun
-cold,koʊld,lạnh,adjective
-cool,kuːl,mát,adjective
-warm,wɔːrm,ấm,adjective
-hot,hɑːt,nóng,adjective
-boil,bɔɪl,sôi,verb
-cook,kʊk,nấu,verb
-bake,beɪk,nướng,verb
-fry,fraɪ,rán,verb
-roast,roʊst,nướng,verb
-grill,ɡrɪl,nướng,verb
-steam,stiːm,hấp,verb
-boil,bɔɪl,luộc,verb
-mix,mɪks,trộn,verb
-stir,stɜːr,khuấy,verb
-pour,pɔːr,rót,verb
-serve,sɜːrv,phục vụ,verb
-taste,teɪst,nếm,verb
-smell,smɛl,ngửi,verb
-flavor,ˈfleɪvər,hương vị,noun
-aroma,əˈroʊmə,hương thơm,noun
-scent,sɛnt,mùi hương,noun
-perfume,pərˈfjuːm,nước hoa,noun
-stink,stɪŋk,hôi,verb
-odor,ˈoʊdər,mùi,noun
+english,vietnamese,part_of_speech
+hello,xin chào,interjection
+goodbye,tạm biệt,interjection
+thank,cảm ơn,verb
+you,bạn,pronoun
+please,làm ơn,adverb
+yes,vâng,interjection
+no,không,interjection
+sorry,xin lỗi,adjective
+excuse,bỏ qua,verb
+help,giúp đỡ,verb
+time,thời gian,noun
+day,ngày,noun
+week,tuần,noun
+month,tháng,noun
+year,năm,noun
+today,hôm nay,noun
+tomorrow,ngày mai,noun
+yesterday,hôm qua,noun
+morning,buổi sáng,noun
+afternoon,buổi chiều,noun
+evening,buổi tối,noun
+night,đêm,noun
+water,nước,noun
+food,thức ăn,noun
+bread,bánh mì,noun
+rice,cơm,noun
+meat,thịt,noun
+fish,cá,noun
+chicken,gà,noun
+egg,trứng,noun
+milk,sữa,noun
+coffee,cà phê,noun
+tea,trà,noun
+fruit,trái cây,noun
+vegetable,rau,noun
+apple,táo,noun
+banana,chuối,noun
+orange,cam,noun
+house,nhà,noun
+home,nhà,noun
+door,cửa,noun
+window,cửa sổ,noun
+room,phòng,noun
+kitchen,nhà bếp,noun
+bathroom,phòng tắm,noun
+bedroom,phòng ngủ,noun
+family,gia đình,noun
+mother,mẹ,noun
+father,cha,noun
+parent,bố mẹ,noun
+child,con,noun
+son,con trai,noun
+daughter,con gái,noun
+brother,anh trai,noun
+sister,chị gái,noun
+husband,chồng,noun
+wife,vợ,noun
+friend,bạn,noun
+person,người,noun
+man,đàn ông,noun
+woman,phụ nữ,noun
+boy,con trai,noun
+girl,con gái,noun
+baby,em bé,noun
+go,đi,verb
+come,đến,verb
+see,nhìn,verb
+look,nhìn,verb
+hear,nghe,verb
+listen,nghe,verb
+speak,nói,verb
+talk,nói chuyện,verb
+say,nói,verb
+tell,kể,verb
+ask,hỏi,verb
+answer,trả lời,verb
+read,đọc,verb
+write,viết,verb
+learn,học,verb
+teach,dạy,verb
+study,học tập,verb
+know,biết,verb
+understand,hiểu,verb
+think,nghĩ,verb
+believe,tin,verb
+remember,nhớ,verb
+forget,quên,verb
+want,muốn,verb
+need,cần,verb
+like,thích,verb
+love,yêu,verb
+hate,ghét,verb
+eat,ăn,verb
+drink,uống,verb
+sleep,ngủ,verb
+wake,thức dậy,verb
+work,làm việc,verb
+play,chơi,verb
+run,chạy,verb
+walk,đi bộ,verb
+sit,ngồi,verb
+stand,đứng,verb
+give,cho,verb
+take,lấy,verb
+bring,mang,verb
+buy,mua,verb
+sell,bán,verb
+pay,trả tiền,verb
+open,mở,verb
+close,đóng,verb
+begin,bắt đầu,verb
+start,bắt đầu,verb
+finish,kết thúc,verb
+end,kết thúc,verb
+stop,dừng,verb
+continue,tiếp tục,verb
+make,làm,verb
+do,làm,verb
+have,có,verb
+get,lấy,verb
+put,đặt,verb
+keep,giữ,verb
+let,để,verb
+seem,có vẻ,verb
+become,trở nên,verb
+feel,cảm thấy,verb
+big,to,adjective
+small,nhỏ,adjective
+large,lớn,adjective
+little,nhỏ,adjective
+long,dài,adjective
+short,ngắn,adjective
+tall,cao,adjective
+high,cao,adjective
+low,thấp,adjective
+new,mới,adjective
+old,cũ,adjective
+young,trẻ,adjective
+good,tốt,adjective
+bad,xấu,adjective
+great,tuyệt vời,adjective
+nice,đẹp,adjective
+beautiful,xinh đẹp,adjective
+pretty,đẹp,adjective
+hot,nóng,adjective
+cold,lạnh,adjective
+warm,ấm,adjective
+cool,mát,adjective
+happy,vui,adjective
+sad,buồn,adjective
+angry,tức giận,adjective
+tired,mệt,adjective
+hungry,đói,adjective
+thirsty,khát,adjective
+sick,ốm,adjective
+healthy,khỏe mạnh,adjective
+strong,mạnh,adjective
+weak,yếu,adjective
+fast,nhanh,adjective
+slow,chậm,adjective
+easy,dễ,adjective
+difficult,khó,adjective
+hard,khó,adjective
+simple,đơn giản,adjective
+clean,sạch,adjective
+dirty,bẩn,adjective
+full,đầy,adjective
+empty,trống,adjective
+rich,giàu,adjective
+poor,nghèo,adjective
+expensive,đắt,adjective
+cheap,rẻ,adjective
+free,miễn phí,adjective
+right,đúng,adjective
+wrong,sai,adjective
+true,thật,adjective
+false,sai,adjective
+same,giống,adjective
+different,khác,adjective
+near,gần,adjective
+far,xa,adjective
+early,sớm,adjective
+late,muộn,adjective
+many,nhiều,adjective
+much,nhiều,adjective
+few,ít,adjective
+little,ít,adjective
+all,tất cả,adjective
+some,một số,adjective
+any,bất kỳ,adjective
+every,mỗi,adjective
+other,khác,adjective
+here,ở đây,adverb
+there,ở đó,adverb
+now,bây giờ,adverb
+then,sau đó,adverb
+always,luôn luôn,adverb
+never,không bao giờ,adverb
+often,thường,adverb
+sometimes,đôi khi,adverb
+usually,thường,adverb
+very,rất,adverb
+too,quá,adverb
+so,quá,adverb
+well,tốt,adverb
+also,cũng,adverb
+only,chỉ,adverb
+just,chỉ,adverb
+really,thực sự,adverb
+maybe,có thể,adverb
+perhaps,có lẽ,adverb
+probably,có lẽ,adverb
+almost,gần như,adverb
+quite,khá,adverb
+enough,đủ,adverb
+together,cùng nhau,adverb
+again,lại,adverb
+once,một lần,adverb
+twice,hai lần,adverb
+quickly,nhanh chóng,adverb
+slowly,chậm,adverb
+carefully,cẩn thận,adverb
+suddenly,đột nhiên,adverb
+finally,cuối cùng,adverb
+I,tôi,pronoun
+me,tôi,pronoun
+my,của tôi,pronoun
+mine,của tôi,pronoun
+we,chúng tôi,pronoun
+us,chúng tôi,pronoun
+our,của chúng tôi,pronoun
+ours,của chúng tôi,pronoun
+he,anh ấy,pronoun
+him,anh ấy,pronoun
+his,của anh ấy,pronoun
+she,cô ấy,pronoun
+her,cô ấy,pronoun
+hers,của cô ấy,pronoun
+it,nó,pronoun
+its,của nó,pronoun
+they,họ,pronoun
+them,họ,pronoun
+their,của họ,pronoun
+theirs,của họ,pronoun
+this,cái này,pronoun
+that,cái đó,pronoun
+these,những cái này,pronoun
+those,những cái đó,pronoun
+who,ai,pronoun
+whom,ai,pronoun
+whose,của ai,pronoun
+what,cái gì,pronoun
+which,cái nào,pronoun
+where,ở đâu,pronoun
+when,khi nào,pronoun
+why,tại sao,pronoun
+how,làm sao,pronoun
+and,và,conjunction
+but,nhưng,conjunction
+or,hoặc,conjunction
+because,vì,conjunction
+if,nếu,conjunction
+when,khi,conjunction
+while,trong khi,conjunction
+although,mặc dù,conjunction
+though,mặc dù,conjunction
+so,vì vậy,conjunction
+than,hơn,conjunction
+as,như,conjunction
+before,trước,conjunction
+after,sau,conjunction
+until,cho đến khi,conjunction
+unless,trừ khi,conjunction
+in,trong,preposition
+on,trên,preposition
+at,ở,preposition
+to,đến,preposition
+from,từ,preposition
+with,với,preposition
+without,không có,preposition
+by,bằng,preposition
+for,cho,preposition
+about,về,preposition
+of,của,preposition
+off,tắt,preposition
+up,lên,preposition
+down,xuống,preposition
+over,qua,preposition
+under,dưới,preposition
+above,trên,preposition
+below,dưới,preposition
+between,giữa,preposition
+among,trong số,preposition
+through,qua,preposition
+across,băng qua,preposition
+into,vào,preposition
+out,ra,preposition
+inside,bên trong,preposition
+outside,bên ngoài,preposition
+behind,đằng sau,preposition
+beside,bên cạnh,preposition
+near,gần,preposition
+toward,về phía,preposition
+against,chống lại,preposition
+during,trong suốt,preposition
+since,từ khi,preposition
+number,số,noun
+one,một,number
+two,hai,number
+three,ba,number
+four,bốn,number
+five,năm,number
+six,sáu,number
+seven,bảy,number
+eight,tám,number
+nine,chín,number
+ten,mười,number
+eleven,mười một,number
+twelve,mười hai,number
+thirteen,mười ba,number
+fourteen,mười bốn,number
+fifteen,mười lăm,number
+sixteen,mười sáu,number
+seventeen,mười bảy,number
+eighteen,mười tám,number
+nineteen,mười chín,number
+twenty,hai mươi,number
+thirty,ba mươi,number
+forty,bốn mươi,number
+fifty,năm mươi,number
+sixty,sáu mươi,number
+seventy,bảy mươi,number
+eighty,tám mươi,number
+ninety,chín mươi,number
+hundred,trăm,number
+thousand,nghìn,number
+million,triệu,number
+first,thứ nhất,adjective
+second,thứ hai,adjective
+third,thứ ba,adjective
+fourth,thứ tư,adjective
+fifth,thứ năm,adjective
+last,cuối cùng,adjective
+next,tiếp theo,adjective
+country,đất nước,noun
+city,thành phố,noun
+town,thị trấn,noun
+village,làng,noun
+street,đường phố,noun
+road,đường,noun
+place,nơi,noun
+world,thế giới,noun
+earth,trái đất,noun
+sea,biển,noun
+ocean,đại dương,noun
+river,sông,noun
+lake,hồ,noun
+mountain,núi,noun
+hill,đồi,noun
+forest,rừng,noun
+tree,cây,noun
+flower,hoa,noun
+grass,cỏ,noun
+plant,cây,noun
+animal,động vật,noun
+bird,chim,noun
+dog,chó,noun
+cat,mèo,noun
+horse,ngựa,noun
+cow,bò,noun
+pig,lợn,noun
+sheep,cừu,noun
+goat,dê,noun
+lion,sư tử,noun
+tiger,hổ,noun
+elephant,voi,noun
+monkey,khỉ,noun
+snake,rắn,noun
+insect,côn trùng,noun
+fly,ruồi,noun
+bee,ong,noun
+school,trường học,noun
+class,lớp,noun
+student,học sinh,noun
+teacher,giáo viên,noun
+book,sách,noun
+pen,bút,noun
+pencil,bút chì,noun
+paper,giấy,noun
+desk,bàn,noun
+chair,ghế,noun
+table,bàn,noun
+picture,hình ảnh,noun
+photo,ảnh,noun
+color,màu sắc,noun
+white,trắng,adjective
+black,đen,adjective
+red,đỏ,adjective
+blue,xanh dương,adjective
+green,xanh lá,adjective
+yellow,vàng,adjective
+brown,nâu,adjective
+gray,xám,adjective
+pink,hồng,adjective
+purple,tím,adjective
+money,tiền,noun
+dollar,đô la,noun
+price,giá,noun
+cost,chi phí,noun
+shop,cửa hàng,noun
+store,cửa hàng,noun
+market,chợ,noun
+bank,ngân hàng,noun
+hospital,bệnh viện,noun
+doctor,bác sĩ,noun
+nurse,y tá,noun
+medicine,thuốc,noun
+health,sức khỏe,noun
+body,cơ thể,noun
+head,đầu,noun
+face,mặt,noun
+eye,mắt,noun
+ear,tai,noun
+nose,mũi,noun
+mouth,miệng,noun
+tooth,răng,noun
+tongue,lưỡi,noun
+hand,tay,noun
+arm,cánh tay,noun
+finger,ngón tay,noun
+leg,chân,noun
+foot,bàn chân,noun
+knee,đầu gối,noun
+back,lưng,noun
+stomach,bụng,noun
+heart,tim,noun
+blood,máu,noun
+bone,xương,noun
+skin,da,noun
+hair,tóc,noun
+car,xe hơi,noun
+bus,xe buýt,noun
+train,tàu hỏa,noun
+plane,máy bay,noun
+ship,tàu thuyền,noun
+boat,thuyền,noun
+bicycle,xe đạp,noun
+motorcycle,xe máy,noun
+airport,sân bay,noun
+station,ga,noun
+ticket,vé,noun
+travel,du lịch,verb
+trip,chuyến đi,noun
+visit,thăm,verb
+hotel,khách sạn,noun
+restaurant,nhà hàng,noun
+menu,thực đơn,noun
+breakfast,bữa sáng,noun
+lunch,bữa trưa,noun
+dinner,bữa tối,noun
+meal,bữa ăn,noun
+hungry,đói,adjective
+thirsty,khát,adjective
+delicious,ngon,adjective
+tasty,ngon,adjective
+sweet,ngọt,adjective
+sour,chua,adjective
+salty,mặn,adjective
+bitter,đắng,adjective
+spicy,cay,adjective
+fresh,tươi,adjective
+weather,thời tiết,noun
+sun,mặt trời,noun
+moon,mặt trăng,noun
+star,ngôi sao,noun
+sky,bầu trời,noun
+cloud,mây,noun
+rain,mưa,noun
+snow,tuyết,noun
+wind,gió,noun
+storm,bão,noun
+sunny,nắng,adjective
+cloudy,nhiều mây,adjective
+rainy,mưa,adjective
+windy,có gió,adjective
+season,mùa,noun
+spring,mùa xuân,noun
+summer,mùa hè,noun
+autumn,mùa thu,noun
+fall,mùa thu,noun
+winter,mùa đông,noun
+job,công việc,noun
+work,công việc,noun
+office,văn phòng,noun
+company,công ty,noun
+business,kinh doanh,noun
+manager,quản lý,noun
+boss,sếp,noun
+employee,nhân viên,noun
+worker,công nhân,noun
+meeting,cuộc họp,noun
+project,dự án,noun
+problem,vấn đề,noun
+solution,giải pháp,noun
+idea,ý tưởng,noun
+plan,kế hoạch,noun
+decision,quyết định,noun
+choice,sự lựa chọn,noun
+change,thay đổi,noun
+result,kết quả,noun
+success,thành công,noun
+fail,thất bại,verb
+failure,thất bại,noun
+try,cố gắng,verb
+attempt,thử,verb
+effort,nỗ lực,noun
+hope,hy vọng,noun
+wish,mong muốn,noun
+dream,giấc mơ,noun
+goal,mục tiêu,noun
+purpose,mục đích,noun
+reason,lý do,noun
+cause,nguyên nhân,noun
+effect,hiệu ứng,noun
+important,quan trọng,adjective
+necessary,cần thiết,adjective
+useful,hữu ích,adjective
+possible,có thể,adjective
+impossible,không thể,adjective
+special,đặc biệt,adjective
+strange,lạ,adjective
+common,phổ biến,adjective
+normal,bình thường,adjective
+usual,thông thường,adjective
+regular,thường xuyên,adjective
+main,chính,adjective
+private,riêng tư,adjective
+public,công cộng,adjective
+general,chung,adjective
+particular,đặc biệt,adjective
+certain,chắc chắn,adjective
+sure,chắc,adjective
+clear,rõ ràng,adjective
+bright,sáng,adjective
+dark,tối,adjective
+light,nhẹ,adjective
+heavy,nặng,adjective
+thick,dày,adjective
+thin,mỏng,adjective
+wide,rộng,adjective
+narrow,hẹp,adjective
+deep,sâu,adjective
+shallow,nông,adjective
+round,tròn,adjective
+square,vuông,adjective
+flat,phẳng,adjective
+sharp,sắc,adjective
+soft,mềm,adjective
+loud,to,adjective
+quiet,yên,adjective
+silent,im lặng,adjective
+safe,an toàn,adjective
+dangerous,nguy hiểm,adjective
+careful,cẩn thận,adjective
+busy,bận rộn,adjective
+free,rảnh,adjective
+ready,sẵn sàng,adjective
+alive,sống,adjective
+dead,chết,adjective
+born,sinh,verb
+die,chết,verb
+live,sống,verb
+life,cuộc sống,noun
+death,cái chết,noun
+age,tuổi,noun
+birth,sinh,noun
+grow,phát triển,verb
+change,thay đổi,verb
+turn,quay,verb
+move,di chuyển,verb
+stay,ở lại,verb
+leave,rời đi,verb
+arrive,đến,verb
+return,trở về,verb
+enter,vào,verb
+exit,thoát,verb
+follow,theo,verb
+lead,dẫn,verb
+meet,gặp,verb
+join,tham gia,verb
+separate,tách,verb
+pull,kéo,verb
+push,đẩy,verb
+throw,ném,verb
+catch,bắt,verb
+hold,giữ,verb
+carry,mang,verb
+pick,chọn,verb
+choose,chọn lựa,verb
+find,tìm,verb
+search,tìm kiếm,verb
+lose,mất,verb
+win,thắng,verb
+fight,chiến đấu,verb
+war,chiến tranh,noun
+peace,hòa bình,noun
+army,quân đội,noun
+soldier,người lính,noun
+gun,súng,noun
+weapon,vũ khí,noun
+danger,nguy hiểm,noun
+fear,sợ hãi,noun
+afraid,sợ,adjective
+brave,dũng cảm,adjective
+protect,bảo vệ,verb
+save,cứu,verb
+help,giúp đỡ,verb
+support,hỗ trợ,verb
+serve,phục vụ,verb
+use,sử dụng,verb
+useful,hữu ích,adjective
+useless,vô ích,adjective
+break,phá,verb
+fix,sửa,verb
+repair,sửa chữa,verb
+build,xây dựng,verb
+create,tạo,verb
+destroy,phá hủy,verb
+cut,cắt,verb
+draw,vẽ,verb
+paint,vẽ,verb
+art,nghệ thuật,noun
+music,âm nhạc,noun
+song,bài hát,noun
+sing,hát,verb
+dance,múa,verb
+movie,phim,noun
+film,phim,noun
+watch,xem,verb
+television,ti vi,noun
+TV,ti vi,noun
+radio,đài,noun
+computer,máy tính,noun
+phone,điện thoại,noun
+call,gọi,verb
+internet,internet,noun
+email,thư điện tử,noun
+message,tin nhắn,noun
+send,gửi,verb
+receive,nhận,verb
+letter,thư,noun
+mail,thư,noun
+address,địa chỉ,noun
+name,tên,noun
+age,tuổi,noun
+old,cũ,adjective
+year,năm,noun
+birthday,sinh nhật,noun
+celebrate,ăn mừng,verb
+party,tiệc,noun
+gift,quà,noun
+present,quà tặng,noun
+game,trò chơi,noun
+sport,thể thao,noun
+football,bóng đá,noun
+soccer,bóng đá,noun
+basketball,bóng rổ,noun
+tennis,quần vợt,noun
+swim,bơi,verb
+jump,nhảy,verb
+exercise,tập thể dục,verb
+practice,luyện tập,verb
+train,tập luyện,verb
+compete,cạnh tranh,verb
+team,đội,noun
+player,người chơi,noun
+win,thắng,verb
+lose,thua,verb
+score,điểm,noun
+point,điểm,noun
+rule,quy tắc,noun
+law,luật,noun
+right,quyền,noun
+wrong,sai,adjective
+crime,tội phạm,noun
+police,cảnh sát,noun
+court,tòa án,noun
+judge,thẩm phán,noun
+lawyer,luật sư,noun
+guilty,có tội,adjective
+innocent,vô tội,adjective
+prison,nhà tù,noun
+freedom,tự do,noun
+government,chính phủ,noun
+president,tổng thống,noun
+minister,bộ trưởng,noun
+leader,lãnh đạo,noun
+vote,bỏ phiếu,verb
+election,bầu cử,noun
+politics,chính trị,noun
+power,quyền lực,noun
+control,kiểm soát,verb
+order,trật tự,noun
+command,mệnh lệnh,noun
+obey,tuân theo,verb
+respect,tôn trọng,verb
+honor,danh dự,noun
+proud,tự hào,adjective
+shame,xấu hổ,noun
+embarrass,làm xấu hổ,verb
+laugh,cười,verb
+smile,mỉm cười,verb
+cry,khóc,verb
+tear,nước mắt,noun
+joy,niềm vui,noun
+pleasure,khoái cảm,noun
+pain,đau,noun
+hurt,làm tổn thương,verb
+suffer,chịu đựng,verb
+worry,lo lắng,verb
+care,quan tâm,verb
+interest,sự quan tâm,noun
+attention,sự chú ý,noun
+notice,chú ý,verb
+ignore,phớt lờ,verb
+accept,chấp nhận,verb
+refuse,từ chối,verb
+allow,cho phép,verb
+permit,cho phép,verb
+forbid,cấm,verb
+prevent,ngăn chặn,verb
+stop,dừng lại,verb
+wait,đợi,verb
+expect,mong đợi,verb
+surprise,ngạc nhiên,verb
+wonder,tò mò,verb
+curious,tò mò,adjective
+doubt,nghi ngờ,verb
+trust,tin tưởng,verb
+promise,hứa,verb
+lie,nói dối,verb
+truth,sự thật,noun
+honest,trung thực,adjective
+fair,công bằng,adjective
+unfair,không công bằng,adjective
+kind,tốt bụng,adjective
+mean,xấu tính,adjective
+cruel,độc ác,adjective
+generous,hào phóng,adjective
+selfish,ích kỷ,adjective
+polite,lịch sự,adjective
+rude,thô lỗ,adjective
+friendly,thân thiện,adjective
+unfriendly,không thân thiện,adjective
+patient,kiên nhẫn,adjective
+impatient,thiếu kiên nhẫn,adjective
+calm,bình tĩnh,adjective
+nervous,lo lắng,adjective
+relaxed,thư giãn,adjective
+stressed,căng thẳng,adjective
+comfortable,thoải mái,adjective
+uncomfortable,không thoải mái,adjective
+excited,phấn khích,adjective
+boring,nhàm chán,adjective
+interesting,thú vị,adjective
+funny,buồn cười,adjective
+serious,nghiêm túc,adjective
+silly,ngớ ngẩn,adjective
+stupid,ngu ngốc,adjective
+smart,thông minh,adjective
+wise,khôn ngoan,adjective
+clever,thông minh,adjective
+intelligent,thông minh,adjective
+foolish,khờ dại,adjective
+crazy,điên,adjective
+mad,điên,adjective
+strange,kỳ lạ,adjective
+weird,kỳ quặc,adjective
+normal,bình thường,adjective
+perfect,hoàn hảo,adjective
+terrible,tệ,adjective
+horrible,kinh khủng,adjective
+awful,khủng khiếp,adjective
+wonderful,tuyệt vời,adjective
+excellent,xuất sắc,adjective
+fantastic,tuyệt vời,adjective
+amazing,tuyệt vời,adjective
+incredible,đáng kinh ngạc,adjective
+ordinary,bình thường,adjective
+extraordinary,phi thường,adjective
+modern,hiện đại,adjective
+ancient,cổ đại,adjective
+future,tương lai,noun
+past,quá khứ,noun
+present,hiện tại,noun
+history,lịch sử,noun
+story,câu chuyện,noun
+news,tin tức,noun
+information,thông tin,noun
+fact,sự thật,noun
+opinion,ý kiến,noun
+thought,suy nghĩ,noun
+mind,trí óc,noun
+brain,não,noun
+memory,trí nhớ,noun
+imagination,trí tưởng tượng,noun
+dream,giấc mơ,noun
+reality,thực tế,noun
+imagine,tưởng tượng,verb
+suppose,giả sử,verb
+pretend,giả vờ,verb
+seem,có vẻ,verb
+appear,xuất hiện,verb
+disappear,biến mất,verb
+exist,tồn tại,verb
+happen,xảy ra,verb
+occur,xảy ra,verb
+event,sự kiện,noun
+occasion,dịp,noun
+chance,cơ hội,noun
+opportunity,cơ hội,noun
+luck,may mắn,noun
+lucky,may mắn,adjective
+unlucky,không may,adjective
+fortune,vận may,noun
+fate,số phận,noun
+destiny,định mệnh,noun
+future,tương lai,noun
+plan,kế hoạch,noun
+prepare,chuẩn bị,verb
+ready,sẵn sàng,adjective
+arrange,sắp xếp,verb
+organize,tổ chức,verb
+manage,quản lý,verb
+handle,xử lý,verb
+deal,giải quyết,verb
+solve,giải quyết,verb
+answer,câu trả lời,noun
+question,câu hỏi,noun
+ask,hỏi,verb
+reply,trả lời,verb
+respond,phản hồi,verb
+explain,giải thích,verb
+describe,mô tả,verb
+express,thể hiện,verb
+communicate,giao tiếp,verb
+conversation,hội thoại,noun
+discussion,thảo luận,noun
+argument,tranh luận,noun
+agree,đồng ý,verb
+disagree,không đồng ý,verb
+opinion,ý kiến,noun
+view,quan điểm,noun
+attitude,thái độ,noun
+behavior,hành vi,noun
+action,hành động,noun
+activity,hoạt động,noun
+habit,thói quen,noun
+custom,phong tục,noun
+tradition,truyền thống,noun
+culture,văn hóa,noun
+society,xã hội,noun
+community,cộng đồng,noun
+group,nhóm,noun
+organization,tổ chức,noun
+association,hiệp hội,noun
+member,thành viên,noun
+belong,thuộc về,verb
+own,sở hữu,verb
+possess,sở hữu,verb
+property,tài sản,noun
+possession,tài sản,noun
+thing,vật,noun
+object,đối tượng,noun
+item,món đồ,noun
+stuff,đồ đạc,noun
+material,vật liệu,noun
+substance,chất,noun
+matter,vật chất,noun
+form,hình dạng,noun
+shape,hình dạng,noun
+size,kích thước,noun
+weight,trọng lượng,noun
+measure,đo,verb
+count,đếm,verb
+calculate,tính toán,verb
+add,cộng,verb
+subtract,trừ,verb
+multiply,nhân,verb
+divide,chia,verb
+equal,bằng,adjective
+total,tổng,noun
+sum,tổng,noun
+amount,số lượng,noun
+quantity,số lượng,noun
+quality,chất lượng,noun
+value,giá trị,noun
+worth,giá trị,noun
+price,giá cả,noun
+cheap,rẻ,adjective
+expensive,đắt,adjective
+valuable,quý giá,adjective
+worthless,vô giá trị,adjective
+advantage,lợi thế,noun
+disadvantage,bất lợi,noun
+benefit,lợi ích,noun
+profit,lợi nhuận,noun
+loss,mất mát,noun
+gain,đạt được,verb
+earn,kiếm được,verb
+spend,chi tiêu,verb
+save,tiết kiệm,verb
+waste,lãng phí,verb
+use,sử dụng,verb
+employ,sử dụng,verb
+apply,áp dụng,verb
+practice,thực hành,verb
+perform,thực hiện,verb
+achieve,đạt được,verb
+accomplish,hoàn thành,verb
+complete,hoàn thành,verb
+finish,kết thúc,verb
+conclude,kết luận,verb
+end,kết thúc,verb
+final,cuối cùng,adjective
+last,cuối cùng,adjective
+ultimate,cuối cùng,adjective
+maximum,tối đa,adjective
+minimum,tối thiểu,adjective
+limit,giới hạn,noun
+boundary,ranh giới,noun
+border,biên giới,noun
+edge,cạnh,noun
+corner,góc,noun
+center,trung tâm,noun
+middle,giữa,noun
+side,bên,noun
+part,phần,noun
+piece,mảnh,noun
+section,phần,noun
+division,phân chia,noun
+whole,toàn bộ,adjective
+entire,toàn bộ,adjective
+complete,hoàn chỉnh,adjective
+partial,một phần,adjective
+half,một nửa,noun
+quarter,một phần tư,noun
+double,gấp đôi,adjective
+single,đơn,adjective
+pair,cặp,noun
+couple,cặp,noun
+both,cả hai,adjective
+either,một trong hai,adjective
+neither,không cái nào,adjective
+none,không có,pronoun
+each,mỗi,adjective
+every,mọi,adjective
+several,một vài,adjective
+various,nhiều,adjective
+different,khác nhau,adjective
+similar,tương tự,adjective
+alike,giống nhau,adjective
+same,giống,adjective
+compare,so sánh,verb
+contrast,tương phản,verb
+differ,khác,verb
+distinguish,phân biệt,verb
+recognize,nhận ra,verb
+identify,xác định,verb
+determine,xác định,verb
+decide,quyết định,verb
+choose,chọn,verb
+select,chọn lựa,verb
+prefer,thích hơn,verb
+favor,ưa thích,verb
+appreciate,đánh giá cao,verb
+admire,ngưỡng mộ,verb
+respect,tôn trọng,verb
+worship,thờ cúng,verb
+praise,khen ngợi,verb
+compliment,khen,verb
+criticize,phê bình,verb
+blame,đổ lỗi,verb
+accuse,buộc tội,verb
+forgive,tha thứ,verb
+pardon,tha,verb
+apologize,xin lỗi,verb
+regret,hối tiếc,verb
+miss,nhớ,verb
+remember,nhớ,verb
+recall,nhớ lại,verb
+remind,nhắc nhở,verb
+warn,cảnh báo,verb
+advise,khuyên,verb
+suggest,gợi ý,verb
+recommend,đề nghị,verb
+propose,đề xuất,verb
+offer,đề nghị,verb
+provide,cung cấp,verb
+supply,cung cấp,verb
+deliver,giao,verb
+distribute,phân phối,verb
+share,chia sẻ,verb
+divide,phân chia,verb
+separate,tách,verb
+unite,kết hợp,verb
+combine,kết hợp,verb
+mix,trộn,verb
+blend,trộn,verb
+join,tham gia,verb
+connect,kết nối,verb
+attach,đính kèm,verb
+fix,sửa,verb
+fasten,buộc chặt,verb
+tie,buộc,verb
+bind,trói,verb
+wrap,gói,verb
+cover,che,verb
+hide,giấu,verb
+reveal,tiết lộ,verb
+show,cho xem,verb
+display,hiển thị,verb
+demonstrate,trình bày,verb
+prove,chứng minh,verb
+test,thử nghiệm,verb
+examine,kiểm tra,verb
+check,kiểm tra,verb
+inspect,thanh tra,verb
+investigate,điều tra,verb
+explore,khám phá,verb
+discover,khám phá,verb
+invent,phát minh,verb
+develop,phát triển,verb
+improve,cải thiện,verb
+progress,tiến bộ,noun
+advance,tiến bộ,verb
+increase,tăng,verb
+decrease,giảm,verb
+rise,tăng,verb
+fall,giảm,verb
+grow,tăng trưởng,verb
+reduce,giảm,verb
+lower,hạ,verb
+raise,nâng,verb
+lift,nâng,verb
+drop,thả,verb
+sink,chìm,verb
+float,nổi,verb
+fly,bay,verb
+crash,va chạm,verb
+hit,đánh,verb
+strike,đập,verb
+beat,đánh,verb
+knock,gõ,verb
+touch,chạm,verb
+feel,cảm giác,verb
+press,ấn,verb
+squeeze,bóp,verb
+twist,xoắn,verb
+bend,uốn,verb
+fold,gập,verb
+tear,xé,verb
+rip,xé,verb
+crack,nứt,verb
+split,chia,verb
+shatter,vỡ,verb
+explosion,vụ nổ,noun
+explode,nổ,verb
+burn,đốt,verb
+fire,lửa,noun
+flame,ngọn lửa,noun
+smoke,khói,noun
+ash,tro,noun
+dust,bụi,noun
+dirt,bụi bẩn,noun
+mud,bùn,noun
+sand,cát,noun
+rock,đá,noun
+stone,đá,noun
+metal,kim loại,noun
+iron,sắt,noun
+steel,thép,noun
+gold,vàng,noun
+silver,bạc,noun
+copper,đồng,noun
+glass,kính,noun
+plastic,nhựa,noun
+wood,gỗ,noun
+paper,giấy,noun
+cloth,vải,noun
+leather,da,noun
+rubber,cao su,noun
+oil,dầu,noun
+gas,khí,noun
+fuel,nhiên liệu,noun
+energy,năng lượng,noun
+electricity,điện,noun
+power,sức mạnh,noun
+force,lực,noun
+strength,sức mạnh,noun
+weak,yếu,adjective
+powerful,mạnh mẽ,adjective
+intense,mạnh mẽ,adjective
+gentle,nhẹ nhàng,adjective
+violent,bạo lực,adjective
+rough,thô,adjective
+smooth,mịn,adjective
+hard,cứng,adjective
+soft,mềm,adjective
+solid,rắn,adjective
+liquid,lỏng,adjective
+gas,khí,noun
+steam,hơi nước,noun
+vapor,hơi,noun
+bubble,bong bóng,noun
+wave,sóng,noun
+current,dòng,noun
+flow,chảy,verb
+pour,đổ,verb
+spill,tràn,verb
+leak,rò rỉ,verb
+drip,nhỏ giọt,verb
+splash,bắn tung tóe,verb
+overflow,tràn,verb
+flood,lũ lụt,noun
+drought,hạn hán,noun
+desert,sa mạc,noun
+ice,băng,noun
+frost,sương giá,noun
+freeze,đóng băng,verb
+melt,tan,verb
+heat,nhiệt,noun
+temperature,nhiệt độ,noun
+degree,độ,noun
+cold,lạnh,adjective
+cool,mát,adjective
+warm,ấm,adjective
+hot,nóng,adjective
+boil,sôi,verb
+cook,nấu,verb
+bake,nướng,verb
+fry,rán,verb
+roast,nướng,verb
+grill,nướng,verb
+steam,hấp,verb
+boil,luộc,verb
+mix,trộn,verb
+stir,khuấy,verb
+pour,rót,verb
+serve,phục vụ,verb
+taste,nếm,verb
+smell,ngửi,verb
+flavor,hương vị,noun
+aroma,hương thơm,noun
+scent,mùi hương,noun
+perfume,nước hoa,noun
+stink,hôi,verb
+odor,mùi,noun

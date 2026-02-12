@@ -1,11 +1,22 @@
 """Dictionary view for browsing and searching words."""
 
 import dearpygui.dearpygui as dpg
+from typing import Optional
 from tak_flashcard.gui.components.toolbar import create_toolbar
 from tak_flashcard.features.dictionary import DictionaryController
+from tak_flashcard.utils.formatters import normalize_unicode
 
 
-dictionary_controller = None
+dictionary_controller: Optional[DictionaryController] = None
+
+
+def _get_dictionary_controller() -> DictionaryController:
+    """Return the active dictionary controller instance."""
+
+    if dictionary_controller is None:
+        raise RuntimeError("Dictionary controller is not initialized")
+
+    return dictionary_controller
 
 
 def show_dictionary_view():
@@ -17,6 +28,7 @@ def show_dictionary_view():
         dpg.delete_item("dictionary_window")
 
     dictionary_controller = DictionaryController()
+    controller = _get_dictionary_controller()
 
     viewport_width = dpg.get_viewport_width()
     viewport_height = dpg.get_viewport_height()
@@ -51,7 +63,7 @@ def show_dictionary_view():
 
             dpg.add_text("Filter by POS:")
             parts_of_speech = ["All"] + \
-                dictionary_controller.get_parts_of_speech()
+                controller.get_parts_of_speech()
             dpg.add_combo(
                 tag="pos_filter",
                 items=parts_of_speech,
@@ -83,30 +95,32 @@ def show_dictionary_view():
             scrollY=True,
             height=550
         ):
-            dpg.add_table_column(label="English", width=150)
-            dpg.add_table_column(label="Pronunciation", width=150)
-            dpg.add_table_column(label="Vietnamese", width=200)
-            dpg.add_table_column(label="Part of Speech", width=120)
-            dpg.add_table_column(label="Difficulty", width=80)
+            dpg.add_table_column(label="English", width=180)
+            dpg.add_table_column(label="Vietnamese", width=220)
+            dpg.add_table_column(label="Part of Speech", width=140)
+            dpg.add_table_column(label="Difficulty", width=90)
 
     _load_words()
 
 
 def _load_words():
     """Load and display all words."""
-    words = dictionary_controller.load_all_words()
+    controller = _get_dictionary_controller()
+    words = controller.load_all_words()
     _update_table(words)
 
 
 def _search_words(query: str):
     """Search for words matching the query."""
-    words = dictionary_controller.search(query)
+    controller = _get_dictionary_controller()
+    words = controller.search(query)
     _update_table(words)
 
 
 def _filter_by_pos(pos: str):
     """Filter words by part of speech."""
-    words = dictionary_controller.filter_by_part_of_speech(
+    controller = _get_dictionary_controller()
+    words = controller.filter_by_part_of_speech(
         None if pos == "All" else pos)
     _update_table(words)
 
@@ -118,8 +132,9 @@ def _change_sort(sort_by: str):
         "Vietnamese": "vietnamese",
         "Difficulty": "difficulty"
     }
-    dictionary_controller.set_sort(sort_map[sort_by])
-    _update_table(dictionary_controller.current_words)
+    controller = _get_dictionary_controller()
+    controller.set_sort(sort_map[sort_by])
+    _update_table(controller.current_words)
 
 
 def _update_table(words):
@@ -127,15 +142,15 @@ def _update_table(words):
     if not dpg.does_item_exist("word_table"):
         return
 
-    for child in dpg.get_item_children("word_table", 1):
+    children = dpg.get_item_children("word_table", 1) or []
+    for child in children:
         dpg.delete_item(child)
 
     for word in words:
         with dpg.table_row(parent="word_table"):
-            dpg.add_text(word.english)
-            dpg.add_text(word.pronunciation)
-            dpg.add_text(word.vietnamese)
-            dpg.add_text(word.part_of_speech)
+            dpg.add_text(normalize_unicode(word.english))
+            dpg.add_text(normalize_unicode(word.vietnamese))
+            dpg.add_text(normalize_unicode(word.part_of_speech))
             dpg.add_text(f"{word.difficulty:.2f}")
 
 

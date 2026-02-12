@@ -162,7 +162,7 @@ SELECT COUNT(*) FROM words;
 ### Adding More Words
 To add more vocabulary words:
 1. Edit `src/tak_flashcard/data/vocab/vocab_source.csv`
-2. Add entries in format: `english,pronunciation,vietnamese,part_of_speech`
+2. Add entries in format: `english,vietnamese,part_of_speech`
 3. Delete the database file
 4. Restart the application to reimport
 

@@ -17,6 +17,10 @@ DEFAULT_SETTINGS = {
     "appearance": {
         "theme": Theme.LIGHT.value,
         "font_size": FontSize.MEDIUM.value,
+        # optional explicit font file path to use (TTF). If None, auto-discover.
+        "font_path": None,
+        # pixel size to use when binding fonts
+        "font_pixel_size": 16,
         "window_width": DEFAULT_WINDOW_WIDTH,
         "window_height": DEFAULT_WINDOW_HEIGHT
     },
@@ -158,6 +162,15 @@ class SettingsManager:
                 return value in [t.value for t in Theme]
             elif key == "font_size":
                 return value in [f.value for f in FontSize]
+            elif key == "font_pixel_size":
+                try:
+                    v = int(value)
+                    return 8 <= v <= 72
+                except Exception:
+                    return False
+            elif key == "font_path":
+                # accept None or a string path
+                return (value is None) or isinstance(value, str)
 
         elif category == "defaults":
             if key == "difficulty_level":

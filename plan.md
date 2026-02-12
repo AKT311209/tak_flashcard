@@ -15,7 +15,7 @@
 
 ### 1.2 Data Import
 - [ ] Find/prepare CSV with ≥1000 English-Vietnamese words
-  - Required columns: `english`, `pronunciation`, `vietnamese`, `part_of_speech`
+  - Required columns: `english`, `vietnamese`, `part_of_speech`
   - Source: GitHub vocabulary lists, public datasets
 - [ ] Implement importer (`data/seed/importer.py`)
   - Parse CSV/TSV files
@@ -158,7 +158,7 @@
 ### 5.1 Dictionary View
 - [ ] Create dictionary view (`gui/views/dictionary_view.py`)
 - [ ] Display all words in table/list
-  - Columns: English, Pronunciation, Vietnamese, Part of Speech
+  - Columns: English, Vietnamese, Part of Speech
 - [ ] Implement search functionality
   - Search by English word
   - Search by Vietnamese word

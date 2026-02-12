@@ -1,7 +1,7 @@
 """Database models for the flashcard application."""
 
 from sqlalchemy import Column, Integer, String, Float, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from datetime import datetime
 
 Base = declarative_base()
@@ -14,7 +14,6 @@ class Word(Base):
     Attributes:
         id: Primary key
         english: English word
-        pronunciation: IPA pronunciation guide
         vietnamese: Vietnamese translation
         part_of_speech: Part of speech (noun, verb, etc.)
         display_count: Number of times word was displayed
@@ -25,7 +24,6 @@ class Word(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     english = Column(String, nullable=False, index=True)
-    pronunciation = Column(String, nullable=False)
     vietnamese = Column(String, nullable=False, index=True)
     part_of_speech = Column(String, nullable=False, index=True)
     display_count = Column(Integer, default=0, nullable=False)

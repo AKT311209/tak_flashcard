@@ -1,13 +1,13 @@
 """Flashcard controller managing flashcard sessions."""
 
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, cast
 from datetime import datetime
 from tak_flashcard.constants import FlashcardMode, Direction, PenaltyType
 from tak_flashcard.core import CardSelector, ScoreManager, Timer
 from tak_flashcard.features.flashcard.service import FlashcardService
 from tak_flashcard.features.flashcard.states import FlashcardState
 from tak_flashcard.db import get_session, close_session, SessionRepository
-from tak_flashcard.db.models import Word
+from tak_flashcard.db.models import Session as SessionModel, Word
 
 
 class FlashcardController:
@@ -49,16 +49,16 @@ class FlashcardController:
         words = self.service.get_all_words()
         self.selector = CardSelector(words, difficulty)
         self.score_manager = ScoreManager(penalty_type)
-        self.timer = Timer(time_limit) if time_limit else None
+        self.timer: Optional[Timer] = Timer(time_limit) if time_limit else None
 
         self.state = FlashcardState.QUESTION
-        self.current_word = None
-        self.current_direction = None
-        self.current_question = None
-        self.current_answer = None
+        self.current_word: Optional[Word] = None
+        self.current_direction: Optional[Direction] = None
+        self.current_question: Optional[str] = None
+        self.current_answer: Optional[str] = None
         self.questions_answered = 0
         self.session_start_time = datetime.utcnow()
-        self.session_id = None
+        self.session_id: Optional[int] = None
         self.answer_shown = False
 
     def start_session(self):
@@ -78,7 +78,7 @@ class FlashcardController:
         db_session = get_session()
         session_repo = SessionRepository(db_session)
         session_obj = session_repo.create(session_data)
-        self.session_id = session_obj.id
+        self.session_id = cast(int, session_obj.id)
         close_session(db_session)
 
         self.next_question()
@@ -111,25 +111,31 @@ class FlashcardController:
         Returns:
             Dictionary with result information
         """
+        if self.current_answer is None or self.current_word is None:
+            raise RuntimeError("Unable to validate without an active question")
+
+        current_answer = self.current_answer
+        current_word = self.current_word
         is_correct = self.service.validate_answer(
-            user_answer, self.current_answer)
+            user_answer, current_answer)
 
         response_time = 0
-        if self.timer and self.timer.is_running:
-            response_time = self.time_limit - self.timer.get_remaining()
+        if self.timer and self.timer.is_running and self.time_limit is not None:
+            remaining = self.timer.get_remaining()
+            response_time = self.time_limit - remaining
 
         if is_correct:
             points = self.score_manager.answer_correct(response_time)
         else:
             points = self.score_manager.answer_incorrect()
 
-        self.service.update_word_stats(self.current_word, is_correct)
+        self.service.update_word_stats(current_word, is_correct)
         self.questions_answered += 1
         self.state = FlashcardState.RESULT
 
         return {
             'is_correct': is_correct,
-            'correct_answer': self.current_answer,
+            'correct_answer': current_answer,
             'points': points,
             'word': self.current_word,
             'statistics': self.score_manager.get_statistics()
@@ -166,10 +172,10 @@ class FlashcardController:
             True if session should end
         """
         if self.mode == FlashcardMode.TESTING:
-            return self.questions_answered >= self.question_count
+            return self.question_count is not None and self.questions_answered >= self.question_count
 
         if self.mode == FlashcardMode.SPEED:
-            return self.timer and self.timer.is_expired()
+            return self.timer.is_expired() if self.timer else False
 
         return False
 
@@ -185,11 +191,11 @@ class FlashcardController:
 
         stats = self.score_manager.get_statistics()
 
-        if self.session_id:
+        if self.session_id is not None:
             db_session = get_session()
             session_repo = SessionRepository(db_session)
             session_obj = db_session.query(
-                "Session").filter_by(id=self.session_id).first()
+                SessionModel).filter_by(id=self.session_id).first()
 
             if session_obj:
                 session_repo.update(session_obj, {
@@ -232,7 +238,6 @@ class FlashcardController:
 
         if self.current_word:
             state_info['word_info'] = {
-                'pronunciation': self.current_word.pronunciation,
                 'part_of_speech': self.current_word.part_of_speech
             }
 

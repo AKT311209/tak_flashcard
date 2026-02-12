@@ -2,16 +2,27 @@
 
 import dearpygui.dearpygui as dpg
 import threading
+from typing import Optional
 from tak_flashcard.gui.components.toolbar import create_toolbar
 from tak_flashcard.gui.components.option_panels import FlashcardOptionsPanel
 from tak_flashcard.gui.views.results_view import show_results_view
 from tak_flashcard.features.flashcard import FlashcardController, FlashcardState
 from tak_flashcard.constants import FlashcardMode
+from tak_flashcard.utils.formatters import normalize_unicode
 
 
-current_controller = None
+current_controller: Optional[FlashcardController] = None
 timer_thread = None
 stop_timer = False
+
+
+def _get_flashcard_controller() -> FlashcardController:
+    """Return the active flashcard controller instance."""
+
+    if current_controller is None:
+        raise RuntimeError("Flashcard session is not active")
+
+    return current_controller
 
 
 def show_flashcard_config_view():
@@ -91,6 +102,8 @@ def show_flashcard_session_view():
     if dpg.does_item_exist("flashcard_session_window"):
         dpg.delete_item("flashcard_session_window")
 
+    controller = _get_flashcard_controller()
+
     viewport_width = dpg.get_viewport_width()
     viewport_height = dpg.get_viewport_height()
 
@@ -116,7 +129,7 @@ def show_flashcard_session_view():
         dpg.add_separator()
         dpg.add_spacer(height=10)
 
-        state = current_controller.get_current_state()
+        state = controller.get_current_state()
 
         with dpg.group(horizontal=True):
             dpg.add_text("Score: ", color=(100, 200, 255))
@@ -136,7 +149,6 @@ def show_flashcard_session_view():
             dpg.add_spacer(height=40)
             dpg.add_text("", tag="question_text", wrap=600)
             dpg.add_spacer(height=10)
-            dpg.add_text("", tag="pronunciation_text", color=(150, 150, 150))
             dpg.add_text("", tag="pos_text", color=(150, 150, 150))
 
         dpg.add_spacer(height=20)
@@ -183,7 +195,7 @@ def show_flashcard_session_view():
 
     _update_question_display()
 
-    if current_controller.mode == FlashcardMode.SPEED:
+    if controller.mode == FlashcardMode.SPEED:
         stop_timer = False
         timer_thread = threading.Thread(target=_update_timer, daemon=True)
         timer_thread.start()
@@ -194,8 +206,17 @@ def _update_timer():
     global stop_timer
 
     import time
-    while not stop_timer and current_controller.timer:
-        remaining = current_controller.timer.get_remaining()
+    while not stop_timer:
+        try:
+            controller = _get_flashcard_controller()
+        except RuntimeError:
+            break
+
+        timer = controller.timer
+        if timer is None:
+            break
+
+        remaining = timer.get_remaining()
 
         if remaining <= 0:
             dpg.set_value("timer_text", "0:00")
@@ -211,7 +232,7 @@ def _update_timer():
 
 def _update_question_display():
     """Update the question display."""
-    state = current_controller.get_current_state()
+    state = _get_flashcard_controller().get_current_state()
 
     if state['state'] == FlashcardState.COMPLETED:
         _end_session()
@@ -220,10 +241,8 @@ def _update_question_display():
     dpg.set_value("question_text", f"     {state['question']}")
 
     if 'word_info' in state:
-        dpg.set_value("pronunciation_text",
-                      f"     /{state['word_info']['pronunciation']}/")
         dpg.set_value(
-            "pos_text", f"     ({state['word_info']['part_of_speech']})")
+            "pos_text", f"     ({normalize_unicode(state['word_info']['part_of_speech'])})")
 
     stats = state['statistics']
     dpg.set_value("score_text", str(stats['score']))
@@ -250,7 +269,7 @@ def _submit_answer():
         dpg.set_value("result_text", "Please enter an answer!")
         return
 
-    result = current_controller.submit_answer(answer)
+    result = _get_flashcard_controller().submit_answer(answer)
 
     if result['is_correct']:
         dpg.set_value(
@@ -272,7 +291,7 @@ def _submit_answer():
 
 def _show_answer():
     """Show the answer with penalty."""
-    result = current_controller.show_answer()
+    result = _get_flashcard_controller().show_answer()
 
     if result:
         dpg.set_value("result_text", f"Answer: {result['answer']}")
@@ -287,10 +306,12 @@ def _show_answer():
 
 def _next_question():
     """Move to the next question."""
-    if current_controller.is_session_complete():
+    controller = _get_flashcard_controller()
+
+    if controller.is_session_complete():
         _end_session()
     else:
-        current_controller.next_question()
+        controller.next_question()
         _update_question_display()
 
 

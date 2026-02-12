@@ -170,7 +170,7 @@ Access the full vocabulary database:
 - **Search**: Find words by English or Vietnamese text
 - **Filter**: Filter by part of speech (noun, verb, adjective, etc.)
 - **Sort**: Sort by English, Vietnamese, or difficulty
-- **View Details**: See pronunciation and statistics for each word
+- **View Details**: See translation information and statistics for each word
 
 ---
 

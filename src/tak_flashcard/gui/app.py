@@ -3,6 +3,7 @@
 import dearpygui.dearpygui as dpg
 from tak_flashcard.config import DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT
 from tak_flashcard.features.settings import SettingsController
+from tak_flashcard.gui.fonts import apply_font_from_appearance, bind_font_from_metadata
 from tak_flashcard.gui.views.home_view import show_home_view
 
 
@@ -27,6 +28,15 @@ class Application:
             'window_height', DEFAULT_WINDOW_HEIGHT)
 
         self._setup_theme()
+
+        # load and bind a font that supports unicode characters (Vietnamese/IPA)
+        # so vocabulary text renders correctly.
+        try:
+            # register font so it's present in the font atlas; bind after setup
+            self._registered_font = apply_font_from_appearance(appearance)
+        except Exception:
+            # don't block startup if font loading fails; default font will be used
+            pass
 
         dpg.create_viewport(
             title="Tak Flashcard",
@@ -128,9 +138,17 @@ class Application:
                     dpg.mvThemeCol_HeaderActive, (60, 100, 180, 160))
         dpg.bind_theme(dark_theme)
 
+    # font loading is handled by tak_flashcard.gui.fonts.apply_font_from_appearance
+
     def run(self):
         """Run the application."""
         dpg.setup_dearpygui()
+        # bind registered font after DearPyGui setup so it takes effect
+        try:
+            if getattr(self, "_registered_font", None):
+                bind_font_from_metadata(self._registered_font)
+        except Exception:
+            pass
         dpg.show_viewport()
 
         show_home_view()

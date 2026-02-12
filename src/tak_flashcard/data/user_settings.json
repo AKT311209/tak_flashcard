@@ -1,18 +1,20 @@
 {
   "appearance": {
-    "theme": "light",
-    "font_size": "large",
-    "window_width": 1920,
+    "theme": "dark",
+    "font_size": "medium",
+    "font_path": "/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf",
+    "font_pixel_size": 23,
+    "window_width": 1919,
     "window_height": 1080
   },
   "defaults": {
     "flashcard_mode": "endless",
     "difficulty_level": 3,
-    "question_count": 20,
+    "question_count": 24,
     "time_limit": 300
   },
   "preferences": {
-    "sound_enabled": false,
+    "sound_enabled": true,
     "animation_speed": "normal"
   }
 }

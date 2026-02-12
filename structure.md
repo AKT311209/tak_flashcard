@@ -75,12 +75,11 @@ tak_flashcard/
 ### Word (Vocabulary)
 Each word in the database contains:
 1. **English Word** (string) - The English vocabulary word
-2. **Pronunciation** (string) - IPA pronunciation guide
-3. **Vietnamese Word** (string) - Vietnamese translation
-4. **Part of Speech** (string) - noun, verb, adjective, etc.
-5. **Display Count** (integer) - Number of times word was displayed
-6. **Correct Count** (integer) - Number of times answered correctly
-7. **Difficulty** (float) - Calculated from display_count and correct_count
+2. **Vietnamese Word** (string) - Vietnamese translation
+3. **Part of Speech** (string) - noun, verb, adjective, etc.
+4. **Display Count** (integer) - Number of times word was displayed
+5. **Correct Count** (integer) - Number of times answered correctly
+6. **Difficulty** (float) - Calculated from display_count and correct_count
 
 ### Session (optional)
 Store flashcard session history:

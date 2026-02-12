@@ -174,7 +174,6 @@ tak_flashcard/
 
 ### Words Table
 - `english`: English word
-- `pronunciation`: IPA pronunciation guide
 - `vietnamese`: Vietnamese translation
 - `part_of_speech`: noun, verb, adjective, etc.
 - `display_count`: Number of times shown
@@ -199,7 +198,7 @@ tak_flashcard/
 
 ### Import errors
 - Ensure the vocabulary CSV file is in the correct location
-- Format: `english,pronunciation,vietnamese,part_of_speech`
+- Format: `english,vietnamese,part_of_speech`
 - At least 1000 words required
 
 ## Contributing
@@ -325,32 +324,15 @@ PYTHONPATH=src python -m tak_flashcard.gui.app
 
 ### Importing Vocabulary
 
-You can import vocabulary from CSV or XLSX files. The file should have the following columns:
+The built-in vocabulary dataset lives at `src/tak_flashcard/data/vocab/vocab_source.csv`. If you need to refresh or replace the data, provide a CSV with the following required columns:
 
-**Required columns:**
-- `word`: English word
-- `english`: English definition
+- `english`: English word
 - `vietnamese`: Vietnamese translation
+- `part_of_speech`: noun, verb, adjective, etc.
 
-**Optional columns:**
-- `pos`: Part of speech (noun, verb, adjective, etc.)
-- `pronunciation`: Pronunciation guide (IPA)
-- `difficulty`: Difficulty level (1-5)
+The importer expects at least 1000 rows, each normalized to NFC. When the application starts, it checks whether the database has enough words and automatically imports the CSV if needed.
 
-Example CSV:
-```csv
-word,english,vietnamese,pos,difficulty
-hello,a greeting,xin chào,interjection,1
-goodbye,a farewell,tạm biệt,interjection,1
-friend,a person you know well,bạn bè,noun,1
-```
-
-Import via script:
-```bash
-python scripts/import_csv.py path/to/your/words.csv
-```
-
-Or use the Import tab in the GUI.
+You can edit the CSV manually or regenerate it from another source as long as the column order stays the same. After replacing the file, delete `src/tak_flashcard/data/flashcard.db` (if present) so the next run rebuilds the schema and data.
 
 ### Starting a Session
 
