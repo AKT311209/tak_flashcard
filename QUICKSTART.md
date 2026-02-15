@@ -34,7 +34,7 @@ When you run the application for the first time:
 - Choose "English → Vietnamese"
 - Set difficulty to 3
 - Click "Start Session"
-- Answer a few questions to test functionality
+- Answer a few questions by selecting from multiple-choice options
 
 ### 2. Test Dictionary Feature
 - Click "Dictionary" on home screen

@@ -110,8 +110,8 @@
 - [ ] Direction selection: Eng→Vn / Vn→Eng / Mixed
 - [ ] Difficulty slider: 1 (easiest) to 5 (hardest)
 - [ ] Additional settings:
-  - Question count (Testing mode)
-  - Time limit (Speed mode)
+  - Question count (Testing mode; visible only when Testing selected)
+  - Time limit (Speed mode; visible only when Speed selected)
   - Enable Show Answer (Endless/Speed)
   - Penalty type (if Show Answer enabled)
 - [ ] Add **START SESSION** action to navigate from settings view to a separate session view
@@ -120,7 +120,7 @@
 - [ ] Implement Endless controller (`features/flashcard/controller.py`)
 - [ ] Create dedicated flashcard session view (`gui/views/flashcard_view.py` → `FlashcardSessionView`)
   - Display question
-  - Input area or multiple choice
+  - Multiple-choice options (4 choices: 1 correct + 3 random distractors)
   - Submit button
   - Next button
   - Show Answer button (optional)

@@ -7,8 +7,14 @@ from typing import Optional
 from sqlalchemy.orm import Session
 
 from tak_flashcard.constants import Direction, Mode
+from tak_flashcard.core.scoring import PENALTY_POINTS
 from tak_flashcard.features.flashcard.service import FlashcardService
-from tak_flashcard.features.flashcard.states import AnswerResult, FlashcardState
+from tak_flashcard.features.flashcard.states import (
+    AnswerResult,
+    FlashcardState,
+    ShowAnswerConfig,
+    ShowAnswerOutcome,
+)
 
 
 class FlashcardController:
@@ -19,10 +25,27 @@ class FlashcardController:
 
         self.service = FlashcardService(db)
 
-    def start(self, mode: Mode, direction: Direction, difficulty: int, question_limit: Optional[int], time_limit: Optional[int]) -> FlashcardState:
+    def start(
+        self,
+        mode: Mode,
+        direction: Direction,
+        difficulty: int,
+        show_config: ShowAnswerConfig,
+        question_limit: Optional[int],
+        time_limit: Optional[int],
+        wrong_penalty: int = PENALTY_POINTS,
+    ) -> FlashcardState:
         """Start a new session with given parameters."""
 
-        return self.service.start_session(mode, direction, difficulty, question_limit, time_limit)
+        return self.service.start_session(
+            mode,
+            direction,
+            difficulty,
+            show_config,
+            question_limit,
+            time_limit,
+            wrong_penalty,
+        )
 
     def next_card(self):
         """Move to the next card and return it."""
@@ -34,10 +57,10 @@ class FlashcardController:
 
         return self.service.submit_answer(answer)
 
-    def reveal(self) -> None:
+    def reveal(self) -> ShowAnswerOutcome:
         """Reveal the answer and apply penalty."""
 
-        self.service.show_answer_penalty()
+        return self.service.show_answer_penalty()
 
     def finished(self) -> bool:
         """Return whether the session has ended."""

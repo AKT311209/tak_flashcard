@@ -12,6 +12,7 @@ from tak_flashcard.data.seed.importer import ensure_seed_data
 from tak_flashcard.db.session import SessionLocal, init_db
 from tak_flashcard.features.dictionary.service import DictionaryService
 from tak_flashcard.features.flashcard.controller import FlashcardController
+from tak_flashcard.features.flashcard.states import ShowAnswerConfig
 from tak_flashcard.gui.styles import apply_appearance_settings
 from tak_flashcard.gui.views.dictionary_view import DictionaryView
 from tak_flashcard.gui.views.flashcard_view import FlashcardSessionView, FlashcardView
@@ -50,8 +51,10 @@ class FlashcardApp(tk.Tk):
 
         self.frames["home"] = HomeView(container, self.navigate)
         self.frames["flashcard"] = FlashcardView(
-            container, self.start_flashcard_session, lambda: self.navigate(
-                "home")
+            container,
+            self.start_flashcard_session,
+            self.settings_manager.settings.defaults,
+            lambda: self.navigate("home"),
         )
         self.frames["flashcard_session"] = FlashcardSessionView(
             container, self.controller, lambda: self.navigate("flashcard")
@@ -79,6 +82,8 @@ class FlashcardApp(tk.Tk):
         difficulty: int,
         question_count: int,
         time_limit: int,
+        show_config: ShowAnswerConfig,
+        wrong_penalty: int,
     ) -> None:
         """Start a flashcard session and navigate to the dedicated session view.
 
@@ -88,12 +93,20 @@ class FlashcardApp(tk.Tk):
             difficulty: Selected difficulty from 1-5.
             question_count: Desired question count for testing mode.
             time_limit: Desired time limit for speed mode.
+            show_config: Settings for show-answer penalties.
+            wrong_penalty: Configured penalty for wrong answers.
         """
 
         session_frame = self.frames.get("flashcard_session")
         if isinstance(session_frame, FlashcardSessionView):
             session_frame.begin_session(
-                mode, direction, difficulty, question_count, time_limit
+                mode,
+                direction,
+                difficulty,
+                question_count,
+                time_limit,
+                show_config,
+                wrong_penalty,
             )
             self.navigate("flashcard_session")
 

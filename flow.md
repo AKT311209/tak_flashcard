@@ -103,6 +103,7 @@
 │                                      │
 │  ┌────────────────────────────────┐ │
 │  │ Mode-Specific Options          │ │
+│  │ (Question Count shown for Testing, Time Limit shown for Speed) │ │
 │  │                                │ │
 │  │ [Testing Mode]                 │ │
 │  │ • Question Count: [___]        │ │
@@ -158,8 +159,8 @@
            ▼                      │
 ┌─────────────────────┐           │
 │  User Input         │           │
-│  • Type answer OR   │           │
-│  • Select choice    │           │
+│  • Select one choice│           │
+│  • (4 options total)│           │
 │  • Show Answer (opt)├────┐      │
 └──────────┬──────────┘    │      │
            │               │      │
@@ -247,7 +248,7 @@ while True:
         apply_penalty(penalty_type)  # e.g., -10 points, -1 HP
         show_answer(card)
     
-    answer = get_user_input()
+    answer = get_user_selection()
     is_correct = validate_answer(answer, card)
     
     if is_correct:
@@ -280,7 +281,7 @@ while timer > 0:
         apply_time_penalty()  # e.g., -10 seconds
         show_answer(card)
     
-    answer = get_user_input()
+    answer = get_user_selection()
     response_time = current_time() - start_time
     
     is_correct = validate_answer(answer, card)
@@ -319,7 +320,7 @@ for card in cards:
     current_question += 1
     show_question(card, f"{current_question}/{total_questions}")
     
-    answer = get_user_input()  # No Show Answer option
+    answer = get_user_selection()  # No Show Answer option
     is_correct = validate_answer(answer, card)
     
     if is_correct:
@@ -344,16 +345,21 @@ show_final_results(score, results)
 
 ### 6.1 Eng→Vn
 - **Question:** Display English word
-- **Expected Answer:** Vietnamese translation
-- **Example:** "hello" → User types "xin chào"
+- **Expected Answer:** Vietnamese translation (selected from multiple choices)
+- **Choice Generation:** 1 correct Vietnamese + 3 random Vietnamese answers from other words
+- **Example:** "hello" → User selects "xin chào"
 
 ### 6.2 Vn→Eng
 - **Question:** Display Vietnamese word
-- **Expected Answer:** English word
-- **Example:** "xin chào" → User types "hello"
+- **Expected Answer:** English word (selected from multiple choices)
+- **Choice Generation:** 1 correct English + 3 random English answers from other words
+- **Example:** "xin chào" → User selects "hello"
 
 ### 6.3 Mixed (Random)
 - **Question:** Randomly choose Eng→Vn OR Vn→Eng
+- **Choice Generation:** Apply the corresponding rule for the chosen direction
+    - Eng→Vn mixed turn: 1 correct Vietnamese + 3 random other Vietnamese
+    - Vn→Eng mixed turn: 1 correct English + 3 random other English
 - **Implementation:**
   ```python
   if random.choice([True, False]):
@@ -989,7 +995,7 @@ def validate_settings(settings):
 |-------|-------|----------|
 | Import Failed | Invalid CSV format | Show error message, allow retry |
 | DB Empty | <1000 words | Force import on startup |
-| Invalid Input | User types special chars | Sanitize input, show warning |
+| Invalid Input | No choice selected before submit | Show warning and stay on current question |
 | Timer < 0 | Speed mode timeout | Auto-end session |
 
 ### 15.2 Validation Points

@@ -81,9 +81,9 @@ python -m tak_flashcard.main
    - **Mode**: Choose Endless, Speed, or Testing
    - **Direction**: Select translation direction
    - **Difficulty**: Adjust from 1 (easiest) to 5 (hardest)
-   - **Additional options**: Set question count, time limit, and penalty type
+  - **Additional options**: Set question count (Testing mode) and time limit (Speed mode), plus penalty type
 3. Click **"Start Session"**
-4. Answer questions by typing your response
+4. Answer questions by selecting one of four options (1 correct + 3 random distractors)
 5. View your results at the end
 
 ### Using the Dictionary
@@ -343,7 +343,7 @@ You can edit the CSV manually or regenerate it from another source as long as th
    - Set difficulty level (1-5)
    - Set number of questions
 4. Click **Start Session**
-5. Answer questions by typing your response
+5. Answer questions by selecting one of four options (1 correct + 3 random distractors)
 6. Use **Reveal** button if you need help (penalty applied)
 7. Review your results at the end
 

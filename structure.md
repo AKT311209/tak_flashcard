@@ -112,6 +112,7 @@ Store flashcard session history:
 ### Required Mechanisms
 1. **Flashcard** - 3 modes × 3 directions = 9 study types
 	- Settings are configured first, then **START SESSION** opens a separate active-session view
+	- Each question uses 4 multiple-choice options (1 correct + 3 random distractors from the same answer language)
 2. **Dictionary** - Full vocabulary list with search
 3. **Guide** - User manual for all features
 4. **Settings** - User preferences and appearance configuration
