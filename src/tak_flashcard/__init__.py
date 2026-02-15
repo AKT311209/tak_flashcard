@@ -1,0 +1,1 @@
+"""Tak Flashcard package initialization."""

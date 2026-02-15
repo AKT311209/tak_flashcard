@@ -61,10 +61,10 @@ A comprehensive desktop application for learning English-Vietnamese vocabulary t
 
 ## How to Run
 
-Run the application from the project root:
+Run the application (ensure `src` is on `PYTHONPATH`):
 
 ```bash
-python -m tak_flashcard.main
+PYTHONPATH=src python -m tak_flashcard.main
 ```
 
 Or from within the src directory:
