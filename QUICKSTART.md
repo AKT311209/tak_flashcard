@@ -42,9 +42,9 @@ When you run the application for the first time:
 - Filter by "verb"
 - Sort by "Difficulty"
 
-### 3. Test Settings Feature
+-### 3. Test Settings Feature
 - Click "Settings" on home screen
-- Change font size
+- Adjust font or font size (pixels)
 - Click "Save & Apply"
 
 ### 4. Test Guide Feature
@@ -109,7 +109,7 @@ rm src/tak_flashcard/data/flashcard.db
 - ✅ **Penalty System**: Score deduction, time deduction, HP limit
 - ✅ **Dictionary**: Search, filter, sort functionality
 - ✅ **Guide**: Comprehensive user manual
-- ✅ **Settings**: Theme, font, defaults, preferences
+- ✅ **Settings**: Appearance (font/colors), defaults, preferences
 - ✅ **GUI**: Tkinter interface with all views
 
 ## File Structure Verification
@@ -176,7 +176,7 @@ After confirming the application works:
 4. **Test Show Answer**: See penalty system in action
 5. **Complete a full session**: Get statistics and results
 6. **Browse dictionary**: Search and filter words
-7. **Customize settings**: Change theme, fonts, defaults
+7. **Customize settings**: Adjust font, colors, defaults
 8. **Read the guide**: Review all features and tips
 
 ## Success Criteria

@@ -507,9 +507,11 @@ elif penalty_type == "hp":
 │  ║  APPEARANCE                  ║   │
 │  ╚══════════════════════════════╝   │
 │                                      │
-│  Theme:        [Light ▼]             │
+│  Font:         [Font ▼]               │
 │                                      │
-│  Font Size:    [Medium ▼]            │
+│  Font Size:    [11 px]               │
+│                                      │
+│  Colors:       [BG / Text / Secondary]│
 │                                      │
 │  Window Size:  Width [800] Height [600]│
 │                                      │
@@ -544,14 +546,13 @@ elif penalty_type == "hp":
 ### Settings Categories
 
 #### 1. Appearance Settings
-- **Theme**: Light / Dark / Custom
-  - Changes color scheme across all views
-  - Custom allows manual color selection
-- **Font Size**: Small / Medium / Large
-  - Affects all text elements in the app
+- **Font Family**: Choose the font used across the UI
+- **Font Size (pixels)**
+    - Enter a value (8-32) that controls all text
+- **Color Palette**: Set background, text, and secondary colors via hex
 - **Window Size**: Width and Height in pixels
-  - Default: 800x600
-  - Min: 640x480, Max: 1920x1080
+    - Default: 800x600
+    - Min: 640x480, Max: 1920x1080
 
 #### 2. Default Settings
 - **Default Mode**: Endless / Speed / Testing
@@ -576,17 +577,19 @@ elif penalty_type == "hp":
 ```python
 # core/settings.py
 import json
-import os
 from pathlib import Path
 
 SETTINGS_PATH = Path("data/user_settings.json")
 
 DEFAULT_SETTINGS = {
     "appearance": {
-        "theme": "light",
-        "font_size": "medium",
-        "window_width": 800,
-        "window_height": 600
+        "font_name": "Arial",
+        "font_size_px": 11,
+        "background_color": "#ffffff",
+        "text_color": "#000000",
+        "secondary_color": "#f0f0f0",
+        "window_width": 960,
+        "window_height": 640
     },
     "defaults": {
         "flashcard_mode": "endless",
@@ -637,8 +640,8 @@ def reset_settings():
          ▼
 ┌─────────────────┐
 │ Apply Settings  │
-│ • Set theme     │
-│ • Set font size │
+│ • Apply font family & size │
+│ • Apply color palette      │
 │ • Set window    │
 │   dimensions    │
 └────────┬────────┘
@@ -715,11 +718,9 @@ def validate_settings(settings):
     errors = []
     
     # Appearance validation
-    if settings['appearance']['theme'] not in ['light', 'dark', 'custom']:
-        errors.append("Invalid theme selection")
-    
-    if settings['appearance']['font_size'] not in ['small', 'medium', 'large']:
-        errors.append("Invalid font size")
+    font_size_px = settings['appearance']['font_size_px']
+    if not (8 <= font_size_px <= 32):
+        errors.append("Font size must be between 8 and 32 pixels")
     
     width = settings['appearance']['window_width']
     height = settings['appearance']['window_height']

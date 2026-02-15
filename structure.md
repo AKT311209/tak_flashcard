@@ -123,9 +123,9 @@ Store flashcard session history:
 - Show Answer feature with penalty system
 - Penalty types: score deduction, timeout, HP limit
 
-### User Settings (Appearance & Preferences)
-- Theme/Color scheme (light/dark mode, custom colors)
-- Font size (small/medium/large)
+-### User Settings (Appearance & Preferences)
+- Font selection and pixel size controls
+- Color palette (background, text, secondary)
 - Window size (default dimensions)
 - Language preference (if multi-language support)
 - Default flashcard mode and difficulty

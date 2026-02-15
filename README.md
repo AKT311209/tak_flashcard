@@ -26,9 +26,7 @@ A comprehensive desktop application for learning English-Vietnamese vocabulary t
 - Sort by English, Vietnamese, or difficulty
 
 ### ⚙️ Customizable Settings
-- Theme customization (Light/Dark)
-- Font size adjustment
-- Window size configuration
+- Appearance customization (fonts, colors, window size)
 - Default preferences for flashcard sessions
 
 ### 🎓 Learning Features
@@ -109,7 +107,7 @@ Click **"Guide"** from the home screen for comprehensive instructions on:
 ### Adjusting Settings
 
 1. Click **"Settings"** from the home screen
-2. Customize appearance (theme, font size, window size)
+2. Customize appearance (font, pixel size, colors, window size)
 3. Set default preferences for flashcard sessions
 4. Enable/disable sound effects and animations
 5. Click **"Save & Apply"** to save changes

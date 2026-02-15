@@ -25,11 +25,6 @@ class SettingsView(ttk.Frame):
             "Arial", 12, "bold")).pack(anchor=tk.W)
         appearance_frame = ttk.Frame(self)
 
-        # Theme selector
-        ttk.Label(appearance_frame, text="Theme (light/dark)").pack(anchor=tk.W)
-        self.theme_var = tk.StringVar(value=self.settings.appearance.theme)
-        ttk.Entry(appearance_frame, textvariable=self.theme_var).pack(fill="x")
-
         # Font selector
         ttk.Label(appearance_frame, text="Font").pack(anchor=tk.W, pady=(4, 0))
         self.font_var = tk.StringVar(value=self.settings.appearance.font_name)
@@ -70,13 +65,6 @@ class SettingsView(ttk.Frame):
         ttk.Entry(appearance_frame,
                   textvariable=self.secondary_color_var).pack(fill="x")
 
-        # Legacy font size selector
-        ttk.Label(appearance_frame,
-                  text="Font size (small/medium/large)").pack(anchor=tk.W, pady=4)
-        self.font_legacy_var = tk.StringVar(
-            value=self.settings.appearance.font_size)
-        ttk.Entry(appearance_frame,
-                  textvariable=self.font_legacy_var).pack(fill="x")
         appearance_frame.pack(fill="x", pady=6)
 
         ttk.Label(self, text="Defaults", font=(
@@ -108,14 +96,12 @@ class SettingsView(ttk.Frame):
     def save(self) -> None:
         """Persist updated settings to disk and apply immediately."""
 
-        self.settings.appearance.theme = self.theme_var.get() or "light"
         self.settings.appearance.font_name = self.font_var.get() or "Arial"
         self.settings.appearance.font_size_px = int(
             self.font_size_px_var.get() or 11)
         self.settings.appearance.background_color = self.bg_color_var.get() or "#ffffff"
         self.settings.appearance.text_color = self.text_color_var.get() or "#000000"
         self.settings.appearance.secondary_color = self.secondary_color_var.get() or "#f0f0f0"
-        self.settings.appearance.font_size = self.font_legacy_var.get() or "medium"
         self.settings.defaults.difficulty_level = int(
             self.difficulty_var.get())
         self.settings.defaults.question_count = int(self.question_var.get())

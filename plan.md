@@ -215,10 +215,13 @@
   ```json
   {
     "appearance": {
-      "theme": "light",
-      "font_size": "medium",
-      "window_width": 800,
-      "window_height": 600
+      "font_name": "Arial",
+      "font_size_px": 11,
+      "background_color": "#ffffff",
+      "text_color": "#000000",
+      "secondary_color": "#f0f0f0",
+      "window_width": 960,
+      "window_height": 640
     },
     "defaults": {
       "flashcard_mode": "endless",
@@ -236,8 +239,9 @@
 ### 6.5.2 Settings View
 - [ ] Create settings view (`gui/views/settings_view.py`)
 - [ ] Implement appearance settings section
-  - Theme selector (Light/Dark/Custom)
-  - Font size slider/dropdown
+  - Font selector (choose font family)
+  - Font size input (pixels)
+  - Color inputs for background/text/secondary elements
   - Window size inputs
 - [ ] Implement default preferences section
   - Default flashcard mode
@@ -251,8 +255,7 @@
 - [ ] Add Back button to return to home
 
 ### 6.5.3 Settings Integration
-- [ ] Apply theme settings to all views
-- [ ] Apply font size to all text elements
+- [ ] Apply appearance fonts and colors to all views
 - [ ] Load default values in Flashcard configuration
 - [ ] Persist settings on app close
 - [ ] Load settings on app start
