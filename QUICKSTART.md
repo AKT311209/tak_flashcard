@@ -110,7 +110,7 @@ rm src/tak_flashcard/data/flashcard.db
 - ✅ **Dictionary**: Search, filter, sort functionality
 - ✅ **Guide**: Comprehensive user manual
 - ✅ **Settings**: Theme, font, defaults, preferences
-- ✅ **GUI**: DearPyGui interface with all views
+- ✅ **GUI**: Tkinter interface with all views
 
 ## File Structure Verification
 

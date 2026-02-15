@@ -44,9 +44,9 @@ tak_flashcard/
 │       │       └── content.py      # Static guide content│       │   └── settings/
 │       │       ├── controller.py   # Settings controller
 │       │       └── service.py      # Settings logic│       │
-│       ├── gui/                    # GUI layer (DearPyGui)
-│       │   ├── app.py              # Initialize DearPyGui
-│       │   ├── views/              # Screen views
+│       ├── gui/                    # GUI layer (Tkinter)
+│       │   ├── app.py              # Initialize Tkinter application
+│       │   ├── views/              # Screen views (Frames)
 │       │   │   ├── home_view.py
 │       │   │   ├── flashcard_view.py
 │       │   │   ├── dictionary_view.py
@@ -94,7 +94,8 @@ Store flashcard session history:
 ## Technology Stack
 
 - **Language:** Python 3.8+
-- **GUI Framework:** DearPyGui
+- **GUI Framework:** Tkinter (built-in with Python)
+- **Themed Widgets:** ttk (tkinter.ttk)
 - **Database:** SQLite
 - **ORM:** SQLAlchemy
 - **Import Format:** CSV/TSV

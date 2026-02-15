@@ -73,11 +73,12 @@
 
 ## Phase 3: GUI Foundation (Week 3)
 
-### 3.1 DearPyGui Setup
-- [ ] Initialize DearPyGui application (`gui/app.py`)
-- [ ] Setup main window with theme
-- [ ] Create navigation system between views
+### 3.1 Tkinter Setup
+- [ ] Initialize Tkinter application (`gui/app.py`)
+- [ ] Setup main window with ttk theming
+- [ ] Create navigation system between frames/views
 - [ ] Define window layout (header, content, footer)
+- [ ] Configure grid/pack layout managers
 
 ### 3.2 Home View
 - [ ] Create home view (`gui/views/home_view.py`)
@@ -88,13 +89,15 @@
   - Settings
   - Exit
 - [ ] Display app title and brief instructions
+- [ ] Implement frame switching logic
 
 ### 3.3 Reusable Components
 - [ ] Toolbar component (`gui/components/toolbar.py`)
   - Back button
   - Home button
   - Settings button (optional)
-- [ ] Create consistent styling/theme
+- [ ] Create consistent styling with ttk.Style
+- [ ] Base frame class for common functionality
 
 ---
 
@@ -259,7 +262,8 @@
 ### 7.1 Windows Compatibility
 - [ ] Test on Windows OS
 - [ ] Verify all file paths work on Windows
-- [ ] Check DearPyGui rendering on Windows
+- [ ] Check Tkinter rendering on Windows
+- [ ] Test ttk themed widgets on Windows
 - [ ] Bundle dependencies with `requirements.txt`
 
 ### 7.2 Error Handling
@@ -310,10 +314,11 @@
 ## Dependencies (requirements.txt)
 
 ```
-dearpygui>=1.9.0
 sqlalchemy>=2.0.0
 pandas>=1.5.0
 ```
+
+**Note:** Tkinter is included with Python standard library, no separate installation required.
 
 ---
 

@@ -903,7 +903,7 @@ def validate_settings(settings):
        │             ▼
        │      ┌──────────────┐
        │      │  GUI Views   │
-       │      │  (DearPyGui) │
+       │      │  (Tkinter)   │
        │      └──────┬───────┘
        │             │
        │             ▼

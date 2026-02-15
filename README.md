@@ -1,6 +1,6 @@
 # Tak Flashcard - English-Vietnamese Vocabulary Learning App
 
-A comprehensive desktop application for learning English-Vietnamese vocabulary through interactive flashcard sessions. Built with Python and DearPyGui.
+A comprehensive desktop application for learning English-Vietnamese vocabulary through interactive flashcard sessions. Built with Python and Tkinter.
 
 ## Features
 
@@ -166,7 +166,8 @@ tak_flashcard/
 ## Technology Stack
 
 - **Python 3.8+**: Core programming language
-- **DearPyGui**: GUI framework for desktop interface
+- **Tkinter**: GUI framework for desktop interface (built-in with Python)
+- **ttk**: Themed widget set for modern UI components
 - **SQLAlchemy**: ORM for database management
 - **SQLite**: Embedded database for storing vocabulary and statistics
 
@@ -253,7 +254,7 @@ AKT311209
 tak_flashcard/
 ├── src/
 │   └── tak_flashcard/
-│       ├── gui/              # DearPyGui views and widgets
+│       ├── gui/              # Tkinter views and widgets
 │       ├── core/             # Session engine, scoring, session models
 │       ├── db/               # Database models and access layer
 │       ├── importers/        # CSV/JSON/XLSX import helpers
@@ -400,7 +401,7 @@ python scripts/seed_db.py
 - **Session Engine** (`core/session_engine.py`): Manages study sessions, scoring, and question flow
 - **Database Layer** (`db/`): SQLAlchemy models and database access
 - **Importers** (`importers/`): CSV/XLSX import functionality
-- **GUI** (`gui/`): DearPyGui interface
+- **GUI** (`gui/`): Tkinter interface with ttk themed widgets
 - **Settings** (`settings.py`): Persistent application settings
 
 ## Contributing
@@ -417,6 +418,6 @@ python scripts/seed_db.py
 ## Credits
 
 Built with:
-- [DearPyGui](https://github.com/hoffstadt/DearPyGui) - GUI framework
+- [Tkinter](https://docs.python.org/3/library/tkinter.html) - GUI framework (Python standard library)
 - [SQLAlchemy](https://www.sqlalchemy.org/) - Database ORM
 - [Pandas](https://pandas.pydata.org/) - Data processing
