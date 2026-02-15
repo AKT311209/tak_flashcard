@@ -1,4 +1,4 @@
-1. ALWAYS read plan.md, flow.md and structure.md before writing any code. These files contain the implementation plan, application flows, and project structure which are essential for understanding the context and requirements of the project.
+1. ALWAYS read plan.md, flow.md and structure.md in /docs before writing any code. These files contain the implementation plan, application flows, and project structure which are essential for understanding the context and requirements of the project.
 2. ONLY add comments to explain the code, do not add comments describing what you have done, what you are doing and what you have changed.
 3. DO NOT include any test code, debugging statements, or temporary code that is not part of the final implementation. The code should be clean and production-ready.
 4. All functions and classes must have docstrings that explain their purpose, parameters, and return values. This is crucial for maintainability and readability of the code.
