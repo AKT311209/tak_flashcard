@@ -21,6 +21,11 @@ class AppearanceSettings:
     font_size: str = "medium"
     window_width: int = 960
     window_height: int = 640
+    font_name: str = "Arial"
+    font_size_px: int = 11
+    background_color: str = "#ffffff"
+    text_color: str = "#000000"
+    secondary_color: str = "#f0f0f0"
 
 
 @dataclass
@@ -78,6 +83,13 @@ class Settings:
             font_size=appearance_payload.get("font_size", "medium"),
             window_width=appearance_payload.get("window_width", 960),
             window_height=appearance_payload.get("window_height", 640),
+            font_name=appearance_payload.get("font_name", "Arial"),
+            font_size_px=int(appearance_payload.get("font_size_px", 11)),
+            background_color=appearance_payload.get(
+                "background_color", "#ffffff"),
+            text_color=appearance_payload.get("text_color", "#000000"),
+            secondary_color=appearance_payload.get(
+                "secondary_color", "#f0f0f0"),
         )
         defaults = DefaultPreferences(
             flashcard_mode=Mode(defaults_payload.get(

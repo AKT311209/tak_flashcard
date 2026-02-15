@@ -6,11 +6,12 @@ import tkinter as tk
 from tkinter import ttk
 
 from tak_flashcard.config import APP_NAME, WINDOW_HEIGHT, WINDOW_WIDTH, ensure_data_dirs
-from tak_flashcard.core.settings import SettingsManager
+from tak_flashcard.core.settings import Settings, SettingsManager
 from tak_flashcard.data.seed.importer import ensure_seed_data
 from tak_flashcard.db.session import SessionLocal, init_db
 from tak_flashcard.features.dictionary.service import DictionaryService
 from tak_flashcard.features.flashcard.controller import FlashcardController
+from tak_flashcard.gui.styles import apply_appearance_settings
 from tak_flashcard.gui.views.dictionary_view import DictionaryView
 from tak_flashcard.gui.views.flashcard_view import FlashcardView
 from tak_flashcard.gui.views.guide_view import GuideView
@@ -28,13 +29,16 @@ class FlashcardApp(tk.Tk):
         ensure_data_dirs()
         self.title(APP_NAME)
         self.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
-        style = ttk.Style(self)
-        style.theme_use("clam")
+        self.style = ttk.Style(self)
+        self.style.theme_use("clam")
 
         init_db()
         self.db = SessionLocal()
         ensure_seed_data(self.db)
         self.settings_manager = SettingsManager()
+
+        apply_appearance_settings(
+            self.style, self.settings_manager.settings.appearance)
 
         self.controller = FlashcardController(self.db)
         self.dictionary_service = DictionaryService(self.db)
@@ -51,12 +55,16 @@ class FlashcardApp(tk.Tk):
         self.frames["guide"] = GuideView(
             container, lambda: self.navigate("home"))
         self.frames["settings"] = SettingsView(
-            container, self.settings_manager, lambda: self.navigate("home"))
+            container, self.settings_manager, lambda: self.navigate("home"), self.apply_appearance)
 
         for frame in self.frames.values():
             frame.grid(row=0, column=0, sticky="nsew")
 
         self.navigate("home")
+
+    def apply_appearance(self, settings: Settings) -> None:
+        """Apply appearance settings to the application immediately."""
+        apply_appearance_settings(self.style, settings.appearance)
 
     def navigate(self, key: str) -> None:
         """Show the requested frame or exit."""

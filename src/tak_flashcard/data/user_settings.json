@@ -3,7 +3,12 @@
     "theme": "dark",
     "font_size": "large",
     "window_width": 960,
-    "window_height": 640
+    "window_height": 640,
+    "font_name": "Hack",
+    "font_size_px": 12,
+    "background_color": "#ffffff",
+    "text_color": "#000000",
+    "secondary_color": "#f0f0f0"
   },
   "defaults": {
     "flashcard_mode": "endless",
