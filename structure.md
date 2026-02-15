@@ -48,7 +48,7 @@ tak_flashcard/
 │       │   ├── app.py              # Initialize Tkinter application
 │       │   ├── views/              # Screen views (Frames)
 │       │   │   ├── home_view.py
-│       │   │   ├── flashcard_view.py
+│       │   │   ├── flashcard_view.py      # Flashcard settings + separate session frame class
 │       │   │   ├── dictionary_view.py
 │       │   │   ├── guide_view.py
 │       │   │   ├── settings_view.py
@@ -111,6 +111,7 @@ Store flashcard session history:
 
 ### Required Mechanisms
 1. **Flashcard** - 3 modes × 3 directions = 9 study types
+	- Settings are configured first, then **START SESSION** opens a separate active-session view
 2. **Dictionary** - Full vocabulary list with search
 3. **Guide** - User manual for all features
 4. **Settings** - User preferences and appearance configuration

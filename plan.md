@@ -105,6 +105,7 @@
 
 ### 4.1 Configuration Panel
 - [ ] Create option panel (`gui/components/option_panels.py`)
+- [ ] Keep flashcard settings in dedicated configuration view (`gui/views/flashcard_view.py`)
 - [ ] Mode selection: Endless / Speed / Testing
 - [ ] Direction selection: Eng→Vn / Vn→Eng / Mixed
 - [ ] Difficulty slider: 1 (easiest) to 5 (hardest)
@@ -113,10 +114,11 @@
   - Time limit (Speed mode)
   - Enable Show Answer (Endless/Speed)
   - Penalty type (if Show Answer enabled)
+- [ ] Add **START SESSION** action to navigate from settings view to a separate session view
 
 ### 4.2 Endless Mode
 - [ ] Implement Endless controller (`features/flashcard/controller.py`)
-- [ ] Create flashcard view (`gui/views/flashcard_view.py`)
+- [ ] Create dedicated flashcard session view (`gui/views/flashcard_view.py` → `FlashcardSessionView`)
   - Display question
   - Input area or multiple choice
   - Submit button

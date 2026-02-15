@@ -85,11 +85,11 @@
 
 ---
 
-## 3. Flashcard Configuration Flow
+## 3. Flashcard Settings Flow
 
 ```
 ┌──────────────────────────────────────┐
-│   Flashcard Configuration            │
+│   Flashcard Settings                 │
 │                                      │
 │  Select Mode:                        │
 │  ◉ Endless  ○ Speed  ○ Testing      │
@@ -117,11 +117,11 @@
 │  │   - Penalty: ▼ Score Deduction │ │
 │  └────────────────────────────────┘ │
 │                                      │
-│  [Start]  [Back]                     │
+│  [START SESSION]  [Back]             │
 └──────────────────────────────────────┘
            │
            ▼
-      Start Session
+    Flashcard Session View
 ```
 
 ---
@@ -842,8 +842,8 @@ def validate_settings(settings):
             │               │               │               │
             ▼               ▼               ▼               ▼
     ┌───────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐
-    │ Flashcard │   │Dictionary│   │  Guide   │   │ Settings │
-    │  Config   │   │   View   │   │   View   │   │   View   │
+        │ Flashcard │   │Dictionary│   │  Guide   │   │ Settings │
+        │ Settings  │   │   View   │   │   View   │   │   View   │
     └─────┬─────┘   └────┬─────┘   └────┬─────┘   └────┬─────┘
           │              │              │              │
           ▼              │              │              │

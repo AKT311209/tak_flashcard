@@ -6,6 +6,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from tak_flashcard.config import APP_NAME, WINDOW_HEIGHT, WINDOW_WIDTH, ensure_data_dirs
+from tak_flashcard.constants import Direction, Mode
 from tak_flashcard.core.settings import Settings, SettingsManager
 from tak_flashcard.data.seed.importer import ensure_seed_data
 from tak_flashcard.db.session import SessionLocal, init_db
@@ -13,7 +14,7 @@ from tak_flashcard.features.dictionary.service import DictionaryService
 from tak_flashcard.features.flashcard.controller import FlashcardController
 from tak_flashcard.gui.styles import apply_appearance_settings
 from tak_flashcard.gui.views.dictionary_view import DictionaryView
-from tak_flashcard.gui.views.flashcard_view import FlashcardView
+from tak_flashcard.gui.views.flashcard_view import FlashcardSessionView, FlashcardView
 from tak_flashcard.gui.views.guide_view import GuideView
 from tak_flashcard.gui.views.home_view import HomeView
 from tak_flashcard.gui.views.settings_view import SettingsView
@@ -45,11 +46,16 @@ class FlashcardApp(tk.Tk):
 
         container = ttk.Frame(self)
         container.pack(fill="both", expand=True)
-        self.frames = {}
+        self.frames: dict[str, ttk.Frame] = {}
 
         self.frames["home"] = HomeView(container, self.navigate)
         self.frames["flashcard"] = FlashcardView(
-            container, self.controller, lambda: self.navigate("home"))
+            container, self.start_flashcard_session, lambda: self.navigate(
+                "home")
+        )
+        self.frames["flashcard_session"] = FlashcardSessionView(
+            container, self.controller, lambda: self.navigate("flashcard")
+        )
         self.frames["dictionary"] = DictionaryView(
             container, self.dictionary_service, lambda: self.navigate("home"))
         self.frames["guide"] = GuideView(
@@ -65,6 +71,31 @@ class FlashcardApp(tk.Tk):
     def apply_appearance(self, settings: Settings) -> None:
         """Apply appearance settings to the application immediately."""
         apply_appearance_settings(self.style, settings.appearance)
+
+    def start_flashcard_session(
+        self,
+        mode: Mode,
+        direction: Direction,
+        difficulty: int,
+        question_count: int,
+        time_limit: int,
+    ) -> None:
+        """Start a flashcard session and navigate to the dedicated session view.
+
+        Parameters:
+            mode: Selected study mode.
+            direction: Selected translation direction.
+            difficulty: Selected difficulty from 1-5.
+            question_count: Desired question count for testing mode.
+            time_limit: Desired time limit for speed mode.
+        """
+
+        session_frame = self.frames.get("flashcard_session")
+        if isinstance(session_frame, FlashcardSessionView):
+            session_frame.begin_session(
+                mode, direction, difficulty, question_count, time_limit
+            )
+            self.navigate("flashcard_session")
 
     def navigate(self, key: str) -> None:
         """Show the requested frame or exit."""
