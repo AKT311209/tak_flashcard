@@ -67,21 +67,6 @@ class SettingsView(ttk.Frame):
 
         appearance_frame.pack(fill="x", pady=6)
 
-        ttk.Label(self, text="Defaults", font=(
-            "Arial", 12, "bold")).pack(anchor=tk.W)
-        defaults_frame = ttk.Frame(self)
-        self.difficulty_var = tk.IntVar(
-            value=self.settings.defaults.difficulty_level)
-        ttk.Label(defaults_frame, text="Default difficulty 1-5").pack(anchor=tk.W)
-        ttk.Scale(defaults_frame, from_=1, to=5,
-                  variable=self.difficulty_var, orient=tk.HORIZONTAL).pack(fill="x")
-        self.question_var = tk.IntVar(
-            value=self.settings.defaults.question_count)
-        ttk.Label(defaults_frame, text="Default question count").pack(
-            anchor=tk.W, pady=4)
-        ttk.Entry(defaults_frame, textvariable=self.question_var).pack(fill="x")
-        defaults_frame.pack(fill="x", pady=6)
-
         btn_frame = ttk.Frame(self)
         ttk.Button(btn_frame, text="Save", command=self.save).pack(
             side=tk.LEFT, padx=4)
@@ -102,9 +87,6 @@ class SettingsView(ttk.Frame):
         self.settings.appearance.background_color = self.bg_color_var.get() or "#ffffff"
         self.settings.appearance.text_color = self.text_color_var.get() or "#000000"
         self.settings.appearance.secondary_color = self.secondary_color_var.get() or "#f0f0f0"
-        self.settings.defaults.difficulty_level = int(
-            self.difficulty_var.get())
-        self.settings.defaults.question_count = int(self.question_var.get())
         self.manager.save(self.settings)
         self.status.set("Saved settings")
 

@@ -7,7 +7,7 @@
     "font_name": "Monaspace Neon",
     "font_size_px": 12,
     "background_color": "#ffffff",
-    "text_color": "#000000",
+    "text_color": "#111111",
     "secondary_color": "#f0f0f0"
   },
   "defaults": {

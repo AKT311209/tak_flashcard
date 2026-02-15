@@ -53,7 +53,6 @@ class FlashcardApp(tk.Tk):
         self.frames["flashcard"] = FlashcardView(
             container,
             self.start_flashcard_session,
-            self.settings_manager.settings.defaults,
             lambda: self.navigate("home"),
         )
         self.frames["flashcard_session"] = FlashcardSessionView(

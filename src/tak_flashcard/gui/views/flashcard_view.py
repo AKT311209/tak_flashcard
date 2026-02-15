@@ -6,9 +6,13 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Callable, Optional
 
-from tak_flashcard.constants import Direction, Mode
+from tak_flashcard.constants import (
+    DEFAULT_QUESTION_COUNT,
+    DEFAULT_TIME_LIMIT,
+    Direction,
+    Mode,
+)
 from tak_flashcard.core.scheduler import CountdownTimer
-from tak_flashcard.core.settings import DefaultPreferences
 from tak_flashcard.features.flashcard.controller import FlashcardController
 from tak_flashcard.features.flashcard.states import ShowAnswerConfig, ShowAnswerOutcome
 from tak_flashcard.gui.components.flashcard_card import FlashcardCard
@@ -24,7 +28,6 @@ class FlashcardView(ttk.Frame):
         on_start_session: Callable[
             [Mode, Direction, int, int, int, ShowAnswerConfig, int], None
         ],
-        defaults: DefaultPreferences,
         on_back: Callable[[], None],
     ):
         """Initialize the flashcard settings view and navigation callbacks.
@@ -40,8 +43,8 @@ class FlashcardView(ttk.Frame):
         self.on_back = on_back
         self.options = FlashcardOptions(
             self,
-            default_question_count=defaults.question_count,
-            default_time_limit=defaults.time_limit,
+            default_question_count=DEFAULT_QUESTION_COUNT,
+            default_time_limit=DEFAULT_TIME_LIMIT,
         )
         self.options.pack(fill="x", pady=6)
 
@@ -57,14 +60,15 @@ class FlashcardView(ttk.Frame):
             side=tk.LEFT, padx=4
         )
         ttk.Button(controls, text="Back", command=self.on_back).pack(
-            side=tk.LEFT, padx=4)
+            side=tk.LEFT, padx=4
+        )
         controls.pack(pady=6)
 
         self.status_var = tk.StringVar(value="Ready to start")
         ttk.Label(self, textvariable=self.status_var).pack(anchor=tk.W)
 
     def start_session(self) -> None:
-        """Start a new flashcard session using current options."""
+        """Start a new flashcard session using the configured options."""
 
         (
             mode,
@@ -126,13 +130,15 @@ class FlashcardSessionView(ttk.Frame):
         self.controller = controller
         self.on_back_to_settings = on_back_to_settings
         self.timer_var = tk.StringVar(value="")
-        self.timer_label = ttk.Label(self, textvariable=self.timer_var,
-                                     font=("Arial", 11, "bold"))
+        self.timer_label = ttk.Label(
+            self, textvariable=self.timer_var, font=("Arial", 11, "bold")
+        )
         self.timer: CountdownTimer | None = None
         self._timer_after_id: Optional[str] = None
 
-        self.card = FlashcardCard(self, self.submit_answer,
-                                  self.show_answer, self.next_card)
+        self.card = FlashcardCard(
+            self, self.submit_answer, self.show_answer, self.next_card
+        )
         self.card.pack(fill="both", expand=True, pady=6)
 
         controls = ttk.Frame(self)
@@ -156,17 +162,7 @@ class FlashcardSessionView(ttk.Frame):
         show_config: ShowAnswerConfig,
         wrong_penalty: int,
     ) -> None:
-        """Start a new session and render the first card.
-
-        Parameters:
-            mode: Selected study mode.
-            direction: Selected translation direction.
-            difficulty: Selected difficulty from 1-5.
-            question_count: User-entered question count for testing mode.
-            time_limit: User-entered time limit for speed mode.
-            show_config: Settings for show-answer penalties.
-            wrong_penalty: Configured score deduction for incorrect answers.
-        """
+        """Start a new session and render the first card."""
 
         self._stop_timer()
         q_limit: Optional[int] = question_count if mode == Mode.TESTING else None
@@ -206,18 +202,18 @@ class FlashcardSessionView(ttk.Frame):
             if state and state.current_direction
             else (state.direction if state else Direction.ENG_TO_VN)
         )
-        prompt = str(card.english) if direction == Direction.ENG_TO_VN else str(
-            card.vietnamese)
+        prompt = (
+            str(card.english)
+            if direction == Direction.ENG_TO_VN
+            else str(card.vietnamese)
+        )
         self.card.set_question(prompt)
         self.card.set_choices(state.current_choices if state else [])
         self._update_show_button_state()
+        self._resume_timer()
 
     def submit_answer(self, answer: str) -> None:
-        """Submit answer and update feedback panel.
-
-        Parameters:
-            answer: Selected answer option.
-        """
+        """Submit answer and update feedback panel."""
 
         if not answer.strip():
             self.card.set_feedback(
@@ -237,6 +233,7 @@ class FlashcardSessionView(ttk.Frame):
         self.card.set_feedback(feedback, color=color)
         self.card.prepare_for_next()
         self.card.set_show_enabled(False)
+        self._pause_timer()
         self.status_var.set(f"Score: {result.new_score}")
 
     def show_answer(self) -> None:
@@ -278,6 +275,7 @@ class FlashcardSessionView(ttk.Frame):
         self.status_var.set(f"Score: {state.score}")
         self.card.prepare_for_next()
         self._update_show_button_state()
+        self._pause_timer()
 
     def _handle_back_to_settings(self) -> None:
         """Stop the timer and return to the settings view."""
@@ -310,8 +308,8 @@ class FlashcardSessionView(ttk.Frame):
 
         self._stop_timer()
         self._show_timer_label()
-        self.timer = CountdownTimer(seconds, self._update_timer_label,
-                                    self._handle_timer_finish)
+        self.timer = CountdownTimer(
+            seconds, self._update_timer_label, self._handle_timer_finish)
         self.timer.start()
         self._schedule_timer_tick()
 
@@ -326,8 +324,9 @@ class FlashcardSessionView(ttk.Frame):
 
         if not self.timer:
             return
-        self.timer.tick()
-        if self.timer.is_running:
+        timer = self.timer
+        timer.tick()
+        if timer.is_running:
             self._timer_after_id = self.after(250, self._tick_timer)
         else:
             self._timer_after_id = None
@@ -342,6 +341,26 @@ class FlashcardSessionView(ttk.Frame):
 
         if self.timer:
             self.timer.deduct(seconds)
+
+    def _pause_timer(self) -> None:
+        """Pause timer updates while the flashcard is in feedback mode."""
+
+        if not self.timer:
+            return
+        self.timer.pause()
+        if self._timer_after_id:
+            self.after_cancel(self._timer_after_id)
+            self._timer_after_id = None
+
+    def _resume_timer(self) -> None:
+        """Resume the timer when a new question becomes active."""
+
+        if not self.timer or self.timer.is_running:
+            return
+        if self.timer.remaining <= 0:
+            return
+        self.timer.resume()
+        self._schedule_timer_tick()
 
     def _handle_timer_finish(self) -> None:
         """Respond to the timer reaching zero seconds."""

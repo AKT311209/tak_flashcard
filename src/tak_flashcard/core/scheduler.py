@@ -31,6 +31,13 @@ class CountdownTimer:
 
         self._running = False
 
+    def pause(self) -> None:
+        """Pause the countdown without resetting remaining time."""
+
+        if not self._running:
+            return
+        self._running = False
+
     def tick(self) -> None:
         """Advance the timer; intended to be called by the UI loop."""
 
@@ -44,6 +51,15 @@ class CountdownTimer:
         if self.remaining <= 0:
             self._running = False
             self._finish_callback()
+
+    def resume(self) -> None:
+        """Resume the countdown if time remains and the timer is paused."""
+
+        if self._running or self.remaining <= 0:
+            return
+        self._running = True
+        self._last_tick = time.time()
+        self._tick_callback(int(self.remaining))
 
     def deduct(self, seconds: int) -> None:
         """Subtract the specified number of seconds from the timer."""
