@@ -54,3 +54,9 @@ Thumbs.db
 # Environment variables
 .env
 .env.local
+
+# Vocabulary data
+src/tak_flashcard/data/vocab/
+
+# Database files
+src/tak_flashcard/db/
