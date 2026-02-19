@@ -85,9 +85,6 @@ class FlashcardView(ttk.Frame):
             time_penalty,
             wrong_answer_penalty,
         ) = self.options.values()
-        self.status_var.set(
-            f"Starting {mode.name.title()} | {direction.name} | Difficulty {difficulty}"
-        )
         show_config = ShowAnswerConfig(
             enabled=mode != Mode.TESTING,
             score_penalty=max(score_penalty, 0),
@@ -305,7 +302,8 @@ class FlashcardSessionView(ttk.Frame):
             return
         if state.mode == Mode.SPEED:
             if self.timer is not None:
-                state.time_used = (state.time_limit or 0) - int(self.timer.remaining)
+                state.time_used = (state.time_limit or 0) - \
+                    int(self.timer.remaining)
             elif state.time_limit is not None and state.finished:
                 state.time_used = state.time_limit
 

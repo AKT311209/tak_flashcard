@@ -59,6 +59,9 @@ class SessionSummary:
         score: Final session score.
         time_used: Seconds of active play time (Speed mode only; None otherwise).
         show_used: Number of times Show Answer was used.
+        difficulty: Difficulty level that drove the session.
+        show_limit_total: Maximum Show Answer uses enforced by the "limit uses"
+            penalty (None if unlimited or not applicable).
     """
 
     mode: Mode
@@ -68,6 +71,8 @@ class SessionSummary:
     score: int
     time_used: Optional[int]
     show_used: int
+    difficulty: int
+    show_limit_total: Optional[int] = None
 
 
 @dataclass

@@ -66,8 +66,17 @@ class FlashcardOptions(ttk.Frame):
         dir_frame.grid(row=0, column=1, sticky="nsew", padx=6, pady=4)
 
         diff_frame = ttk.LabelFrame(self, text="Difficulty")
-        ttk.Scale(diff_frame, from_=min(DIFFICULTY_LEVELS), to=max(DIFFICULTY_LEVELS),
-                  variable=self.difficulty, orient=tk.HORIZONTAL).pack(fill="x", padx=6, pady=6)
+        self.difficulty_scale = tk.Scale(
+            diff_frame,
+            from_=min(DIFFICULTY_LEVELS),
+            to=max(DIFFICULTY_LEVELS),
+            variable=self.difficulty,
+            orient=tk.HORIZONTAL,
+            resolution=1,
+            tickinterval=1,
+            showvalue=False,
+        )
+        self.difficulty_scale.pack(fill="x", padx=6, pady=6)
         ttk.Label(diff_frame, textvariable=self.difficulty).pack()
         diff_frame.grid(row=1, column=0, sticky="nsew", padx=6, pady=4)
 

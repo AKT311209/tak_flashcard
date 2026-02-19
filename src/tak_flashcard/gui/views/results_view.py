@@ -63,8 +63,10 @@ class ResultsView(ttk.Frame):
 
         self._correct_var = tk.StringVar(value="")
         self._score_var = tk.StringVar(value="")
+        self._difficulty_var = tk.StringVar(value="")
         self._time_var = tk.StringVar(value="")
         self._show_var = tk.StringVar(value="")
+        self._show_limit_var = tk.StringVar(value="")
 
         self._correct_label = ttk.Label(
             stats_frame,
@@ -73,12 +75,26 @@ class ResultsView(ttk.Frame):
         )
         self._correct_label.pack(anchor=tk.W, pady=4)
 
+        score_row = ttk.Frame(stats_frame)
         self._score_label = ttk.Label(
-            stats_frame,
+            score_row,
             textvariable=self._score_var,
             font=("Arial", 13),
         )
-        self._score_label.pack(anchor=tk.W, pady=4)
+        self._score_label.pack(side=tk.LEFT)
+        self._show_limit_label = ttk.Label(
+            score_row,
+            textvariable=self._show_limit_var,
+            font=("Arial", 12),
+        )
+        score_row.pack(anchor=tk.W, pady=4)
+
+        self._difficulty_label = ttk.Label(
+            stats_frame,
+            textvariable=self._difficulty_var,
+            font=("Arial", 13),
+        )
+        self._difficulty_label.pack(anchor=tk.W, pady=4)
 
         self._time_label = ttk.Label(
             stats_frame,
@@ -118,6 +134,20 @@ class ResultsView(ttk.Frame):
             f"Correct:          {summary.correct} / {summary.asked}  ({pct})"
         )
         self._score_var.set(f"Score:            {summary.score}")
+        self._difficulty_var.set(f"Difficulty:       {summary.difficulty}")
+        limit_active = (
+            summary.show_limit_total is not None
+            and summary.mode in (Mode.ENDLESS, Mode.SPEED)
+        )
+        if limit_active:
+            self._show_limit_var.set(
+                f"Show uses: {summary.show_used}/{summary.show_limit_total}"
+            )
+            if not self._show_limit_label.winfo_ismapped():
+                self._show_limit_label.pack(side=tk.LEFT, padx=(12, 0))
+        else:
+            self._show_limit_var.set("")
+            self._show_limit_label.pack_forget()
 
         if summary.mode == Mode.SPEED and summary.time_used is not None:
             self._time_var.set(
@@ -127,7 +157,7 @@ class ResultsView(ttk.Frame):
         else:
             self._time_label.pack_forget()
 
-        if summary.mode != Mode.TESTING:
+        if summary.mode != Mode.TESTING and not limit_active:
             self._show_var.set(
                 f"Show Answer Uses: {summary.show_used}"
             )

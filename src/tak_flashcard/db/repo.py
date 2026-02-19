@@ -6,7 +6,7 @@ import random
 from collections.abc import Iterable
 from typing import Sequence, cast
 
-from sqlalchemy import func, select
+from sqlalchemy import func, insert, select
 from sqlalchemy.orm import Session
 
 from tak_flashcard.config import Direction, DIFFICULTY_LEVELS
@@ -22,7 +22,7 @@ def get_word_count(db: Session) -> int:
 def bulk_insert_words(db: Session, words: Iterable[dict[str, object]]) -> None:
     """Insert multiple words into the database."""
 
-    db.bulk_insert_mappings(Word, list(words))
+    db.execute(insert(Word), list(words))
 
 
 def list_words(db: Session) -> list[Word]:

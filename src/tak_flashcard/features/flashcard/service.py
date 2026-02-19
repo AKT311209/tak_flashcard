@@ -207,6 +207,13 @@ class FlashcardService:
             return None
         s = self.state
         percent = round(s.correct / s.answered * 100, 1) if s.answered > 0 else 0.0
+        show_limit_total: Optional[int] = None
+        if (
+            s.mode in (Mode.ENDLESS, Mode.SPEED)
+            and s.show_config.max_uses is not None
+            and s.show_config.max_uses > 0
+        ):
+            show_limit_total = s.show_config.max_uses
         return SessionSummary(
             mode=s.mode,
             correct=s.correct,
@@ -215,4 +222,6 @@ class FlashcardService:
             score=s.score,
             time_used=s.time_used,
             show_used=s.show_used,
+            difficulty=s.difficulty,
+            show_limit_total=show_limit_total,
         )
