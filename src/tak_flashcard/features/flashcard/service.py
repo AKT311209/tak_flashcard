@@ -8,7 +8,7 @@ from typing import Optional
 
 from sqlalchemy.orm import Session
 
-from tak_flashcard.constants import Direction, Mode
+from tak_flashcard.config import Direction, Mode
 from tak_flashcard.core.scoring import PENALTY_POINTS, apply_scoring
 from tak_flashcard.core.selectors import select_next_word
 from tak_flashcard.db import repo

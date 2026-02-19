@@ -118,7 +118,6 @@ rm src/tak_flashcard/data/flashcard.db
 # Check core files exist
 ls -la src/tak_flashcard/main.py
 ls -la src/tak_flashcard/config.py
-ls -la src/tak_flashcard/constants.py
 
 # Check database layer
 ls -la src/tak_flashcard/db/models.py

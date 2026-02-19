@@ -6,7 +6,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from tak_flashcard.config import APP_NAME, WINDOW_HEIGHT, WINDOW_WIDTH, ensure_data_dirs
-from tak_flashcard.constants import Direction, Mode
+from tak_flashcard.config import Direction, Mode
 from tak_flashcard.core.settings import Settings, SettingsManager
 from tak_flashcard.data.seed.importer import ensure_seed_data
 from tak_flashcard.db.session import SessionLocal, init_db

@@ -6,7 +6,7 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Callable
 
-from tak_flashcard.constants import Mode
+from tak_flashcard.config import Mode
 from tak_flashcard.features.flashcard.states import SessionSummary
 
 

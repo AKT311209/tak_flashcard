@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional
 
-from tak_flashcard.constants import Direction, Mode
+from tak_flashcard.config import Direction, Mode
 from tak_flashcard.core.scoring import PENALTY_POINTS
 from tak_flashcard.db.models import Word
 

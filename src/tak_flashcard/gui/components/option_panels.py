@@ -5,7 +5,7 @@ from __future__ import annotations
 import tkinter as tk
 from tkinter import ttk
 
-from tak_flashcard.constants import (
+from tak_flashcard.config import (
     DEFAULT_QUESTION_COUNT,
     DEFAULT_SHOW_LIMIT,
     DEFAULT_SHOW_SCORE_PENALTY,

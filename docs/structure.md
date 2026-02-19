@@ -8,8 +8,7 @@ tak_flashcard/
 │   └── tak_flashcard/
 │       ├── __init__.py
 │       ├── main.py                 # Entry point
-│       ├── config.py               # Application configuration
-│       ├── constants.py            # Enums/labels for modes, directions, difficulty
+│       ├── config.py               # Application configuration, paths, enums, and shared constants
 │       │
 │       ├── data/                   # Data storage
 │       │   ├── vocab/

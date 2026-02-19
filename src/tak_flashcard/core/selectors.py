@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Sequence
 
-from tak_flashcard.constants import Direction
+from tak_flashcard.config import Direction
 from tak_flashcard.db.models import Word
 from tak_flashcard.db.repo import choose_weighted_word
 

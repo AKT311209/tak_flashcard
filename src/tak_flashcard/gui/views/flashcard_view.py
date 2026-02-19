@@ -6,7 +6,7 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Callable, Optional
 
-from tak_flashcard.constants import (
+from tak_flashcard.config import (
     DEFAULT_QUESTION_COUNT,
     DEFAULT_TIME_LIMIT,
     Direction,

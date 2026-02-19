@@ -9,7 +9,7 @@ from typing import Sequence, cast
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from tak_flashcard.constants import Direction, DIFFICULTY_LEVELS
+from tak_flashcard.config import Direction, DIFFICULTY_LEVELS
 from tak_flashcard.db.models import Word
 
 
