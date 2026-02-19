@@ -45,6 +45,7 @@ class FlashcardApp(tk.Tk):
 
         self.controller = FlashcardController(self.db)
         self.dictionary_service = DictionaryService(self.db)
+        self._current_view: str = ""
 
         outer = ttk.Frame(self)
         outer.pack(fill="both", expand=True)
@@ -166,6 +167,63 @@ class FlashcardApp(tk.Tk):
                 frame._set_status("")
                 frame.configure_mode(get_word_count(self.db) == 0)
             frame.tkraise()
+            self._current_view = key
+            self._update_global_shortcuts()
+
+    def _update_global_shortcuts(self) -> None:
+        """Rebind root-level keyboard shortcuts for the currently active view.
+
+        All previously registered shortcuts are cleared before applying the new
+        set so there is no cross-view interference.
+        """
+
+        _events = ("<Return>", "<Escape>", "<space>",
+                   "<Key-1>", "<Key-2>", "<Key-3>", "<Key-4>")
+        for event in _events:
+            self.unbind(event)
+
+        key = self._current_view
+
+        if key == "flashcard":
+            # type: ignore[assignment]
+            fc: FlashcardView = self.frames["flashcard"]
+            self.bind("<Return>", lambda _e: fc.start_session())
+            self.bind("<Escape>", lambda _e: self.navigate("home"))
+
+        elif key == "flashcard_session":
+            # type: ignore[assignment]
+            session: FlashcardSessionView = self.frames["flashcard_session"]
+            self.bind("<Return>", lambda _e: session.on_enter_key())
+            self.bind("<space>", lambda _e: session.on_space_key())
+            self.bind("<Escape>", lambda _e: session._handle_exit_session())
+            for _i in range(1, 5):
+                self.bind(f"<Key-{_i}>", lambda _e,
+                          n=_i: session.on_number_key(n))
+
+        elif key == "dictionary":
+            # type: ignore[assignment]
+            dv: DictionaryView = self.frames["dictionary"]
+            self.bind("<Return>", lambda _e: dv.perform_search())
+            self.bind("<Escape>", lambda _e: self.navigate("home"))
+
+        elif key == "guide":
+            self.bind("<Escape>", lambda _e: self.navigate("home"))
+
+        elif key == "settings":
+            self.bind("<Escape>", lambda _e: self.navigate("home"))
+
+        elif key == "results":
+            self.bind("<Return>", lambda _e: self.navigate("flashcard"))
+            self.bind("<Escape>", lambda _e: self.navigate("home"))
+
+        elif key == "import":
+            # type: ignore[assignment]
+            import_frame: ImportView = self.frames["import"]
+            self.bind(
+                "<Escape>",
+                lambda _e: (
+                    None if import_frame._forced else self.navigate("home")),
+            )
 
     def _on_inner_configure(self, event: tk.Event) -> None:
         """Update the canvas scroll region when the inner frame resizes."""

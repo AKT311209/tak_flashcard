@@ -85,7 +85,8 @@ class FlashcardView(ttk.Frame):
             time_penalty,
             wrong_answer_penalty,
         ) = self.options.values()
-        max_uses = 0 if mode == Mode.TESTING else (show_limit if show_limit > 0 else None)
+        max_uses = 0 if mode == Mode.TESTING else (
+            show_limit if show_limit > 0 else None)
         show_config = ShowAnswerConfig(
             enabled=mode != Mode.TESTING,
             score_penalty=max(score_penalty, 0),
@@ -139,7 +140,22 @@ class FlashcardSessionView(ttk.Frame):
         self.card = FlashcardCard(
             self, self.submit_answer, self.show_answer, self.next_card
         )
-        self.card.pack(fill="both", expand=True, pady=6)
+        self.card.pack(fill="x", pady=(8, 4))
+
+        self._loading_var = tk.StringVar(value="")
+        self._loading_label = ttk.Label(
+            self, textvariable=self._loading_var, foreground="gray"
+        )
+        self._loading_label.pack(anchor=tk.W, padx=14)
+
+        spacer = ttk.Frame(self)
+        spacer.pack(fill="both", expand=True)
+
+        self.status_var = tk.StringVar(value="Session not started")
+        ttk.Label(
+            self,
+            textvariable=self.status_var,
+        ).pack(anchor=tk.W, side=tk.BOTTOM, pady=(0, 2), padx=12)
 
         controls = ttk.Frame(self)
         ttk.Button(
@@ -147,10 +163,7 @@ class FlashcardSessionView(ttk.Frame):
             text="End Session",
             command=self._handle_exit_session,
         ).pack(side=tk.LEFT, padx=4)
-        controls.pack(pady=6)
-
-        self.status_var = tk.StringVar(value="Session not started")
-        ttk.Label(self, textvariable=self.status_var).pack(anchor=tk.W)
+        controls.pack(side=tk.BOTTOM, pady=(2, 10))
 
     def begin_session(
         self,
@@ -188,8 +201,11 @@ class FlashcardSessionView(ttk.Frame):
     def next_card(self) -> None:
         """Fetch and display the next card for the current session."""
 
+        self._loading_var.set("Loading…")
+        self.update_idletasks()
         card = self.controller.next_card()
         if card is None:
+            self._loading_var.set("")
             state = self.controller.service.state
             self._stop_timer()
             if state and state.finished:
@@ -204,6 +220,7 @@ class FlashcardSessionView(ttk.Frame):
         prompt = self._prompt_for(card.english, card.vietnamese, direction)
         self.card.set_question(prompt)
         self.card.set_choices(state.current_choices if state else [])
+        self._loading_var.set("")
         self._update_show_button_state()
         self._resume_timer()
 
@@ -431,3 +448,25 @@ class FlashcardSessionView(ttk.Frame):
         """Hide the timer label when Speed mode is not active."""
 
         self.timer_label.pack_forget()
+
+    # ── keyboard handlers ─────────────────────────────────────────────────────
+
+    def on_enter_key(self) -> None:
+        """Advance to the next card when Enter is pressed and the card is awaiting next."""
+
+        if self.card.awaiting_next:
+            self.next_card()
+
+    def on_space_key(self) -> None:
+        """Trigger the Show Answer or Next button when Space is pressed."""
+
+        self.card.trigger_show_or_next()
+
+    def on_number_key(self, index: int) -> None:
+        """Select and submit the answer choice at the given 1-based position.
+
+        Parameters:
+            index: 1-based index of the answer to select (1–4).
+        """
+
+        self.card.select_choice(index)

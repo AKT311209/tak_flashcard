@@ -19,7 +19,7 @@ class FlashcardCard(ttk.Frame):
     ):
         """Create card with callbacks for answer submission, show answer, and next actions."""
 
-        super().__init__(master, padding=12)
+        super().__init__(master, padding=(12, 6))
         self._on_submit = on_submit
         self._on_show_answer = on_show_answer
         self._on_next = on_next
@@ -29,21 +29,21 @@ class FlashcardCard(ttk.Frame):
         self.choice_var = tk.StringVar(value="")
         self._default_feedback_color = "black"
         ttk.Label(self, textvariable=self.prompt_var,
-                  font=("Arial", 14)).pack(fill="x", pady=8)
+                  font=("Arial", 14)).pack(fill="x", pady=(4, 6))
         self.choice_buttons: list[ttk.Radiobutton] = []
         self.choices_frame = ttk.Frame(self)
-        self.choices_frame.pack(fill="x", pady=4)
+        self.choices_frame.pack(fill="x", pady=(0, 2))
         self.show_button = ttk.Button(
             self,
             text="Show Answer",
             command=self._handle_show_or_next,
             takefocus=0,
         )
-        self.show_button.pack(pady=6)
+        self.show_button.pack(pady=(4, 2))
         self.feedback = tk.StringVar(value="")
         self.feedback_label = tk.Label(self, textvariable=self.feedback,
                                        fg=self._default_feedback_color)
-        self.feedback_label.pack()
+        self.feedback_label.pack(pady=0)
 
     def set_question(self, text: str) -> None:
         """Update the displayed question text and prepare inputs for a new answer."""
@@ -141,3 +141,34 @@ class FlashcardCard(ttk.Frame):
             return
         state = "normal" if self._show_enabled else "disabled"
         self.show_button.config(state=state)
+
+    # ── keyboard helpers ──────────────────────────────────────────────────────
+
+    @property
+    def awaiting_next(self) -> bool:
+        """Return whether the card is waiting for the user to advance to the next question."""
+
+        return self._awaiting_next
+
+    def select_choice(self, index: int) -> None:
+        """Programmatically select and submit the answer choice at a 1-based index.
+
+        Parameters:
+            index: 1-based position of the choice to select (1–4).
+        """
+
+        if self._awaiting_next:
+            return
+        if index < 1 or index > len(self.choice_buttons):
+            return
+        button = self.choice_buttons[index - 1]
+        if str(button.cget("state")) == "disabled":
+            return
+        button.invoke()
+
+    def trigger_show_or_next(self) -> None:
+        """Trigger the Show Answer / Next button if it is currently enabled."""
+
+        if str(self.show_button.cget("state")) == "disabled":
+            return
+        self._handle_show_or_next()

@@ -51,6 +51,22 @@ When you run the application for the first time:
 - Click "Guide" on home screen
 - Scroll through the user manual
 
+## Keyboard Shortcuts
+
+| Screen | Key | Action |
+|--------|-----|--------|
+| Flashcard Config | `Enter` | Start Session |
+| Flashcard Config | `Escape` | Back to Home |
+| Flashcard Session | `1` / `2` / `3` / `4` | Select & submit answer choice |
+| Flashcard Session | `Space` | Show Answer (pre-answer) / Next card (post-answer) |
+| Flashcard Session | `Enter` | Next card (post-answer) |
+| Flashcard Session | `Escape` | End session early |
+| Dictionary | `Enter` | Search |
+| Dictionary | `Escape` | Back to Home |
+| Results | `Enter` | Play Again (back to config) |
+| Results | `Escape` | Back to Home |
+| Guide / Settings / Import | `Escape` | Back to Home |
+
 ## Expected Console Output
 
 ```
