@@ -218,19 +218,58 @@
       │         └─────────┘
       │
       ▼
-┌─────────────┐
-│  Show Final │
-│  Results    │
-└─────────────┘
+┌──────────────────────┐
+│  Session Summary     │
+│  • Correct / Total   │
+│  • % Correct         │
+│  • Score             │
+│  • Time Used (Speed) │
+│  • Show Answer Uses  │
+│    (non-Testing)     │
+└──────────────────────┘
 ```
 
 ### 4.2 End Conditions by Mode
 
 | Mode | End Condition |
 |------|---------------|
-| **Endless** | User clicks "Exit" or "Back" |
-| **Speed** | Timer reaches 0 OR User exits |
-| **Testing** | All questions answered OR User exits |
+| **Endless** | User clicks "Back to Settings" |
+| **Speed** | Timer reaches 0 OR User clicks "Back to Settings" |
+| **Testing** | All questions answered OR User clicks "Back to Settings" |
+
+In all cases the app navigates automatically to the **Session Summary** view once the session ends.
+
+### 4.3 Session Summary View
+
+```
+┌──────────────────────────────────────┐
+│         Session Summary              │
+│                                      │
+│  ┌────────────────────────────────┐  │
+│  │  Results                       │  │
+│  │                                │  │
+│  │  Correct:          X / Y (Z%)  │  │
+│  │  Score:            NNN         │  │
+│  │  Time Used:        Xm Ys       │  │ ← Speed mode only
+│  │  Show Answer Uses: N           │  │ ← hidden in Testing mode
+│  └────────────────────────────────┘  │
+│                                      │
+│  [Play Again]  [Home]                │
+└──────────────────────────────────────┘
+```
+
+**Field visibility by mode:**
+
+| Field | Endless | Speed | Testing |
+|-------|---------|-------|---------|
+| Correct / Total (%) | ✓ | ✓ | ✓ |
+| Score | ✓ | ✓ | ✓ |
+| Time Used | — | ✓ | — |
+| Show Answer Uses | ✓ | ✓ | — |
+
+**Navigation from Summary:**
+- **Play Again** → Flashcard Settings (same settings pre-filled)
+- **Home** → Home Screen
 
 ---
 
@@ -262,6 +301,8 @@ while True:
     
     if user_clicks_exit:
         break
+
+show_session_summary(correct, asked, score, show_used)
 ```
 
 ### 5.2 Speed Mode Logic
@@ -302,7 +343,8 @@ while timer > 0:
     if user_clicks_exit:
         break
 
-show_final_results(score, cards_answered)
+time_used = time_limit - remaining_time
+show_session_summary(correct, asked, score, time_used, show_used)
 ```
 
 ### 5.3 Testing Mode Logic
@@ -312,7 +354,7 @@ show_final_results(score, cards_answered)
 total_questions = QuestionCount  # e.g., 20
 current_question = 0
 score = 0
-results = []
+correct = 0
 
 cards = select_cards_weighted(total_questions, difficulty_setting, direction)
 
@@ -325,18 +367,14 @@ for card in cards:
     
     if is_correct:
         score += base_points
+        correct += 1
         card.correct_count += 1
     
     card.display_count += 1
     save_to_db(card)
-    
-    results.append({
-        'card': card,
-        'user_answer': answer,
-        'is_correct': is_correct
-    })
 
-show_final_results(score, results)
+show_session_summary(correct, total_questions, score)
+# Note: Time Used and Show Answer Uses are hidden for Testing mode
 ```
 
 ---
@@ -982,7 +1020,13 @@ def validate_settings(settings):
               ▼
         ┌──────────┐
         │  FINISH  │
-        └──────────┘
+        └────┬─────┘
+             │
+             ▼
+       ┌───────────┐
+       │  SUMMARY  │
+       │  (Results)│
+       └───────────┘
 ```
 
 ---

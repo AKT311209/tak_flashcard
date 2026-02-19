@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import random
 from collections.abc import Iterable
-from typing import Sequence
+from typing import Sequence, cast
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -81,16 +81,37 @@ def choose_weighted_word(words: Sequence[Word], difficulty_level: int, direction
                   min(DIFFICULTY_LEVELS))
     weights: list[float] = []
     for word in words:
-        base = word.difficulty or 0.5
-        if clamped <= 2:
-            weight = 1.0 - base
-        elif clamped == 3:
-            weight = 1.0
-        elif clamped == 4:
-            weight = 0.5 + base
-        else:
-            weight = 1.0 + base
+        base_value = cast(float | None, word.difficulty)
+        base = base_value if base_value is not None else 0.5
+        weight = _calculate_difficulty_weight(clamped, base)
         weights.append(max(weight, 0.01))
 
     chosen = random.choices(words, weights=weights, k=1)[0]
     return chosen
+
+
+def _calculate_difficulty_weight(level: int, base: float) -> float:
+    """Return the selection weight for a word given the difficulty level.
+
+    Uses an exponential multiplier so that each successive level increases
+    the hard-to-easy probability ratio rather than simply shifting all weights
+    up by a constant.
+
+    Level 1 (easiest): strongly favours low-difficulty words via 1/e^(2*base).
+    Level 2 (easy):    gently favours low-difficulty words via 1/e^(base).
+    Level 3 (neutral): flat weight; all words equally likely.
+    Level 4 (hard):    gently favours high-difficulty words via e^base.
+    Level 5 (hardest): strongly favours high-difficulty words via e^(2*base).
+    """
+
+    import math
+
+    if level == 1:
+        return math.exp(-2.0 * base)
+    if level == 2:
+        return math.exp(-base)
+    if level == 3:
+        return 1.0
+    if level == 4:
+        return math.exp(base)
+    return math.exp(2.0 * base)

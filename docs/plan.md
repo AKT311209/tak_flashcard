@@ -135,21 +135,33 @@
 - [ ] Implement time penalties for Show Answer
 - [ ] Auto-end when time runs out
 - [ ] Display score during session
+- [ ] Record `time_used` (time_limit − remaining) for the session summary
 
 ### 4.4 Testing/Exam Mode
 - [ ] Extend controller for Testing mode
 - [ ] Display question counter (e.g., "5/20")
 - [ ] No Show Answer option
 - [ ] Implement scoring system
-- [ ] Create results view (`gui/views/results_view.py`)
-  - Total score
-  - Correct/Wrong count
-  - Breakdown by direction
-  - Review wrong answers (optional)
-  - Retry button
-  - Back to home button
+- [ ] Navigate to Session Summary after final question
 
-### 4.5 Answer Validation
+### 4.5 Session Summary View
+- [ ] Create `SessionSummary` dataclass (`features/flashcard/states.py`)
+  - `correct`, `asked`, `percent_correct`
+  - `score`
+  - `time_used` (Speed mode only)
+  - `show_used` (Endless/Speed only)
+- [ ] Add `get_summary()` to `FlashcardService` and `FlashcardController`
+- [ ] Implement `ResultsView` (`gui/views/results_view.py`)
+  - Always show: Correct / Total (%), Score
+  - Speed mode only: Time Used (formatted as Xm Ys)
+  - Non-Testing only: Show Answer Uses
+  - **Play Again** button → Flashcard Settings view
+  - **Home** button → Home screen
+- [ ] Auto-navigate to summary:
+  - After 1.5 s delay when session ends naturally (timer expires / question limit reached)
+  - Immediately when user clicks "Back to Settings" (early exit)
+
+### 4.6 Answer Validation
 - [ ] Implement answer checking logic
   - Case-insensitive comparison
   - Trim whitespace
@@ -335,7 +347,7 @@ pandas>=1.5.0
 ✅ 9 study modes (3 flashcard modes × 3 directions)  
 ✅ Configurable difficulty, question count, time limit  
 ✅ Penalty system for Show Answer feature  
-✅ Scoring and results display for Testing mode  
+✅ Scoring and session summary for all three modes (correct %, score, time, show-answer uses)  
 ✅ Persistent user settings (appearance and preferences)
 ✅ Stable operation on Windows OS  
 ✅ Video intro ≤5 minutes demonstrating all features

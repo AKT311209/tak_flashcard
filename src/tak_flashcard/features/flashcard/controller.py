@@ -12,6 +12,7 @@ from tak_flashcard.features.flashcard.service import FlashcardService
 from tak_flashcard.features.flashcard.states import (
     AnswerResult,
     FlashcardState,
+    SessionSummary,
     ShowAnswerConfig,
     ShowAnswerOutcome,
 )
@@ -66,3 +67,8 @@ class FlashcardController:
         """Return whether the session has ended."""
 
         return self.service.is_finished()
+
+    def get_summary(self) -> Optional[SessionSummary]:
+        """Return an aggregated summary of the current or completed session."""
+
+        return self.service.get_summary()

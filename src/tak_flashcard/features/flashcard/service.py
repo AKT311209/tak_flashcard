@@ -16,6 +16,7 @@ from tak_flashcard.db.models import Word
 from tak_flashcard.features.flashcard.states import (
     AnswerResult,
     FlashcardState,
+    SessionSummary,
     ShowAnswerConfig,
     ShowAnswerOutcome,
 )
@@ -149,6 +150,7 @@ class FlashcardService:
             penalty_points=self.state.wrong_answer_penalty,
         )
         self.state.score = scoring.total
+        self.state.answered += 1
         if is_correct:
             self.state.correct += 1
         if self.state.question_limit and self.state.asked >= self.state.question_limit:
@@ -173,6 +175,7 @@ class FlashcardService:
             return ShowAnswerOutcome(False, 0, 0, 0)
         penalty = config.score_penalty
         self.state.score -= penalty
+        self.state.answered += 1
         self.state.show_used += 1
         remaining_uses = None
         if config.max_uses is not None:
@@ -191,3 +194,25 @@ class FlashcardService:
         if self.state is None:
             return True
         return bool(self.state.finished)
+
+    def get_summary(self) -> Optional[SessionSummary]:
+        """Build and return a summary of the current or completed session.
+
+        Returns:
+            A :class:`SessionSummary` populated from the current state, or
+            ``None`` if no session has been started.
+        """
+
+        if self.state is None:
+            return None
+        s = self.state
+        percent = round(s.correct / s.answered * 100, 1) if s.answered > 0 else 0.0
+        return SessionSummary(
+            mode=s.mode,
+            correct=s.correct,
+            asked=s.answered,
+            percent_correct=percent,
+            score=s.score,
+            time_used=s.time_used,
+            show_used=s.show_used,
+        )

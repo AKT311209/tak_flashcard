@@ -18,6 +18,7 @@ from tak_flashcard.gui.views.dictionary_view import DictionaryView
 from tak_flashcard.gui.views.flashcard_view import FlashcardSessionView, FlashcardView
 from tak_flashcard.gui.views.guide_view import GuideView
 from tak_flashcard.gui.views.home_view import HomeView
+from tak_flashcard.gui.views.results_view import ResultsView
 from tak_flashcard.gui.views.settings_view import SettingsView
 
 
@@ -56,7 +57,7 @@ class FlashcardApp(tk.Tk):
             lambda: self.navigate("home"),
         )
         self.frames["flashcard_session"] = FlashcardSessionView(
-            container, self.controller, lambda: self.navigate("flashcard")
+            container, self.controller, self._on_session_end
         )
         self.frames["dictionary"] = DictionaryView(
             container, self.dictionary_service, lambda: self.navigate("home"))
@@ -64,6 +65,11 @@ class FlashcardApp(tk.Tk):
             container, lambda: self.navigate("home"))
         self.frames["settings"] = SettingsView(
             container, self.settings_manager, lambda: self.navigate("home"), self.apply_appearance)
+        self.frames["results"] = ResultsView(
+            container,
+            on_back=lambda: self.navigate("flashcard"),
+            on_home=lambda: self.navigate("home"),
+        )
 
         for frame in self.frames.values():
             frame.grid(row=0, column=0, sticky="nsew")
@@ -73,6 +79,18 @@ class FlashcardApp(tk.Tk):
     def apply_appearance(self, settings: Settings) -> None:
         """Apply appearance settings to the application immediately."""
         apply_appearance_settings(self.style, settings.appearance)
+
+    def _on_session_end(self, summary) -> None:
+        """Populate the results view with the session summary and navigate to it.
+
+        Parameters:
+            summary: A :class:`SessionSummary` produced at end of session.
+        """
+
+        results_frame = self.frames.get("results")
+        if isinstance(results_frame, ResultsView):
+            results_frame.update_summary(summary)
+        self.navigate("results")
 
     def start_flashcard_session(
         self,

@@ -14,7 +14,11 @@ from tak_flashcard.constants import (
 )
 from tak_flashcard.core.scheduler import CountdownTimer
 from tak_flashcard.features.flashcard.controller import FlashcardController
-from tak_flashcard.features.flashcard.states import ShowAnswerConfig, ShowAnswerOutcome
+from tak_flashcard.features.flashcard.states import (
+    SessionSummary,
+    ShowAnswerConfig,
+    ShowAnswerOutcome,
+)
 from tak_flashcard.gui.components.flashcard_card import FlashcardCard
 from tak_flashcard.gui.components.option_panels import FlashcardOptions
 
@@ -116,19 +120,20 @@ class FlashcardSessionView(ttk.Frame):
         self,
         master: tk.Misc,
         controller: FlashcardController,
-        on_back_to_settings: Callable[[], None],
+        on_session_end: Callable[[SessionSummary], None],
     ):
         """Initialize session widgets and callbacks.
 
         Parameters:
             master: Parent Tkinter widget.
             controller: Flashcard session controller.
-            on_back_to_settings: Callback used to return to settings view.
+            on_session_end: Callback invoked with the session summary when the
+                session ends (natural completion or user exit).
         """
 
         super().__init__(master, padding=10)
         self.controller = controller
-        self.on_back_to_settings = on_back_to_settings
+        self.on_session_end = on_session_end
         self.timer_var = tk.StringVar(value="")
         self.timer_label = ttk.Label(
             self, textvariable=self.timer_var, font=("Arial", 11, "bold")
@@ -144,8 +149,8 @@ class FlashcardSessionView(ttk.Frame):
         controls = ttk.Frame(self)
         ttk.Button(
             controls,
-            text="Back to Settings",
-            command=self._handle_back_to_settings,
+            text="End Session",
+            command=self._handle_exit_session,
         ).pack(side=tk.LEFT, padx=4)
         controls.pack(pady=6)
 
@@ -190,11 +195,19 @@ class FlashcardSessionView(ttk.Frame):
 
         card = self.controller.next_card()
         if card is None:
-            self.card.set_question("Session finished or no cards available")
-            self.card.set_choices([])
-            self.card.disable_all()
-            self.card.set_show_enabled(False)
+            state = self.controller.service.state
             self._stop_timer()
+            if state and state.finished:
+                self.card.set_question("Session complete!")
+                self.card.set_choices([])
+                self.card.disable_all()
+                self.card.set_show_enabled(False)
+                self._capture_time_used()
+                self.after(1500, self._emit_session_end)
+            else:
+                self.card.set_question("No cards available.")
+                self.card.set_choices([])
+                self.card.disable_all()
             return
         state = self.controller.service.state
         direction = (
@@ -277,11 +290,31 @@ class FlashcardSessionView(ttk.Frame):
         self._update_show_button_state()
         self._pause_timer()
 
-    def _handle_back_to_settings(self) -> None:
-        """Stop the timer and return to the settings view."""
+    def _handle_exit_session(self) -> None:
+        """Capture remaining time, stop the timer, and emit the session summary."""
 
+        self._capture_time_used()
         self._stop_timer()
-        self.on_back_to_settings()
+        self._emit_session_end()
+
+    def _capture_time_used(self) -> None:
+        """Store the elapsed play time on the state for Speed mode sessions."""
+
+        state = self.controller.service.state
+        if state is None:
+            return
+        if state.mode == Mode.SPEED:
+            if self.timer is not None:
+                state.time_used = (state.time_limit or 0) - int(self.timer.remaining)
+            elif state.time_limit is not None and state.finished:
+                state.time_used = state.time_limit
+
+    def _emit_session_end(self) -> None:
+        """Build the session summary and invoke the end-of-session callback."""
+
+        summary = self.controller.get_summary()
+        if summary is not None:
+            self.on_session_end(summary)
 
     def _update_show_button_state(self) -> None:
         """Enable or disable the show-answer button based on the state."""
@@ -368,11 +401,13 @@ class FlashcardSessionView(ttk.Frame):
         state = self.controller.service.state
         if state:
             state.finished = True
+            state.time_used = state.time_limit
             self.status_var.set(f"Time's up! Score: {state.score}")
         self.card.set_question("Time's up! Session ended.")
         self.card.disable_all()
         self.card.set_show_enabled(False)
         self._stop_timer()
+        self.after(1500, self._emit_session_end)
 
     def _stop_timer(self) -> None:
         """Halt any active timer and remove scheduled callbacks."""

@@ -36,11 +36,38 @@ class FlashcardState:
     current_choices: list[str] = field(default_factory=list)
     score: int = 0
     asked: int = 0
+    answered: int = 0
     correct: int = 0
     started_at: Optional[datetime] = None
     finished: bool = False
     show_used: int = 0
     wrong_answer_penalty: int = PENALTY_POINTS
+    time_used: Optional[int] = None
+
+
+@dataclass
+class SessionSummary:
+    """Aggregated statistics for a completed flashcard session.
+
+    Attributes:
+        mode: Study mode that was used.
+        correct: Number of correctly answered questions.
+        asked: Total number of questions actually resolved by the user
+            (submitted or revealed); excludes any card displayed but not yet
+            acted upon when the session ended.
+        percent_correct: Correct answers as a percentage of total asked.
+        score: Final session score.
+        time_used: Seconds of active play time (Speed mode only; None otherwise).
+        show_used: Number of times Show Answer was used.
+    """
+
+    mode: Mode
+    correct: int
+    asked: int
+    percent_correct: float
+    score: int
+    time_used: Optional[int]
+    show_used: int
 
 
 @dataclass
