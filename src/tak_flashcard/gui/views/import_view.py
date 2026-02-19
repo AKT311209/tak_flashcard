@@ -113,30 +113,36 @@ class ImportView(ttk.Frame):
         packed into the layout.
         """
 
-        self._col_map_frame = ttk.LabelFrame(self, text="Column Mapping", padding=8)
+        self._col_map_frame = ttk.LabelFrame(
+            self, text="Column Mapping", padding=8)
 
         eng_row = ttk.Frame(self._col_map_frame)
-        ttk.Label(eng_row, text="English *", width=18, anchor=tk.W).pack(side=tk.LEFT)
+        ttk.Label(eng_row, text="English *", width=18,
+                  anchor=tk.W).pack(side=tk.LEFT)
         self._english_var = tk.StringVar()
         self._english_combo = ttk.Combobox(
             eng_row, textvariable=self._english_var, state="readonly", width=30
         )
         self._english_combo.pack(side=tk.LEFT, padx=(8, 0))
-        self._english_combo.bind("<<ComboboxSelected>>", self._on_column_selected)
+        self._english_combo.bind(
+            "<<ComboboxSelected>>", self._on_column_selected)
         eng_row.pack(anchor=tk.W, pady=4)
 
         vn_row = ttk.Frame(self._col_map_frame)
-        ttk.Label(vn_row, text="Vietnamese *", width=18, anchor=tk.W).pack(side=tk.LEFT)
+        ttk.Label(vn_row, text="Vietnamese *", width=18,
+                  anchor=tk.W).pack(side=tk.LEFT)
         self._vietnamese_var = tk.StringVar()
         self._vietnamese_combo = ttk.Combobox(
             vn_row, textvariable=self._vietnamese_var, state="readonly", width=30
         )
         self._vietnamese_combo.pack(side=tk.LEFT, padx=(8, 0))
-        self._vietnamese_combo.bind("<<ComboboxSelected>>", self._on_column_selected)
+        self._vietnamese_combo.bind(
+            "<<ComboboxSelected>>", self._on_column_selected)
         vn_row.pack(anchor=tk.W, pady=4)
 
         pos_row = ttk.Frame(self._col_map_frame)
-        ttk.Label(pos_row, text="Part of Speech", width=18, anchor=tk.W).pack(side=tk.LEFT)
+        ttk.Label(pos_row, text="Part of Speech",
+                  width=18, anchor=tk.W).pack(side=tk.LEFT)
         self._pos_var = tk.StringVar()
         self._pos_combo = ttk.Combobox(
             pos_row, textvariable=self._pos_var, state="readonly", width=30
@@ -242,7 +248,8 @@ class ImportView(ttk.Frame):
             if self._pos_var.get() == "(none)" and ("part" in h or "pos" in h or "speech" in h):
                 self._pos_var.set(headers[i])
 
-        self._col_map_frame.pack(fill="x", pady=(0, 10), before=self._mode_frame)
+        self._col_map_frame.pack(fill="x", pady=(
+            0, 10), before=self._mode_frame)
         self._on_column_selected()
 
     def _on_column_selected(self, _event: object = None) -> None:

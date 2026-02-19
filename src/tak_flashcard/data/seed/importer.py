@@ -83,7 +83,8 @@ def _parse_csv_rows(
     with path.open("r", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
             english = row.get(english_col, "").strip() if english_col else ""
-            vietnamese = row.get(vietnamese_col, "").strip() if vietnamese_col else ""
+            vietnamese = row.get(
+                vietnamese_col, "").strip() if vietnamese_col else ""
             if not english or not vietnamese:
                 continue
             rows.append(
@@ -156,7 +157,8 @@ def import_vocab_file(
     if not column_map.get("english") or not column_map.get("vietnamese"):
         return ImportResult(
             added=0, removed=0, backup_path=None,
-            errors=["Both the English and Vietnamese columns must be mapped before importing."],
+            errors=[
+                "Both the English and Vietnamese columns must be mapped before importing."],
         )
 
     backup_path = _backup_vocab(source)
@@ -165,7 +167,8 @@ def import_vocab_file(
     if not rows:
         return ImportResult(
             added=0, removed=0, backup_path=backup_path,
-            errors=["No valid rows were found in the CSV file after applying the column mapping."],
+            errors=[
+                "No valid rows were found in the CSV file after applying the column mapping."],
         )
 
     removed = 0
