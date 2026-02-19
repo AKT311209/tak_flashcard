@@ -787,34 +787,37 @@ def validate_settings(settings):
 ## 11. Dictionary Flow
 
 ```
-┌──────────────────────────┐
-│    Dictionary View       │
-│                          │
-│  Search: [_______] 🔍    │
-│                          │
-│  Filter:                 │
-│  [All POS ▼] [Sort by ▼] │
-│                          │
-│  ┌────────────────────┐  │
-│  │ Word List (Table)  │  │
-│  │                    │  │
-│  │ Eng | IPA | Vn | POS│ │
-│  │ ──────────────────── │ │
-│  │ hello│/həˈloʊ/│xin…│  │
-│  │ world│/wɜrld/│thế…│   │
-│  │ ...               │  │
-│  └────────────────────┘  │
-│                          │
-│  [Back to Home]          │
-└──────────────────────────┘
+┌──────────────────────────────────────────┐
+│    Dictionary View                       │
+│                                          │
+│  Search: [___________________] [Go]      │
+│                                          │
+│  ┌──────────────────────────────────┐   │
+│  │ Word List (Table)                │   │
+│  │                                  │   │
+│  │ English ▲ │ Vietnamese │ PoS │ Difficulty │
+│  │ ─────────────────────────────── │   │
+│  │ apple     │ quả táo    │ noun│  0.20  │   │
+│  │ book      │ cuốn sách  │ noun│  0.45  │   │
+│  │ ...                             │   │
+│  └──────────────────────────────────┘   │
+│                                          │
+│  [Back]                                  │
+└──────────────────────────────────────────┘
 ```
 
+### Column Sorting Behaviour
+- Clicking a column heading sorts the visible rows **ascending** (▲) by that column.
+- Clicking the **same** heading again reverses the order to **descending** (▼).
+- Clicking a **different** heading deactivates the previous sort and starts a new ascending sort.
+- Only one column can be sorted at a time.
+- `Difficulty` is sorted numerically; all other columns are sorted case-insensitively.
+- The active sort is re-applied automatically after every search or full refresh.
+
 ### Dictionary Features
-- Display all vocabulary words
-- Search by English or Vietnamese
-- Filter by Part of Speech (noun, verb, adj, etc.)
-- Sort by: Alphabetical, Difficulty (easy→hard or hard→easy), Display Count
-- Show word statistics (difficulty score, display/correct counts)
+- Display all vocabulary words in a four-column table (English, Vietnamese, Part of Speech, Difficulty)
+- Search by English or Vietnamese word
+- Column-header click sorting with ascending/descending toggle and ▲/▼ indicator
 
 ---
 

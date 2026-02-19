@@ -11,7 +11,7 @@ from pathlib import Path
 from sqlalchemy.orm import Session
 
 from tak_flashcard.config import DATA_DIR
-from tak_flashcard.db.repo import bulk_insert_words, clear_all_words
+from tak_flashcard.db.repo import bulk_insert_words, clear_all_words, upsert_words_append
 
 
 VOCAB_BACKUP_DIR = DATA_DIR / "vocab"
@@ -24,12 +24,16 @@ class ImportResult:
     Attributes:
         added: Number of new words inserted into the database.
         removed: Number of words deleted (only non-zero for Replace mode).
+        updated: Number of duplicate words overwritten (Append mode only).
+        skipped: Number of duplicate words left unchanged (Append mode only).
         backup_path: Path to the timestamped backup CSV that was written.
         errors: Validation error messages; non-empty means import was aborted.
     """
 
     added: int
     removed: int
+    updated: int
+    skipped: int
     backup_path: Path | None
     errors: list[str]
 
@@ -124,6 +128,8 @@ def import_vocab_file(
     source: Path,
     column_map: dict[str, str],
     replace: bool = False,
+    overwrite_duplicates: bool = False,
+    reset_difficulty: bool = False,
 ) -> ImportResult:
     """Import vocabulary words from a CSV file into the database.
 
@@ -142,6 +148,13 @@ def import_vocab_file(
         replace: When ``True`` all existing words are deleted before inserting
                  the new ones (Replace mode). When ``False`` new words are
                  appended to the existing data (Append mode).
+        overwrite_duplicates: Append mode only. When ``True``, existing words
+            that match an imported English word are updated with the new
+            translation and part-of-speech. When ``False`` they are skipped.
+        reset_difficulty: Append mode only. When ``True`` (and
+            ``overwrite_duplicates`` is also ``True``), the difficulty,
+            display count, and correct count are reset to defaults for any
+            overwritten word.
 
     Returns:
         An :class:`ImportResult` with counts and backup location, or a
@@ -150,13 +163,13 @@ def import_vocab_file(
 
     if not source.exists():
         return ImportResult(
-            added=0, removed=0, backup_path=None,
+            added=0, removed=0, updated=0, skipped=0, backup_path=None,
             errors=[f"File not found: {source}"],
         )
 
     if not column_map.get("english") or not column_map.get("vietnamese"):
         return ImportResult(
-            added=0, removed=0, backup_path=None,
+            added=0, removed=0, updated=0, skipped=0, backup_path=None,
             errors=[
                 "Both the English and Vietnamese columns must be mapped before importing."],
         )
@@ -166,21 +179,31 @@ def import_vocab_file(
 
     if not rows:
         return ImportResult(
-            added=0, removed=0, backup_path=backup_path,
+            added=0, removed=0, updated=0, skipped=0, backup_path=backup_path,
             errors=[
                 "No valid rows were found in the CSV file after applying the column mapping."],
         )
 
     removed = 0
+    updated = 0
+    skipped = 0
+
     if replace:
         removed = clear_all_words(db)
+        bulk_insert_words(db, rows)
+        added = len(rows)
+    else:
+        added, updated, skipped = upsert_words_append(
+            db, rows, overwrite_duplicates, reset_difficulty
+        )
 
-    bulk_insert_words(db, rows)
     db.commit()
 
     return ImportResult(
-        added=len(rows),
+        added=added,
         removed=removed,
+        updated=updated,
+        skipped=skipped,
         backup_path=backup_path,
         errors=[],
     )

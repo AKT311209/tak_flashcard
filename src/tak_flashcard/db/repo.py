@@ -27,6 +27,78 @@ def bulk_insert_words(db: Session, words: Iterable[dict[str, object]]) -> None:
     db.execute(insert(Word), list(words))
 
 
+def find_word_by_english(db: Session, english: str) -> Word | None:
+    """Return the first Word whose English text matches exactly (case-insensitive).
+
+    Parameters:
+        db: Active SQLAlchemy session.
+        english: The English word to look up.
+
+    Returns:
+        The matching :class:`Word` instance, or ``None`` if not found.
+    """
+
+    return db.scalars(
+        select(Word).where(func.lower(Word.english) == english.lower())
+    ).first()
+
+
+def upsert_words_append(
+    db: Session,
+    rows: list[dict[str, object]],
+    overwrite_duplicates: bool,
+    reset_difficulty: bool,
+) -> tuple[int, int, int]:
+    """Insert new words with configurable handling of duplicates.
+
+    For each row the English word is looked up in the database.  When no
+    existing record is found the row is inserted as a new word.  When a
+    duplicate is found the behaviour is controlled by the caller flags.
+
+    Parameters:
+        db: Active SQLAlchemy session.
+        rows: Parsed vocabulary rows ready for insertion.
+        overwrite_duplicates: When ``True``, update the existing record with
+            the new Vietnamese translation and part-of-speech; when ``False``
+            the existing record is left untouched.
+        reset_difficulty: When ``True`` (and ``overwrite_duplicates`` is also
+            ``True``), reset the duplicate word's difficulty, display count,
+            and correct count back to their defaults.
+
+    Returns:
+        A three-tuple ``(added, updated, skipped)`` with counts for each
+        outcome category.
+    """
+
+    added = updated = skipped = 0
+    to_insert: list[dict[str, object]] = []
+
+    for row in rows:
+        english = str(row.get("english", ""))
+        existing = find_word_by_english(db, english)
+
+        if existing is None:
+            to_insert.append(row)
+            added += 1
+        elif overwrite_duplicates:
+            existing.vietnamese = str(row.get("vietnamese", ""))
+            existing.part_of_speech = row.get(
+                "part_of_speech")  # type: ignore[assignment]
+            if reset_difficulty:
+                existing.difficulty = 0.5
+                existing.display_count = 0
+                existing.correct_count = 0
+            db.add(existing)
+            updated += 1
+        else:
+            skipped += 1
+
+    if to_insert:
+        db.execute(insert(Word), to_insert)
+
+    return added, updated, skipped
+
+
 def clear_all_words(db: Session) -> int:
     """Delete every word from the database and return the count removed.
 

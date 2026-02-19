@@ -180,9 +180,11 @@
 - [ ] Add filters
   - Filter by Part of Speech
   - Filter by difficulty level (optional)
-- [ ] Add sorting
-  - Sort by English alphabetically
-  - Sort by difficulty
+- [x] Add column-header sorting
+  - Click a column heading to sort ascending (▲); click again to sort descending (▼)
+  - Only one column is active at a time; selecting a new column resets to ascending
+  - `difficulty` column sorts numerically; all other columns sort case-insensitively
+  - Sort state is preserved after a search or full refresh
 
 ### 5.2 Dictionary Service
 - [ ] Implement dictionary service (`features/dictionary/service.py`)

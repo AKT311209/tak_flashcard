@@ -22,7 +22,11 @@ _GUIDE_TEXT = (
     "  3. Choose an import mode and click Import.\n\n"
     "Modes:\n"
     "  • Replace — deletes all existing words, then inserts the new ones.\n"
-    "  • Append  — keeps existing words and adds the new ones alongside them.\n\n"
+    "  • Append  — keeps existing words and adds the new ones alongside them.\n"
+    "               Duplicate options (words whose English text already exists):\n"
+    "               - Overwrite: replaces the translation and part-of-speech.\n"
+    "               - Keep original: leaves the existing record untouched.\n"
+    "               - Reset difficulty: resets score history when overwriting.\n\n"
 )
 
 
@@ -158,7 +162,7 @@ class ImportView(ttk.Frame):
         ).pack(anchor=tk.W, pady=(4, 0))
 
     def _build_mode_row(self) -> None:
-        """Render import-mode radio buttons."""
+        """Render import-mode radio buttons and Append-specific duplicate options."""
 
         row = ttk.LabelFrame(self, text="Import Mode", padding=8)
         self._mode_frame = row
@@ -168,13 +172,42 @@ class ImportView(ttk.Frame):
             text="Append  (keep existing words, add new ones)",
             variable=self._mode_var,
             value="append",
+            command=self._on_mode_changed,
         ).pack(anchor=tk.W, pady=2)
         ttk.Radiobutton(
             row,
             text="Replace  (delete ALL existing words, then insert new ones)",
             variable=self._mode_var,
             value="replace",
+            command=self._on_mode_changed,
         ).pack(anchor=tk.W, pady=2)
+
+        self._append_options_frame = ttk.Frame(row)
+        ttk.Label(
+            self._append_options_frame,
+            text="Duplicate words (same English):",
+            font=("Arial", 9),
+        ).pack(anchor=tk.W, pady=(6, 2))
+
+        self._overwrite_var = tk.BooleanVar(value=False)
+        self._overwrite_check = ttk.Checkbutton(
+            self._append_options_frame,
+            text="Overwrite duplicate words (update translation & part-of-speech)",
+            variable=self._overwrite_var,
+            command=self._on_overwrite_changed,
+        )
+        self._overwrite_check.pack(anchor=tk.W, padx=(16, 0))
+
+        self._reset_difficulty_var = tk.BooleanVar(value=False)
+        self._reset_difficulty_check = ttk.Checkbutton(
+            self._append_options_frame,
+            text="Reset difficulty for overwritten words",
+            variable=self._reset_difficulty_var,
+        )
+        self._reset_difficulty_check.pack(anchor=tk.W, padx=(32, 0))
+        self._reset_difficulty_check.state(["disabled"])
+
+        self._append_options_frame.pack(anchor=tk.W, fill="x", pady=(4, 0))
         row.pack(fill="x", pady=(0, 10))
 
     def _build_action_row(self) -> None:
@@ -199,6 +232,23 @@ class ImportView(ttk.Frame):
         self._status_label.pack(anchor=tk.W)
 
     # ── event handlers ────────────────────────────────────────────────────────
+
+    def _on_mode_changed(self) -> None:
+        """Show or hide Append-specific options based on the selected mode."""
+
+        if self._mode_var.get() == "append":
+            self._append_options_frame.pack(anchor=tk.W, fill="x", pady=(4, 0))
+        else:
+            self._append_options_frame.pack_forget()
+
+    def _on_overwrite_changed(self) -> None:
+        """Enable or disable the reset-difficulty checkbox based on overwrite state."""
+
+        if self._overwrite_var.get():
+            self._reset_difficulty_check.state(["!disabled"])
+        else:
+            self._reset_difficulty_var.set(False)
+            self._reset_difficulty_check.state(["disabled"])
 
     def _browse_file(self) -> None:
         """Open a file-picker dialog, update the displayed path, and load column headers."""
@@ -280,11 +330,16 @@ class ImportView(ttk.Frame):
             column_map["part_of_speech"] = pos
 
         replace = self._mode_var.get() == "replace"
+        overwrite_duplicates = (not replace) and self._overwrite_var.get()
+        reset_difficulty = overwrite_duplicates and self._reset_difficulty_var.get()
         self._set_status("Importing…")
         self.update_idletasks()
 
         result: ImportResult = import_vocab_file(
-            self.db, self._selected_path, column_map, replace=replace
+            self.db, self._selected_path, column_map,
+            replace=replace,
+            overwrite_duplicates=overwrite_duplicates,
+            reset_difficulty=reset_difficulty,
         )
 
         if result.errors:
@@ -334,6 +389,12 @@ class ImportView(ttk.Frame):
         if result.removed:
             parts.append(
                 f"  {result.removed} existing word(s) were removed (Replace mode).")
+        if result.updated:
+            parts.append(
+                f"  {result.updated} duplicate word(s) were overwritten.")
+        if result.skipped:
+            parts.append(
+                f"  {result.skipped} duplicate word(s) were kept unchanged.")
         if result.backup_path:
             parts.append(f"  Backup saved to: {result.backup_path}")
         return "\n".join(parts)
