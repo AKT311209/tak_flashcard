@@ -21,6 +21,7 @@ class HomeView(ttk.Frame):
             ("Flashcard", "flashcard"),
             ("Dictionary", "dictionary"),
             ("Guide", "guide"),
+            ("Import Vocabulary", "import"),
             ("Settings", "settings"),
             ("Exit", "exit"),
         ]:

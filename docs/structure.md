@@ -12,9 +12,9 @@ tak_flashcard/
 │       │
 │       ├── data/                   # Data storage
 │       │   ├── vocab/
-│       │   │   └── vocab_source.csv    # Import source ≥1000 words
+│       │   │   └── vocab_source_<timestamp>.csv  # Timestamped backup created on each import
 │       │   ├── seed/
-│       │   │   └── importer.py         # CSV → DB loader
+│       │   │   └── importer.py         # CSV → DB loader; validate / backup / replace / append
 │       │   └── user_settings.json      # User configuration/preferences
 │       │
 │       ├── db/                     # Database layer
@@ -50,6 +50,7 @@ tak_flashcard/
 │       │   │   ├── flashcard_view.py      # Flashcard settings + separate session frame class
 │       │   │   ├── dictionary_view.py
 │       │   │   ├── guide_view.py
+│       │   │   ├── import_view.py         # Import Vocabulary (browse CSV, replace/append)
 │       │   │   ├── settings_view.py
 │       │   │   └── results_view.py
 │       │   └── components/         # Reusable UI components
@@ -114,7 +115,15 @@ Store flashcard session history:
 	- Each question uses 4 multiple-choice options (1 correct + 3 random distractors from the same answer language)
 2. **Dictionary** - Full vocabulary list with search
 3. **Guide** - User manual for all features
-4. **Settings** - User preferences and appearance configuration
+4. **Import Vocabulary** - CSV file importer accessible from the Home screen
+	- Validates required column structure before importing
+	- Writes a timestamped backup to `data/vocab/` before any DB change
+	- **Append** mode: inserts new words without touching existing ones
+	- **Replace** mode: clears the entire word table, then inserts new words
+	- Reports words added / removed with backup file path
+	- **Forced mode**: shown automatically on startup when the database is empty;
+	  Back button hidden, warning banner displayed, auto-navigates to Home after import
+5. **Settings** - User preferences and appearance configuration
 
 ### Configurable Options
 - Difficulty level adjustment (Scale 1-5: controls proportion of high-difficulty words)

@@ -8,10 +8,8 @@ from pathlib import Path
 APP_NAME = "Tak Flashcard"
 PACKAGE_ROOT = Path(__file__).resolve().parent
 DATA_DIR = PACKAGE_ROOT / "data"
-VOCAB_PATH = DATA_DIR / "vocab" / "vocab_source.csv"
 DB_PATH = DATA_DIR / "flashcard.db"
 SETTINGS_PATH = DATA_DIR / "user_settings.json"
-MIN_WORDS_REQUIRED = 1000
 
 WINDOW_WIDTH = 960
 WINDOW_HEIGHT = 700

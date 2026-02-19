@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import tkinter as tk
 from tkinter import ttk
-from typing import Callable, Optional
+from typing import Callable
 
 from tak_flashcard.config import (
     DEFAULT_QUESTION_COUNT,
@@ -85,15 +85,13 @@ class FlashcardView(ttk.Frame):
             time_penalty,
             wrong_answer_penalty,
         ) = self.options.values()
+        max_uses = 0 if mode == Mode.TESTING else (show_limit if show_limit > 0 else None)
         show_config = ShowAnswerConfig(
             enabled=mode != Mode.TESTING,
             score_penalty=max(score_penalty, 0),
             time_penalty=time_penalty if mode == Mode.SPEED else 0,
+            max_uses=max_uses,
         )
-        if mode == Mode.TESTING:
-            show_config.max_uses = 0
-        elif show_limit > 0:
-            show_config.max_uses = show_limit
         wrong_penalty = (
             wrong_answer_penalty
             if mode in (Mode.ENDLESS, Mode.SPEED)
@@ -136,7 +134,7 @@ class FlashcardSessionView(ttk.Frame):
             self, textvariable=self.timer_var, font=("Arial", 11, "bold")
         )
         self.timer: CountdownTimer | None = None
-        self._timer_after_id: Optional[str] = None
+        self._timer_after_id: str | None = None
 
         self.card = FlashcardCard(
             self, self.submit_answer, self.show_answer, self.next_card
@@ -167,8 +165,8 @@ class FlashcardSessionView(ttk.Frame):
         """Start a new session and render the first card."""
 
         self._stop_timer()
-        q_limit: Optional[int] = question_count if mode == Mode.TESTING else None
-        t_limit: Optional[int] = time_limit if mode == Mode.SPEED else None
+        q_limit: int | None = question_count if mode == Mode.TESTING else None
+        t_limit: int | None = time_limit if mode == Mode.SPEED else None
         self.controller.start(
             mode,
             direction,
@@ -195,28 +193,15 @@ class FlashcardSessionView(ttk.Frame):
             state = self.controller.service.state
             self._stop_timer()
             if state and state.finished:
-                self.card.set_question("Session complete!")
-                self.card.set_choices([])
-                self.card.disable_all()
-                self.card.set_show_enabled(False)
+                self._display_terminal_card("Session complete!")
                 self._capture_time_used()
                 self.after(1500, self._emit_session_end)
             else:
-                self.card.set_question("No cards available.")
-                self.card.set_choices([])
-                self.card.disable_all()
+                self._display_terminal_card("No cards available.")
             return
         state = self.controller.service.state
-        direction = (
-            state.current_direction
-            if state and state.current_direction
-            else (state.direction if state else Direction.ENG_TO_VN)
-        )
-        prompt = (
-            str(card.english)
-            if direction == Direction.ENG_TO_VN
-            else str(card.vietnamese)
-        )
+        direction = self._active_direction()
+        prompt = self._prompt_for(card.english, card.vietnamese, direction)
         self.card.set_question(prompt)
         self.card.set_choices(state.current_choices if state else [])
         self._update_show_button_state()
@@ -252,22 +237,20 @@ class FlashcardSessionView(ttk.Frame):
         state = self.controller.service.state
         if state is None or state.current_word is None:
             return
-        direction = state.current_direction or state.direction
-        prompt = (
-            str(state.current_word.english)
-            if direction == Direction.ENG_TO_VN
-            else str(state.current_word.vietnamese)
+        direction = self._active_direction()
+        prompt = self._prompt_for(
+            state.current_word.english,
+            state.current_word.vietnamese,
+            direction,
         )
-        answer = (
-            str(state.current_word.vietnamese)
-            if direction == Direction.ENG_TO_VN
-            else str(state.current_word.english)
+        answer = self._answer_for(
+            state.current_word.english,
+            state.current_word.vietnamese,
+            direction,
         )
         outcome: ShowAnswerOutcome = self.controller.reveal()
         if not outcome.allowed:
-            message = "Show answer unavailable"
-            if state.show_config.max_uses is not None:
-                message = "Show limit reached"
+            message = "Show limit reached" if state.show_config.max_uses is not None else "Show answer unavailable"
             self.card.set_feedback(message)
             self._update_show_button_state()
             return
@@ -323,16 +306,38 @@ class FlashcardSessionView(ttk.Frame):
         """Determine whether the show-answer control can currently be used."""
 
         state = self.controller.service.state
-        if state is None:
+        if state is None or not state.show_config.enabled:
             return False
         config = state.show_config
-        if not config.enabled:
-            return False
-        if config.max_uses is None:
-            return True
-        if config.max_uses <= 0:
-            return False
-        return state.show_used < config.max_uses
+        return config.max_uses is None or (config.max_uses > 0 and state.show_used < config.max_uses)
+
+    def _active_direction(self) -> Direction:
+        """Return the current card direction or a sensible default."""
+
+        state = self.controller.service.state
+        if state is None:
+            return Direction.ENG_TO_VN
+        return state.current_direction or state.direction
+
+    @staticmethod
+    def _prompt_for(english: object, vietnamese: object, direction: Direction) -> str:
+        """Return the prompt text for the provided direction."""
+
+        return str(english) if direction == Direction.ENG_TO_VN else str(vietnamese)
+
+    @staticmethod
+    def _answer_for(english: object, vietnamese: object, direction: Direction) -> str:
+        """Return the answer text for the provided direction."""
+
+        return str(vietnamese) if direction == Direction.ENG_TO_VN else str(english)
+
+    def _display_terminal_card(self, message: str) -> None:
+        """Render a disabled terminal card state with a message."""
+
+        self.card.set_question(message)
+        self.card.set_choices([])
+        self.card.disable_all()
+        self.card.set_show_enabled(False)
 
     def _start_timer(self, seconds: int) -> None:
         """Create and begin the countdown timer for Speed mode."""
@@ -401,9 +406,7 @@ class FlashcardSessionView(ttk.Frame):
             state.finished = True
             state.time_used = state.time_limit
             self.status_var.set(f"Time's up! Score: {state.score}")
-        self.card.set_question("Time's up! Session ended.")
-        self.card.disable_all()
-        self.card.set_show_enabled(False)
+        self._display_terminal_card("Time's up! Session ended.")
         self._stop_timer()
         self.after(1500, self._emit_session_end)
 

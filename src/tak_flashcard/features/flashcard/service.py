@@ -70,21 +70,34 @@ class FlashcardService:
     def _pick_word(self) -> Optional[Word]:
         """Select the next word respecting direction and difficulty."""
 
-        if not self.words:
+        state = self.state
+        if state is None or not self.words:
             return None
-        if self.state is None:
-            return None
-        if self.state.direction == Direction.MIXED:
-            direction = random.choice(
-                [Direction.ENG_TO_VN, Direction.VN_TO_ENG])
-        else:
-            direction = self.state.direction
-        word = select_next_word(self.words, self.state.difficulty, direction)
-        if word:
-            self.state.current_word = word
-            self.state.current_direction = direction
-            self.state.current_choices = self._build_choices(word, direction)
+        direction = self._resolve_direction(state.direction)
+        word = select_next_word(self.words, state.difficulty, direction)
+        if word is not None:
+            state.current_word = word
+            state.current_direction = direction
+            state.current_choices = self._build_choices(word, direction)
         return word
+
+    @staticmethod
+    def _resolve_direction(direction: Direction) -> Direction:
+        """Resolve mixed direction into a concrete direction for a card."""
+
+        if direction == Direction.MIXED:
+            return random.choice([Direction.ENG_TO_VN, Direction.VN_TO_ENG])
+        return direction
+
+    @staticmethod
+    def _answer_for(word: Word, direction: Direction) -> str:
+        """Return the expected answer text for a word and direction."""
+
+        return (
+            str(word.vietnamese)
+            if direction == Direction.ENG_TO_VN
+            else str(word.english)
+        )
 
     def _build_choices(self, word: Word, direction: Direction) -> list[str]:
         """Build shuffled multiple-choice options for the current question.
@@ -98,20 +111,12 @@ class FlashcardService:
             distinct distractors from other words in the dataset.
         """
 
-        if direction == Direction.ENG_TO_VN:
-            correct_answer = str(word.vietnamese)
-            candidate_pool = {
-                str(item.vietnamese)
-                for item in self.words
-                if str(item.vietnamese).strip()
-            }
-        else:
-            correct_answer = str(word.english)
-            candidate_pool = {
-                str(item.english)
-                for item in self.words
-                if str(item.english).strip()
-            }
+        correct_answer = self._answer_for(word, direction)
+        candidate_pool = {
+            value
+            for item in self.words
+            if (value := self._answer_for(item, direction)).strip()
+        }
 
         candidate_pool.discard(correct_answer)
         candidate_list = list(candidate_pool)
@@ -138,28 +143,29 @@ class FlashcardService:
     def submit_answer(self, answer: str) -> Optional[AnswerResult]:
         """Validate an answer, update stats, and return result."""
 
-        if self.state is None or self.state.current_word is None:
+        state = self.state
+        if state is None or state.current_word is None:
             return None
-        active_direction = self.state.current_direction or self.state.direction
-        correct_answer = self.state.current_word.vietnamese if active_direction == Direction.ENG_TO_VN else self.state.current_word.english
+        active_direction = state.current_direction or state.direction
+        correct_answer = self._answer_for(state.current_word, active_direction)
         is_correct = answer.strip().lower() == correct_answer.strip().lower()
-        repo.update_word_stats(self.db, self.state.current_word.id, is_correct)
+        repo.update_word_stats(self.db, state.current_word.id, is_correct)
         scoring = apply_scoring(
-            self.state.score,
+            state.score,
             is_correct,
-            penalty_points=self.state.wrong_answer_penalty,
+            penalty_points=state.wrong_answer_penalty,
         )
-        self.state.score = scoring.total
-        self.state.answered += 1
+        state.score = scoring.total
+        state.answered += 1
         if is_correct:
-            self.state.correct += 1
-        if self.state.question_limit and self.state.asked >= self.state.question_limit:
-            self.state.finished = True
+            state.correct += 1
+        if state.question_limit and state.asked >= state.question_limit:
+            state.finished = True
         self.db.commit()
         return AnswerResult(
             is_correct=is_correct,
             correct_answer=correct_answer,
-            new_score=self.state.score,
+            new_score=state.score,
             delta=scoring.delta,
         )
 

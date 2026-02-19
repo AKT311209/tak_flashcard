@@ -14,18 +14,16 @@
   - Search words
 
 ### 1.2 Data Import
-- [ ] Find/prepare CSV with ≥1000 English-Vietnamese words
-  - Required columns: `english`, `vietnamese`, `part_of_speech`
-  - Source: GitHub vocabulary lists, public datasets
-- [ ] Implement importer (`data/seed/importer.py`)
-  - Parse CSV/TSV files
-  - Validate data format
+- [x] Implement importer (`data/seed/importer.py`)
+  - Parse CSV files
+  - Validate column structure (`english`, `vietnamese`, `part_of_speech`)
   - Bulk insert to database
-  - Show import progress
-- [ ] Add startup validation
-  - Check if DB has ≥1000 words
-  - Trigger import if needed
-  - Display error if import fails
+  - Manual import via GUI (Import Vocabulary view) with Replace / Append modes
+  - Timestamped backup written to `data/vocab/` before every import
+- [x] Add startup validation
+  - Check if DB has any words on launch
+  - If empty: redirect to Import View in forced mode (Back button hidden, warning banner shown)
+  - After a successful forced import: auto-navigate to Home
 
 ### 1.3 Testing
 - [ ] Verify database schema
@@ -271,6 +269,35 @@
 - [ ] Load default values in Flashcard configuration
 - [ ] Persist settings on app close
 - [ ] Load settings on app start
+
+---
+
+## Phase 6.7: Import Vocabulary Feature
+
+### 6.7.1 Importer Logic (`data/seed/importer.py`)
+- [x] `validate_csv_file(path)` — checks file existence, encoding, required columns, and non-empty rows; returns a list of error messages
+- [x] `import_vocab_file(db, source, replace)` — orchestrates validate → backup → (optional clear) → bulk insert → commit
+- [x] `ImportResult` dataclass — carries `added`, `removed`, `backup_path`, `errors`
+- [x] `_backup_vocab(source)` — copies user CSV to `data/vocab/vocab_source_<YYYYMMDD_HHMMSS>.csv`
+
+### 6.7.2 Repository (`db/repo.py`)
+- [x] `clear_all_words(db)` — deletes every word row and returns the count removed (used by Replace mode)
+
+### 6.7.3 Import View (`gui/views/import_view.py`)
+- [x] Header and collapsible Guide panel explaining required columns and modes
+- [x] File picker row (Browse… opens native file dialog, filters to `*.csv`)
+- [x] Import Mode selector: **Append** (default) / **Replace**
+- [x] Import button (disabled until a file is selected)
+- [x] Status area: green on success, red on validation failure
+  - Success message shows: words added, words removed (Replace only), backup path
+- [x] Back button returns to Home (hidden in forced mode)
+- [x] Forced mode: triggered on startup when DB is empty
+  - Warning banner prompts user to import before proceeding
+  - Back button hidden; user cannot leave without importing
+  - Auto-navigates to Home after a successful import
+
+### 6.7.4 Home Screen Integration
+- [x] **Import Vocabulary** button added to `HomeView` between Guide and Settings
 
 ---
 

@@ -8,7 +8,7 @@ from tkinter import ttk
 from tak_flashcard.config import APP_NAME, WINDOW_HEIGHT, WINDOW_WIDTH, ensure_data_dirs
 from tak_flashcard.config import Direction, Mode
 from tak_flashcard.core.settings import Settings, SettingsManager
-from tak_flashcard.data.seed.importer import ensure_seed_data
+from tak_flashcard.db.repo import get_word_count
 from tak_flashcard.db.session import SessionLocal, init_db
 from tak_flashcard.features.dictionary.service import DictionaryService
 from tak_flashcard.features.flashcard.controller import FlashcardController
@@ -18,6 +18,7 @@ from tak_flashcard.gui.views.dictionary_view import DictionaryView
 from tak_flashcard.gui.views.flashcard_view import FlashcardSessionView, FlashcardView
 from tak_flashcard.gui.views.guide_view import GuideView
 from tak_flashcard.gui.views.home_view import HomeView
+from tak_flashcard.gui.views.import_view import ImportView
 from tak_flashcard.gui.views.results_view import ResultsView
 from tak_flashcard.gui.views.settings_view import SettingsView
 
@@ -37,7 +38,6 @@ class FlashcardApp(tk.Tk):
 
         init_db()
         self.db = SessionLocal()
-        ensure_seed_data(self.db)
         self.settings_manager = SettingsManager()
 
         apply_appearance_settings(
@@ -65,6 +65,10 @@ class FlashcardApp(tk.Tk):
             container, lambda: self.navigate("home"))
         self.frames["settings"] = SettingsView(
             container, self.settings_manager, lambda: self.navigate("home"), self.apply_appearance)
+        self.frames["import"] = ImportView(
+            container, self.db, lambda: self.navigate("home"),
+            on_success=lambda: self.navigate("home"),
+        )
         self.frames["results"] = ResultsView(
             container,
             on_back=lambda: self.navigate("flashcard"),
@@ -74,7 +78,10 @@ class FlashcardApp(tk.Tk):
         for frame in self.frames.values():
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.navigate("home")
+        if get_word_count(self.db) == 0:
+            self.navigate("import")
+        else:
+            self.navigate("home")
 
     def apply_appearance(self, settings: Settings) -> None:
         """Apply appearance settings to the application immediately."""
@@ -137,6 +144,9 @@ class FlashcardApp(tk.Tk):
         if frame:
             if key == "dictionary" and isinstance(frame, DictionaryView):
                 frame.refresh()
+            elif key == "import" and isinstance(frame, ImportView):
+                frame._set_status("")
+                frame.configure_mode(get_word_count(self.db) == 0)
             frame.tkraise()
 
 

@@ -10,7 +10,7 @@
          ▼
 ┌─────────────────────────┐
 │  Check Database         │
-│  (≥1000 words?)         │
+│  (any words?)           │
 └────────┬────────────────┘
          │
     ┌────┴─────┐
@@ -19,33 +19,20 @@
   YES         NO
     │          │
     │          ▼
-    │    ┌─────────────────────┐
-    │    │  Import vocab_      │
-    │    │  source.csv         │
-    │    └─────────┬───────────┘
-    │              │
-    │              ▼
-    │    ┌─────────────────────┐
-    │    │  Show Progress      │
-    │    │  Bar                │
-    │    └─────────┬───────────┘
-    │              │
-    │         ┌────┴────┐
-    │         │Success? │
-    │         └────┬────┘
-    │              │
-    │         ┌────┴────┐
-    │         │         │
-    │         ▼         ▼
-    │        YES       NO
-    │         │         │
-    │         │         ▼
-    │         │   ┌──────────────┐
-    │         │   │ Show Error & │
-    │         │   │ Exit         │
-    │         │   └──────────────┘
-    │         │
-    └─────────┘
+    │    ┌──────────────────────────┐
+    │    │  Show Import View        │
+    │    │  (forced mode)           │
+    │    │  • Back button hidden    │
+    │    │  • Warning banner shown  │
+    │    │  • User must import CSV  │
+    │    └────────────┬─────────────┘
+    │                 │
+    │                 ▼
+    │    ┌──────────────────────────┐
+    │    │  User imports CSV        │
+    │    └────────────┬─────────────┘
+    │                 │
+    └─────────────────┘
          │
          ▼
 ┌─────────────────┐
@@ -71,6 +58,10 @@
 │                          │
 │  ┌─────────────────┐    │
 │  │    [Guide]      │────┼─────▶ Guide View
+│  └─────────────────┘    │
+│                          │
+│  ┌─────────────────┐    │
+│  │[Import Vocab]   │────┼─────▶ Import Vocabulary View
 │  └─────────────────┘    │
 │                          │
 │  ┌─────────────────┐    │
@@ -876,39 +867,128 @@ def validate_settings(settings):
 
 ---
 
+## 12.5 Import Vocabulary Flow
+
+```
+┌──────────────────────────────────────┐
+│      Import Vocabulary               │
+│                                      │
+│  ╔══════════════════════════════╗   │
+│  ║  Guide                       ║   │
+│  ║  Required columns:           ║   │
+│  ║    english, vietnamese,      ║   │
+│  ║    part_of_speech            ║   │
+│  ║  Append: keeps existing words║   │
+│  ║  Replace: clears DB first    ║   │
+│  ╚══════════════════════════════╝   │
+│                                      │
+│  CSV File: [path/to/file.csv] Browse │
+│                                      │
+│  Import Mode:                        │
+│  ◉ Append   ○ Replace               │
+│                                      │
+│  [Import]  [Back]                    │
+│                                      │
+│  Status: ✓ 1037 word(s) added.      │
+│           Backup saved to …         │
+└──────────────────────────────────────┘
+```
+
+### Import Flow Logic
+
+```
+ User clicks Browse
+       │
+       ▼
+ Open file dialog → choose .csv
+       │
+       ▼
+ Import button becomes enabled
+       │
+ User clicks Import
+       │
+       ▼
+┌─────────────────────┐
+│ validate_csv_file() │
+│  • file exists?     │
+│  • 3 required cols? │
+│  • has data rows?   │
+└────────┬────────────┘
+         │
+    ┌────┴────┐
+    │ Valid?  │
+    └────┬────┘
+         │
+    ┌────┴────┐
+    │         │
+    ▼         ▼
+   YES        NO
+    │          │
+    │          ▼
+    │   Show error(s) in red
+    │   (abort, no DB change)
+    │
+    ▼
+_backup_vocab(source)
+  → data/vocab/vocab_source_YYYYMMDD_HHMMSS.csv
+    │
+    ▼
+ Replace mode?──YES──▶ clear_all_words(db)
+    │                        │ (records removed count)
+    │◀───────────────────────┘
+    ▼
+ bulk_insert_words(db, rows)
+    │
+    ▼
+db.commit()
+    │
+    ▼
+Show green success message:
+  "X word(s) added."
+  "Y existing word(s) removed."  ← Replace only
+  "Backup saved to: …"
+```
+
+---
+
 ## 13. Navigation Map
 
 ```
-                    ┌──────────────┐
-                    │  Home Screen │
-                    └───────┬──────┘
-                            │
-            ┌───────────────┼───────────────┬───────────────┐
-            │               │               │               │
-            ▼               ▼               ▼               ▼
-    ┌───────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐
-        │ Flashcard │   │Dictionary│   │  Guide   │   │ Settings │
-        │ Settings  │   │   View   │   │   View   │   │   View   │
-    └─────┬─────┘   └────┬─────┘   └────┬─────┘   └────┬─────┘
-          │              │              │              │
-          ▼              │              │              │
-    ┌───────────┐        │              │              │
-    │ Flashcard │        │              │              │
-    │  Session  │        │              │              │
-    └─────┬─────┘        │              │              │
-          │              │              │              │
-          ▼              │              │              │
-    ┌───────────┐        │              │              │
-    │  Results  │        │              │              │
-    │   View    │        │              │              │
-    └─────┬─────┘        │              │              │
-          │              │              │              │
-          └──────────────┴──────────────┴──────────────┘
-                         │
-                         ▼
-                   ┌──────────┐
-                   │   Home   │
-                   └──────────┘
+                         ┌──────────────┐
+                         │  Home Screen │
+                         └──────┬───────┘
+                                │
+       ┌────────────────────────┼──────────────────────┬──────────────────┐
+       │                        │                      │                  │
+       ▼                        ▼                      ▼                  ▼
+┌───────────┐          ┌──────────────┐        ┌──────────┐        ┌──────────┐
+│ Flashcard │          │  Dictionary  │        │  Guide   │        │ Settings │
+│ Settings  │          │     View     │        │   View   │        │   View   │
+└─────┬─────┘          └──────┬───────┘        └────┬─────┘        └────┬─────┘
+      │                       │                     │                   │
+      ▼                       │                     │                   │
+┌───────────┐                 │                     │                   │
+│ Flashcard │                 │                     │                   │
+│  Session  │                 │                     │                   │
+└─────┬─────┘                 │                     │                   │
+      │                       │                     │                   │
+      ▼                       │                     │                   │
+┌───────────┐                 │                     │                   │
+│  Results  │                 │                     │                   │
+│   View    │                 │                     │                   │
+└─────┬─────┘                 │                     │                   │
+      │                       │                     │                   │
+      └───────────────────────┴─────────────────────┴───────────────────┘
+                               │
+                               ▼
+                         ┌──────────┐
+                         │   Home   │
+                         └──────────┘
+
+┌────────────────┐
+│ Import Vocab   │◀── Home button ──▶ Home
+│     View       │
+└────────────────┘
 ```
 
 ---
