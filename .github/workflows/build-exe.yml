@@ -2,18 +2,8 @@ name: Build Windows EXE
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - 'requirements.txt'
-      - 'tak_flashcard.spec'
-      - '.github/workflows/build-exe.yml'
     tags:
       - 'v*'
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
