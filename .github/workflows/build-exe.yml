@@ -9,6 +9,8 @@ on:
       - 'requirements.txt'
       - 'tak_flashcard.spec'
       - '.github/workflows/build-exe.yml'
+    tags:
+      - 'v*'
   pull_request:
     branches:
       - main
