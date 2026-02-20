@@ -32,7 +32,7 @@ if errorlevel 1 (
 
 echo.
 echo [3/5] Building EXE with PyInstaller...
-pyinstaller --onefile tak_flashcard.spec
+pyinstaller tak_flashcard.spec
 
 if errorlevel 1 (
     echo Error: PyInstaller build failed

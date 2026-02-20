@@ -46,7 +46,7 @@ build_exe.bat
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 pip install pyinstaller
-pyinstaller --onefile tak_flashcard.spec
+pyinstaller tak_flashcard.spec
 mkdir dist\tak_flashcard_data\vocab
 mkdir dist\tak_flashcard_data\seed
 ```

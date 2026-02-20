@@ -28,7 +28,7 @@ pip3 install pyinstaller
 
 echo ""
 echo "[3/5] Building EXE with PyInstaller..."
-pyinstaller --onefile tak_flashcard.spec
+pyinstaller tak_flashcard.spec
 
 if [ $? -ne 0 ]; then
     echo "Error: PyInstaller build failed"

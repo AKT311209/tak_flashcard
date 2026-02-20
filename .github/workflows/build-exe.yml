@@ -36,7 +36,7 @@ jobs:
 
       - name: Build EXE with PyInstaller
         run: |
-          pyinstaller --onefile tak_flashcard.spec
+          pyinstaller tak_flashcard.spec
 
       - name: Create data directory structure
         run: |
