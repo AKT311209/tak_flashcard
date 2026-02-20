@@ -148,14 +148,14 @@ class FlashcardSessionView(ttk.Frame):
         )
         self._loading_label.pack(anchor=tk.W, padx=14)
 
-        spacer = ttk.Frame(self)
-        spacer.pack(fill="both", expand=True)
+        gap = ttk.Frame(self, height=250)
+        gap.pack()
 
         self.status_var = tk.StringVar(value="Session not started")
         ttk.Label(
             self,
             textvariable=self.status_var,
-        ).pack(anchor=tk.W, side=tk.BOTTOM, pady=(0, 2), padx=12)
+        ).pack(anchor=tk.W, pady=(0, 6), padx=12)
 
         controls = ttk.Frame(self)
         ttk.Button(
@@ -163,7 +163,7 @@ class FlashcardSessionView(ttk.Frame):
             text="End Session",
             command=self._handle_exit_session,
         ).pack(side=tk.LEFT, padx=4)
-        controls.pack(side=tk.BOTTOM, pady=(2, 10))
+        controls.pack(pady=(4, 12))
 
     def begin_session(
         self,

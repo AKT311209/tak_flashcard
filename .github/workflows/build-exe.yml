@@ -1,0 +1,64 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'requirements.txt'
+      - 'tak_flashcard.spec'
+      - '.github/workflows/build-exe.yml'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build EXE with PyInstaller
+        run: |
+          pyinstaller --onefile tak_flashcard.spec
+
+      - name: Create data directory structure
+        run: |
+          mkdir dist\tak_flashcard_data\vocab
+          mkdir dist\tak_flashcard_data\seed
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tak_flashcard-windows
+          path: |
+            dist/tak_flashcard.exe
+            dist/tak_flashcard_data/
+          retention-days: 30
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/tak_flashcard.exe
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

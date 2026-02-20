@@ -6,8 +6,14 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Callable
 
-from tak_flashcard.config import Mode
+from tak_flashcard.config import Direction, Mode
 from tak_flashcard.features.flashcard.states import SessionSummary
+
+_DIRECTION_DISPLAY: dict[Direction, str] = {
+    Direction.ENG_TO_VN: "English→Vietnamese",
+    Direction.VN_TO_ENG: "Vietnamese→English",
+    Direction.MIXED: "Mixed",
+}
 
 
 def _format_seconds(total: int) -> str:
@@ -61,12 +67,20 @@ class ResultsView(ttk.Frame):
         stats_frame = ttk.LabelFrame(self, text="Results", padding=16)
         stats_frame.pack(fill="x", padx=20, pady=8)
 
+        self._specs_var = tk.StringVar(value="")
         self._correct_var = tk.StringVar(value="")
         self._score_var = tk.StringVar(value="")
         self._difficulty_var = tk.StringVar(value="")
         self._time_var = tk.StringVar(value="")
         self._show_var = tk.StringVar(value="")
         self._show_limit_var = tk.StringVar(value="")
+
+        self._specs_label = ttk.Label(
+            stats_frame,
+            textvariable=self._specs_var,
+            font=("Arial", 12, "bold"),
+        )
+        self._specs_label.pack(anchor=tk.W, pady=(0, 6))
 
         self._correct_label = ttk.Label(
             stats_frame,
@@ -129,6 +143,26 @@ class ResultsView(ttk.Frame):
                 :meth:`FlashcardController.get_summary`.
         """
 
+        direction_label = _DIRECTION_DISPLAY.get(
+            summary.direction,
+            summary.direction.name.replace("_", " ").capitalize(),
+        )
+        if summary.show_limit_total is not None:
+            show_desc = f"Show Answer limit: {summary.show_limit_total} uses"
+        elif summary.show_time_penalty:
+            show_desc = f"Show Answer penalty: {summary.show_time_penalty}s"
+        elif summary.show_score_penalty:
+            show_desc = f"Show Answer penalty: {summary.show_score_penalty} pts"
+        else:
+            show_desc = "Show Answer penalty: none"
+        self._specs_var.set(
+            " | ".join([
+                f"Mode: {summary.mode.name.title()}",
+                f"Direction: {direction_label}",
+                show_desc,
+                f"Wrong Answer: -{summary.wrong_penalty} pts",
+            ])
+        )
         pct = f"{summary.percent_correct:.1f}%"
         self._correct_var.set(
             f"Correct:          {summary.correct} / {summary.asked}  ({pct})"

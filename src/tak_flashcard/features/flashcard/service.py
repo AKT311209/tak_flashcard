@@ -212,7 +212,8 @@ class FlashcardService:
         if self.state is None:
             return None
         s = self.state
-        percent = round(s.correct / s.answered * 100, 1) if s.answered > 0 else 0.0
+        percent = round(s.correct / s.answered * 100,
+                        1) if s.answered > 0 else 0.0
         show_limit_total: Optional[int] = None
         if (
             s.mode in (Mode.ENDLESS, Mode.SPEED)
@@ -229,5 +230,9 @@ class FlashcardService:
             time_used=s.time_used,
             show_used=s.show_used,
             difficulty=s.difficulty,
+            direction=s.direction,
+            show_score_penalty=s.show_config.score_penalty,
+            show_time_penalty=s.show_config.time_penalty,
+            wrong_penalty=s.wrong_answer_penalty,
             show_limit_total=show_limit_total,
         )

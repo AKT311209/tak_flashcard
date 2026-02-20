@@ -72,6 +72,10 @@ class SessionSummary:
     time_used: Optional[int]
     show_used: int
     difficulty: int
+    direction: Direction
+    show_score_penalty: int = 0
+    show_time_penalty: int = 0
+    wrong_penalty: int = PENALTY_POINTS
     show_limit_total: Optional[int] = None
 
 
