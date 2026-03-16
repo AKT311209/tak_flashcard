@@ -136,7 +136,18 @@ class FlashcardService:
 
     @staticmethod
     def _resolve_direction(direction: Direction) -> Direction:
-        """Resolve mixed direction into a concrete direction for a card."""
+        """Turn a MIXED direction into a concrete ENG_TO_VN or VN_TO_ENG.
+
+        For any non-Mixed direction the input is returned unchanged.
+        For Mixed, one of the two concrete directions is selected at random
+        (50/50) so each card can go in either direction independently.
+
+        Parameters:
+            direction: The session's configured direction (may be MIXED).
+
+        Returns:
+            A concrete :class:`Direction` (never MIXED).
+        """
 
         if direction == Direction.MIXED:
             return random.choice([Direction.ENG_TO_VN, Direction.VN_TO_ENG])
@@ -144,7 +155,18 @@ class FlashcardService:
 
     @staticmethod
     def _answer_for(word: Word, direction: Direction) -> str:
-        """Return the expected answer text for a word and direction."""
+        """Return the text the user must select to answer correctly.
+
+        For English→Vietnamese the correct answer is the Vietnamese text.
+        For Vietnamese→English the correct answer is the English text.
+
+        Parameters:
+            word: The vocabulary word being quizzed.
+            direction: Which direction this card is going.
+
+        Returns:
+            The correct answer string.
+        """
 
         return (
             str(word.vietnamese)
@@ -153,15 +175,22 @@ class FlashcardService:
         )
 
     def _build_choices(self, word: Word, direction: Direction) -> list[str]:
-        """Build shuffled multiple-choice options for the current question.
+        """Build the four answer options shown on the current card.
+
+        Always produces exactly:
+          1 correct answer (from the card's word in the given direction), plus
+          up to 3 wrong distractors (random answers from other words).
+
+        The four options are shuffled before returning so the correct answer
+        is not always in the same position.
 
         Parameters:
-            word: The selected vocabulary word for the question prompt.
-            direction: Active translation direction for this card.
+            word: The vocabulary word for the current question.
+            direction: Which direction this card is going (determines whether
+                the correct answer is English or Vietnamese text).
 
         Returns:
-            A shuffled list containing the correct answer and up to three
-            distinct distractors from other words in the dataset.
+            A shuffled list of strings — the four answer choices.
         """
 
         correct_answer = self._answer_for(word, direction)
@@ -181,7 +210,15 @@ class FlashcardService:
         return choices
 
     def next_card(self) -> Optional[Word]:
-        """Advance to the next card and update asked counter."""
+        """Pick the next word and increment the asked counter.
+
+        Checks the question limit before drawing; marks the session finished
+        and returns ``None`` if the limit has been reached.
+
+        Returns:
+            The newly chosen :class:`Word`, or ``None`` if the session is
+            over or no words are available.
+        """
 
         if self.state is None:
             return None
