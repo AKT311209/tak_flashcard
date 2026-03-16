@@ -4,15 +4,15 @@ from __future__ import annotations
 
 import tkinter as tk
 from tkinter import ttk
+from typing import cast
 
 from tak_flashcard.config import APP_NAME, WINDOW_HEIGHT, WINDOW_WIDTH, ensure_data_dirs
-from tak_flashcard.config import Direction, Mode
 from tak_flashcard.core.settings import Settings, SettingsManager
 from tak_flashcard.db.repo import get_word_count
 from tak_flashcard.db.session import SessionLocal, init_db
 from tak_flashcard.features.dictionary.service import DictionaryService
 from tak_flashcard.features.flashcard.controller import FlashcardController
-from tak_flashcard.features.flashcard.states import ShowAnswerConfig
+from tak_flashcard.features.flashcard.states import SessionConfig
 from tak_flashcard.gui.styles import apply_appearance_settings
 from tak_flashcard.gui.views.dictionary_view import DictionaryView
 from tak_flashcard.gui.views.flashcard_view import FlashcardSessionView, FlashcardView
@@ -118,39 +118,16 @@ class FlashcardApp(tk.Tk):
             results_frame.update_summary(summary)
         self.navigate("results")
 
-    def start_flashcard_session(
-        self,
-        mode: Mode,
-        direction: Direction,
-        difficulty: int,
-        question_count: int,
-        time_limit: int,
-        show_config: ShowAnswerConfig,
-        wrong_penalty: int,
-    ) -> None:
+    def start_flashcard_session(self, config: SessionConfig) -> None:
         """Start a flashcard session and navigate to the dedicated session view.
 
         Parameters:
-            mode: Selected study mode.
-            direction: Selected translation direction.
-            difficulty: Selected difficulty from 1-5.
-            question_count: Desired question count for testing mode.
-            time_limit: Desired time limit for speed mode.
-            show_config: Settings for show-answer penalties.
-            wrong_penalty: Configured penalty for wrong answers.
+            config: Session settings collected from the flashcard configuration view.
         """
 
         session_frame = self.frames.get("flashcard_session")
         if isinstance(session_frame, FlashcardSessionView):
-            session_frame.begin_session(
-                mode,
-                direction,
-                difficulty,
-                question_count,
-                time_limit,
-                show_config,
-                wrong_penalty,
-            )
+            session_frame.begin_session(config)
             self.navigate("flashcard_session")
 
     def navigate(self, key: str) -> None:
@@ -185,14 +162,12 @@ class FlashcardApp(tk.Tk):
         key = self._current_view
 
         if key == "flashcard":
-            # type: ignore[assignment]
-            fc: FlashcardView = self.frames["flashcard"]
+            fc = cast(FlashcardView, self.frames["flashcard"])
             self.bind("<Return>", lambda _e: fc.start_session())
             self.bind("<Escape>", lambda _e: self.navigate("home"))
 
         elif key == "flashcard_session":
-            # type: ignore[assignment]
-            session: FlashcardSessionView = self.frames["flashcard_session"]
+            session = cast(FlashcardSessionView, self.frames["flashcard_session"])
             self.bind("<Return>", lambda _e: session.on_enter_key())
             self.bind("<space>", lambda _e: session.on_space_key())
             self.bind("<Escape>", lambda _e: session._handle_exit_session())
@@ -201,8 +176,7 @@ class FlashcardApp(tk.Tk):
                           n=_i: session.on_number_key(n))
 
         elif key == "dictionary":
-            # type: ignore[assignment]
-            dv: DictionaryView = self.frames["dictionary"]
+            dv = cast(DictionaryView, self.frames["dictionary"])
             self.bind("<Return>", lambda _e: dv.perform_search())
             self.bind("<Escape>", lambda _e: self.navigate("home"))
 
@@ -217,8 +191,7 @@ class FlashcardApp(tk.Tk):
             self.bind("<Escape>", lambda _e: self.navigate("home"))
 
         elif key == "import":
-            # type: ignore[assignment]
-            import_frame: ImportView = self.frames["import"]
+            import_frame = cast(ImportView, self.frames["import"])
             self.bind(
                 "<Escape>",
                 lambda _e: (

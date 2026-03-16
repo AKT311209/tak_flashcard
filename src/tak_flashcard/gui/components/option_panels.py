@@ -16,6 +16,7 @@ from tak_flashcard.config import (
     Direction,
     Mode,
 )
+from tak_flashcard.features.flashcard.states import SessionConfig, ShowAnswerConfig
 
 
 class FlashcardOptions(ttk.Frame):
@@ -191,6 +192,46 @@ class FlashcardOptions(ttk.Frame):
             int(self.show_limit.get()),
             int(self.show_time_penalty.get()),
             int(self.wrong_answer_penalty.get()),
+        )
+
+    def session_config(self) -> SessionConfig:
+        """Build a normalized :class:`SessionConfig` from widget values."""
+
+        (
+            mode,
+            direction,
+            difficulty,
+            question_count,
+            time_limit,
+            score_penalty,
+            show_limit,
+            time_penalty,
+            wrong_answer_penalty,
+        ) = self.values()
+
+        max_uses = 0 if mode == Mode.TESTING else (
+            show_limit if show_limit > 0 else None)
+        show_config = ShowAnswerConfig(
+            enabled=mode != Mode.TESTING,
+            score_penalty=max(score_penalty, 0),
+            time_penalty=time_penalty if mode == Mode.SPEED else 0,
+            max_uses=max_uses,
+        )
+        q_limit: int | None = question_count if mode == Mode.TESTING else None
+        t_limit: int | None = time_limit if mode == Mode.SPEED else None
+        wrong_penalty = (
+            wrong_answer_penalty
+            if mode in (Mode.ENDLESS, Mode.SPEED)
+            else 0
+        )
+        return SessionConfig(
+            mode=mode,
+            direction=direction,
+            difficulty=difficulty,
+            show_config=show_config,
+            question_limit=q_limit,
+            time_limit=t_limit,
+            wrong_penalty=wrong_penalty,
         )
 
     def _update_mode_specific_controls(self, *_: str) -> None:

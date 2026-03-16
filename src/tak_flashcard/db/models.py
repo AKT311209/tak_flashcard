@@ -1,4 +1,10 @@
-"""Database models for Tak Flashcard."""
+"""Database table definitions.
+
+This module describes the shape of the data stored on disk.
+There is one table: ``words``, holding every vocabulary entry.
+SQLAlchemy reads this description and creates/manages the actual
+SQLite table automatically.
+"""
 
 from __future__ import annotations
 
@@ -11,7 +17,23 @@ class Base(DeclarativeBase):
 
 
 class Word(Base):
-    """Represents a vocabulary word with performance metrics."""
+    """One row in the ``words`` table — a single vocabulary word and its stats.
+
+    Each word tracks how often it has been shown and how often the user
+    answered it correctly.  These counts feed the difficulty formula so
+    the app learns which words to show more or less often.
+
+    Attributes:
+        id: Auto-assigned unique number for each word.
+        english: The English word (e.g. ``"apple"``).
+        vietnamese: The Vietnamese translation (e.g. ``"quả táo"``).
+        part_of_speech: Grammar category — noun, verb, adjective, etc.
+            Can be empty/missing for older imported data.
+        display_count: Total times this word has appeared as a question.
+        correct_count: Times the user selected the right answer.
+        difficulty: Calculated score from 0.0 (always correct) to ~1.0
+            (never correct).  Updated after every answer.
+    """
 
     __tablename__ = "words"
 
@@ -29,7 +51,16 @@ class Word(Base):
         Float, default=0.0, nullable=False)
 
     def to_dict(self) -> dict[str, str | int | float | None]:
-        """Convert the word record to a dictionary for UI display."""
+        """Return all fields of this word as a plain Python dictionary.
+
+        Useful when the GUI needs to display the data without holding a
+        direct reference to the database object.
+
+        Returns:
+            A dict with keys: ``id``, ``english``, ``vietnamese``,
+            ``part_of_speech``, ``display_count``, ``correct_count``,
+            ``difficulty``.
+        """
 
         return {
             "id": self.id,

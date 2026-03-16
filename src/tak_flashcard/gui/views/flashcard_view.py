@@ -15,8 +15,8 @@ from tak_flashcard.config import (
 from tak_flashcard.core.scheduler import CountdownTimer
 from tak_flashcard.features.flashcard.controller import FlashcardController
 from tak_flashcard.features.flashcard.states import (
+    SessionConfig,
     SessionSummary,
-    ShowAnswerConfig,
     ShowAnswerOutcome,
 )
 from tak_flashcard.gui.components.flashcard_card import FlashcardCard
@@ -29,9 +29,7 @@ class FlashcardView(ttk.Frame):
     def __init__(
         self,
         master: tk.Misc,
-        on_start_session: Callable[
-            [Mode, Direction, int, int, int, ShowAnswerConfig, int], None
-        ],
+        on_start_session: Callable[[SessionConfig], None],
         on_back: Callable[[], None],
     ):
         """Initialize the flashcard settings view and navigation callbacks.
@@ -74,39 +72,7 @@ class FlashcardView(ttk.Frame):
     def start_session(self) -> None:
         """Start a new flashcard session using the configured options."""
 
-        (
-            mode,
-            direction,
-            difficulty,
-            question_count,
-            time_limit,
-            score_penalty,
-            show_limit,
-            time_penalty,
-            wrong_answer_penalty,
-        ) = self.options.values()
-        max_uses = 0 if mode == Mode.TESTING else (
-            show_limit if show_limit > 0 else None)
-        show_config = ShowAnswerConfig(
-            enabled=mode != Mode.TESTING,
-            score_penalty=max(score_penalty, 0),
-            time_penalty=time_penalty if mode == Mode.SPEED else 0,
-            max_uses=max_uses,
-        )
-        wrong_penalty = (
-            wrong_answer_penalty
-            if mode in (Mode.ENDLESS, Mode.SPEED)
-            else 0
-        )
-        self.on_start_session(
-            mode,
-            direction,
-            difficulty,
-            question_count,
-            time_limit,
-            show_config,
-            wrong_penalty,
-        )
+        self.on_start_session(self.options.session_config())
 
 
 class FlashcardSessionView(ttk.Frame):
@@ -167,33 +133,17 @@ class FlashcardSessionView(ttk.Frame):
 
     def begin_session(
         self,
-        mode: Mode,
-        direction: Direction,
-        difficulty: int,
-        question_count: int,
-        time_limit: int,
-        show_config: ShowAnswerConfig,
-        wrong_penalty: int,
+        config: SessionConfig,
     ) -> None:
         """Start a new session and render the first card."""
 
         self._stop_timer()
-        q_limit: int | None = question_count if mode == Mode.TESTING else None
-        t_limit: int | None = time_limit if mode == Mode.SPEED else None
-        self.controller.start(
-            mode,
-            direction,
-            difficulty,
-            show_config,
-            q_limit,
-            t_limit,
-            wrong_penalty,
-        )
+        self.controller.start(config)
         self.status_var.set(
-            f"Mode: {mode.name.title()} | Direction: {direction.name} | Score: 0"
+            f"Mode: {config.mode.name.title()} | Direction: {config.direction.name} | Score: 0"
         )
-        if mode == Mode.SPEED and t_limit is not None:
-            self._start_timer(t_limit)
+        if config.mode == Mode.SPEED and config.time_limit is not None:
+            self._start_timer(config.time_limit)
         else:
             self._hide_timer_label()
         self.next_card()

@@ -1,4 +1,18 @@
-"""Database session management."""
+"""Database connection setup.
+
+This module opens the connection to the SQLite database file and provides
+``SessionLocal`` — a factory for creating database sessions.
+
+A "session" is like a temporary workspace: you read and write data inside
+it, and when you're ready the changes are committed (saved) to disk.
+
+The application creates ONE session at startup (in ``gui/app.py``) and
+reuses it for the entire lifetime of the app.
+
+Module-level side effects:
+    - Calls ``ensure_data_dirs()`` so the ``data/`` folder exists before
+      SQLite tries to create the ``.db`` file inside it.
+"""
 
 from __future__ import annotations
 
@@ -16,6 +30,11 @@ SessionLocal = sessionmaker(
 
 
 def init_db() -> None:
-    """Create database tables if they do not exist."""
+    """Create the database tables on first run (safe to call every startup).
+
+    Checks whether the ``words`` table exists and creates it if not.
+    If the table is already there, nothing changes — no data is lost.
+    Called once during app startup before any data is read or written.
+    """
 
     Base.metadata.create_all(bind=ENGINE)

@@ -1,41 +1,69 @@
-"""Repository layer for database operations."""
+"""Repository layer for database operations.
+
+This module is the ONLY place in the codebase that reads from or writes to
+the database.  Every function here takes an active SQLAlchemy session (``db``)
+as its first argument and performs exactly one logical database task.
+
+No business logic lives here — just raw queries and writes.
+
+Calling order (typical):
+  db/session.py creates the session
+      → gui/app.py holds it open for the lifetime of the app
+          → features/ and gui/ call these functions via services/controllers
+"""
 
 from __future__ import annotations
 
-import random
-import math
 from collections.abc import Iterable
-from typing import Sequence, cast
 
 from sqlalchemy import func, insert, select
 from sqlalchemy.orm import Session
 
-from tak_flashcard.config import Direction, DIFFICULTY_LEVELS
 from tak_flashcard.core.difficulty import difficulty_score
 from tak_flashcard.db.models import Word
 
 
 def get_word_count(db: Session) -> int:
-    """Return the total count of words in the database."""
+    """Count how many vocabulary words are currently in the database.
+
+    Used at startup to decide whether to show the Import screen first.
+
+    Parameters:
+        db: The open database connection.
+
+    Returns:
+        Total number of words stored (0 if the table is empty).
+    """
 
     return db.scalar(select(func.count()).select_from(Word)) or 0
 
 
 def bulk_insert_words(db: Session, words: Iterable[dict[str, object]]) -> None:
-    """Insert multiple words into the database."""
+    """Write a large batch of new words to the database in one go.
+
+    More efficient than inserting words one at a time; used during CSV import.
+
+    Parameters:
+        db: The open database connection.
+        words: Each item is a dict with keys ``english``, ``vietnamese``, and
+               optionally ``part_of_speech``.
+    """
 
     db.execute(insert(Word), list(words))
 
 
 def find_word_by_english(db: Session, english: str) -> Word | None:
-    """Return the first Word whose English text matches exactly (case-insensitive).
+    """Look up a word by its English text (case-insensitive).
+
+    Used during import to check whether a word already exists before
+    deciding to insert or update it.
 
     Parameters:
-        db: Active SQLAlchemy session.
-        english: The English word to look up.
+        db: The open database connection.
+        english: The English word to search for (e.g. ``"apple"``).
 
     Returns:
-        The matching :class:`Word` instance, or ``None`` if not found.
+        The matching :class:`Word` record, or ``None`` if not found.
     """
 
     return db.scalars(
@@ -49,25 +77,26 @@ def upsert_words_append(
     overwrite_duplicates: bool,
     reset_difficulty: bool,
 ) -> tuple[int, int, int]:
-    """Insert new words with configurable handling of duplicates.
+    """Add new words while leaving existing ones alone (Append import mode).
 
-    For each row the English word is looked up in the database.  When no
-    existing record is found the row is inserted as a new word.  When a
-    duplicate is found the behaviour is controlled by the caller flags.
+    Goes through each row from the CSV one by one:
+    - If the English word is not yet in the database → insert it as new.
+    - If it already exists and ``overwrite_duplicates`` is True → update
+      its Vietnamese translation and part of speech.
+    - If it already exists and ``overwrite_duplicates`` is False → skip it.
 
     Parameters:
-        db: Active SQLAlchemy session.
-        rows: Parsed vocabulary rows ready for insertion.
-        overwrite_duplicates: When ``True``, update the existing record with
-            the new Vietnamese translation and part-of-speech; when ``False``
-            the existing record is left untouched.
+        db: The open database connection.
+        rows: Parsed CSV rows, each a dict with ``english``, ``vietnamese``,
+              and optionally ``part_of_speech``.
+        overwrite_duplicates: Whether to update existing words with new data
+            from the CSV.
         reset_difficulty: When ``True`` (and ``overwrite_duplicates`` is also
-            ``True``), reset the duplicate word's difficulty, display count,
-            and correct count back to their defaults.
+            ``True``), wipe the word's progress stats back to zero.
 
     Returns:
-        A three-tuple ``(added, updated, skipped)`` with counts for each
-        outcome category.
+        A three-item tuple: ``(added, updated, skipped)`` — how many words
+        fell into each category.
     """
 
     added = updated = skipped = 0
@@ -100,13 +129,16 @@ def upsert_words_append(
 
 
 def clear_all_words(db: Session) -> int:
-    """Delete every word from the database and return the count removed.
+    """Delete every word from the database (Replace import mode).
+
+    Called before a fresh import when the user chooses "Replace" mode,
+    which wipes the existing vocabulary and replaces it entirely.
 
     Parameters:
-        db: Active SQLAlchemy session.
+        db: The open database connection.
 
     Returns:
-        The number of rows that were deleted.
+        The number of words that were deleted.
     """
 
     count = get_word_count(db)
@@ -115,13 +147,34 @@ def clear_all_words(db: Session) -> int:
 
 
 def list_words(db: Session) -> list[Word]:
-    """Return all words ordered by English word."""
+    """Fetch every word from the database, sorted A→Z by English text.
+
+    Used by the Dictionary view to show the full vocabulary list and by
+    the flashcard service to load all words into memory at session start.
+
+    Parameters:
+        db: The open database connection.
+
+    Returns:
+        All :class:`Word` records, ordered alphabetically by English word.
+    """
 
     return list(db.scalars(select(Word).order_by(Word.english)).all())
 
 
 def search_words(db: Session, query: str) -> list[Word]:
-    """Search words by English or Vietnamese fields."""
+    """Find words whose English or Vietnamese text contains the search query.
+
+    Called by the Dictionary view's search bar.  Matching is
+    case-insensitive and uses a "contains" check (not exact match).
+
+    Parameters:
+        db: The open database connection.
+        query: Text typed by the user in the search bar.
+
+    Returns:
+        All matching :class:`Word` records, sorted A→Z by English text.
+    """
 
     pattern = f"%{query.lower()}%"
     stmt = select(Word).where(
@@ -132,7 +185,16 @@ def search_words(db: Session, query: str) -> list[Word]:
 
 
 def filter_by_part_of_speech(db: Session, part: str) -> list[Word]:
-    """Filter words by part of speech."""
+    """Fetch only words that match a specific part of speech.
+
+    Parameters:
+        db: The open database connection.
+        part: The part of speech to filter by (e.g. ``"noun"``, ``"verb"``).
+              Matching is case-insensitive.
+
+    Returns:
+        Matching :class:`Word` records, sorted A→Z by English text.
+    """
 
     stmt = select(Word).where(func.lower(Word.part_of_speech)
                               == part.lower()).order_by(Word.english)
@@ -140,7 +202,18 @@ def filter_by_part_of_speech(db: Session, part: str) -> list[Word]:
 
 
 def update_word_stats(db: Session, word_id: int, is_correct: bool) -> None:
-    """Update display and correct counts, and recalculate difficulty for a word."""
+    """Record the result of one answer attempt and refresh the word's difficulty.
+
+    Called after every answer submitted during a flashcard session.
+    Increments the word's display count each time, and its correct count
+    only when the user answered correctly.  Then recalculates difficulty
+    so future word selection reflects the latest performance.
+
+    Parameters:
+        db: The open database connection.
+        word_id: The database ID of the word that was just answered.
+        is_correct: ``True`` if the user chose the right answer.
+    """
 
     word = db.get(Word, word_id)
     if word is None:
@@ -153,52 +226,3 @@ def update_word_stats(db: Session, word_id: int, is_correct: bool) -> None:
     db.add(word)
 
 
-def choose_weighted_word(words: Sequence[Word], difficulty_level: int, _direction: Direction) -> Word | None:
-    """Select a word weighted by difficulty preference and direction."""
-
-    if not words:
-        return None
-
-    clamped = _clamp_difficulty(difficulty_level)
-    weights: list[float] = []
-    for word in words:
-        base_value = cast(float | None, word.difficulty)
-        base = base_value if base_value is not None else 0.5
-        weight = _calculate_difficulty_weight(clamped, base)
-        weights.append(max(weight, 0.01))
-
-    chosen = random.choices(words, weights=weights, k=1)[0]
-    return chosen
-
-
-def _clamp_difficulty(level: int) -> int:
-    """Clamp user-selected difficulty to valid configured bounds."""
-
-    min_level = min(DIFFICULTY_LEVELS)
-    max_level = max(DIFFICULTY_LEVELS)
-    return max(min(level, max_level), min_level)
-
-
-def _calculate_difficulty_weight(level: int, base: float) -> float:
-    """Return the selection weight for a word given the difficulty level.
-
-    Uses an exponential multiplier so that each successive level increases
-    the hard-to-easy probability ratio rather than simply shifting all weights
-    up by a constant.
-
-    Level 1 (easiest): strongly favours low-difficulty words via 1/e^(2*base).
-    Level 2 (easy):    gently favours low-difficulty words via 1/e^(base).
-    Level 3 (neutral): flat weight; all words equally likely.
-    Level 4 (hard):    gently favours high-difficulty words via e^base.
-    Level 5 (hardest): strongly favours high-difficulty words via e^(2*base).
-    """
-
-    if level == 1:
-        return math.exp(-2.0 * base)
-    if level == 2:
-        return math.exp(-base)
-    if level == 3:
-        return 1.0
-    if level == 4:
-        return math.exp(base)
-    return math.exp(2.0 * base)

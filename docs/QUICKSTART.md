@@ -1,212 +1,76 @@
-# Quick Start Guide
+# Quick Start (Non-Technical)
 
-## Running the Application
+This guide helps you open and use Tak Flashcard quickly.
 
-### From Project Root
+## 1) Start the app
 
-```bash
-cd /mnt/Data/Bi/Coding/Projects/tak_flashcard
-python -m src.tak_flashcard.main
-```
+From the project folder, run the app module.
 
-### From src Directory
+- Preferred command path: `src/tak_flashcard/main.py`
+- Main module name: `tak_flashcard.main`
 
-```bash
-cd /mnt/Data/Bi/Coding/Projects/tak_flashcard/src
-python -m tak_flashcard.main
-```
+If needed, follow the same launch style documented in `README.md`.
 
-## First-Time Setup
+## 2) First launch behavior
 
-When you run the application for the first time:
+On first run, the app will:
 
-1. **Database Initialization**: The application will create a SQLite database at `src/tak_flashcard/data/flashcard.db`
+1. Create the database file.
+2. Check whether words exist.
+3. If no words exist, open **Import Vocabulary** in forced mode.
 
-2. **Vocabulary Import**: The application will automatically import 1037 words from `src/tak_flashcard/data/vocab/vocab_source.csv`
+Forced mode means:
 
-3. **Settings File**: A default settings file will be created at `src/tak_flashcard/data/user_settings.json`
+- You must import a CSV first.
+- Back button is hidden.
+- After successful import, app goes to Home screen.
 
-## Testing the Features
+## 3) CSV import requirements
 
-### 1. Test Flashcard Feature
-- Click "Flashcard" on home screen
-- Select "Endless" mode
-- Choose "English → Vietnamese"
-- Set difficulty to 3
-- Click "Start Session"
-- Answer a few questions by selecting from multiple-choice options
+Your CSV must include these columns:
 
-### 2. Test Dictionary Feature
-- Click "Dictionary" on home screen
-- Search for "hello"
-- Filter by "verb"
-- Sort by "Difficulty"
+- `english`
+- `vietnamese`
+- `part_of_speech`
 
--### 3. Test Settings Feature
-- Click "Settings" on home screen
-- Adjust font or font size (pixels)
-- Click "Save & Apply"
+Import modes:
 
-### 4. Test Guide Feature
-- Click "Guide" on home screen
-- Scroll through the user manual
+- **Append**: keep existing words, add/update from file.
+- **Replace**: remove all existing words, then insert from file.
 
-## Keyboard Shortcuts
+Before import, the app creates a backup copy in `src/tak_flashcard/data/vocab/`.
+
+## 4) Basic learning flow
+
+1. Home → **Flashcard**
+2. Pick mode, direction, difficulty
+3. Click **Start Session**
+4. Answer cards
+5. See **Session Summary**
+
+## 5) Keyboard shortcuts
 
 | Screen | Key | Action |
-|--------|-----|--------|
-| Flashcard Config | `Enter` | Start Session |
-| Flashcard Config | `Escape` | Back to Home |
-| Flashcard Session | `1` / `2` / `3` / `4` | Select & submit answer choice |
-| Flashcard Session | `Space` | Show Answer (pre-answer) / Next card (post-answer) |
-| Flashcard Session | `Enter` | Next card (post-answer) |
-| Flashcard Session | `Escape` | End session early |
+|---|---|---|
+| Flashcard setup | `Enter` | Start session |
+| Flashcard setup | `Escape` | Back to Home |
+| Flashcard session | `1` / `2` / `3` / `4` | Choose answer |
+| Flashcard session | `Space` | Show Answer or Next |
+| Flashcard session | `Enter` | Next card (after answer) |
+| Flashcard session | `Escape` | End session |
 | Dictionary | `Enter` | Search |
 | Dictionary | `Escape` | Back to Home |
-| Results | `Enter` | Play Again (back to config) |
-| Results | `Escape` | Back to Home |
-| Guide / Settings / Import | `Escape` | Back to Home |
+| Results | `Enter` | Play Again |
+| Results | `Escape` | Home |
 
-## Expected Console Output
+## 6) If something goes wrong
 
-```
-Initializing database...
-Checking vocabulary data...
-Successfully imported 1037 words
-Starting application...
-```
+- Check dependencies are installed from `requirements.txt`.
+- Confirm CSV has required columns.
+- If data seems broken, remove the local DB file and restart (the app recreates it).
 
-## Common Issues and Solutions
+## 7) Read more (simple docs)
 
-### Issue: ModuleNotFoundError
-**Solution**: Make sure you're running from the correct directory and PYTHONPATH is set
-
-```bash
-# Option 1: Run from project root
-cd /mnt/Data/Bi/Coding/Projects/tak_flashcard
-PYTHONPATH=src python -m tak_flashcard.main
-
-# Option 2: Run from src directory
-cd /mnt/Data/Bi/Coding/Projects/tak_flashcard/src
-python -m tak_flashcard.main
-```
-
-### Issue: Package import errors
-**Solution**: Install all dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### Issue: CSV file not found
-**Solution**: Ensure the vocabulary CSV exists at the correct location
-
-```bash
-ls -la src/tak_flashcard/data/vocab/vocab_source.csv
-```
-
-### Issue: Database errors
-**Solution**: Delete and recreate the database
-
-```bash
-rm src/tak_flashcard/data/flashcard.db
-# Then restart the application
-```
-
-## Features Checklist
-
-- ✅ **Database Layer**: SQLAlchemy models, session management, repositories
-- ✅ **Data Import**: CSV importer with 1037+ words
-- ✅ **Core Logic**: Difficulty calculation, card selection, scoring, timer
-- ✅ **Settings**: JSON-based settings persistence
-- ✅ **Flashcard Modes**: Endless, Speed, Testing
-- ✅ **Directions**: Eng→Vn, Vn→Eng, Mixed
-- ✅ **Difficulty Levels**: 1-5 with weighted selection
-- ✅ **Penalty System**: Score deduction, time deduction, HP limit
-- ✅ **Dictionary**: Search, filter, sort functionality
-- ✅ **Guide**: Comprehensive user manual
-- ✅ **Settings**: Appearance (font/colors), defaults, preferences
-- ✅ **GUI**: Tkinter interface with all views
-
-## File Structure Verification
-
-```bash
-# Check core files exist
-ls -la src/tak_flashcard/main.py
-ls -la src/tak_flashcard/config.py
-
-# Check database layer
-ls -la src/tak_flashcard/db/models.py
-ls -la src/tak_flashcard/db/session.py
-ls -la src/tak_flashcard/db/repo.py
-
-# Check features
-ls -la src/tak_flashcard/features/flashcard/controller.py
-ls -la src/tak_flashcard/features/dictionary/service.py
-ls -la src/tak_flashcard/features/guide/content.py
-ls -la src/tak_flashcard/features/settings/controller.py
-
-# Check GUI
-ls -la src/tak_flashcard/gui/app.py
-ls -la src/tak_flashcard/gui/views/home_view.py
-ls -la src/tak_flashcard/gui/views/flashcard_view.py
-
-# Check data
-ls -la src/tak_flashcard/data/vocab/vocab_source.csv
-```
-
-## Development Notes
-
-### Type Checking Warnings
-The Pylance type checker may show some warnings related to:
-- SQLAlchemy Column types
-- Optional type handling
-
-These are false positives and won't affect runtime execution. The application has been designed to handle these cases properly.
-
-### Database Schema
-The database schema is automatically created on first run. You can inspect it using SQLite:
-
-```bash
-sqlite3 src/tak_flashcard/data/flashcard.db
-.schema
-SELECT COUNT(*) FROM words;
-.quit
-```
-
-### Adding More Words
-To add more vocabulary words:
-1. Edit `src/tak_flashcard/data/vocab/vocab_source.csv`
-2. Add entries in format: `english,vietnamese,part_of_speech`
-3. Delete the database file
-4. Restart the application to reimport
-
-## Next Steps
-
-After confirming the application works:
-
-1. **Test all modes**: Try Endless, Speed, and Testing modes
-2. **Test all directions**: Eng→Vn, Vn→Eng, Mixed
-3. **Test difficulty levels**: Try levels 1-5 and observe word selection
-4. **Test Show Answer**: See penalty system in action
-5. **Complete a full session**: Get statistics and results
-6. **Browse dictionary**: Search and filter words
-7. **Customize settings**: Adjust font, colors, defaults
-8. **Read the guide**: Review all features and tips
-
-## Success Criteria
-
-✅ Application starts without errors  
-✅ Database auto-created with 1000+ words  
-✅ All 3 flashcard modes work  
-✅ All 3 directions functional  
-✅ Difficulty system adapts to performance  
-✅ Dictionary search/filter/sort works  
-✅ Settings save and load correctly  
-✅ Guide displays complete documentation  
-✅ Session results shown correctly  
-✅ Application stable on Windows/Linux
-
-## Contact
-
-For issues or questions, refer to the main README.md or the in-app Guide.
+- `docs/NON_TECH_OVERVIEW.md`
+- `docs/CORE_LOGIC_SIMPLE.md`
+- `docs/FUNCTION_ROLE_MAP.md`

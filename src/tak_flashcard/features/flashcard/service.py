@@ -1,4 +1,28 @@
-"""Business logic for flashcard sessions."""
+"""The engine that runs a flashcard session.
+
+This module does all the work:
+  - Loading vocabulary words from the database into memory.
+  - Picking the next word and building the four answer choices.
+  - Checking whether the user's answer is correct.
+  - Updating word difficulty statistics in the database.
+  - Applying the scoring rules.
+  - Knowing when the session is over and building the summary.
+
+It is the only "brain" layer — the GUI calls it through a controller but
+never talks to the database directly.
+
+Calling order (typical session):
+  FlashcardController  (features/flashcard/controller.py)
+      → FlashcardService.start_session()   — set up a new session
+      → FlashcardService.next_card()       — get the next word to display
+          → _pick_word()
+              → core/selectors.py :: select_next_word()
+              → _build_choices()
+      → FlashcardService.submit_answer()   — process the user's selection
+          → db/repo.py :: update_word_stats()
+          → core/scoring.py :: apply_scoring()
+      → FlashcardService.get_summary()     — build end-of-session stats
+"""
 
 from __future__ import annotations
 
@@ -16,54 +40,74 @@ from tak_flashcard.db.models import Word
 from tak_flashcard.features.flashcard.states import (
     AnswerResult,
     FlashcardState,
+    SessionConfig,
     SessionSummary,
-    ShowAnswerConfig,
     ShowAnswerOutcome,
 )
 
 
 class FlashcardService:
-    """Manage flashcard session lifecycle and logic."""
+    """Manages the full lifecycle of a flashcard session.
+
+    On :meth:`start_session` all vocabulary words are loaded into memory
+    and a fresh :class:`FlashcardState` is created.  Subsequent calls to
+    :meth:`next_card`, :meth:`submit_answer`, and :meth:`show_answer_penalty`
+    advance the session, update stats, and keep state in sync.
+
+    One instance is created at app startup and reused across sessions
+    (it reloads words and resets state on each :meth:`start_session` call).
+    """
 
     def __init__(self, db: Session):
-        """Create service bound to a database session."""
+        """Bind the service to a database session.
+
+        Parameters:
+            db: The shared database session opened once by the application.
+        """
 
         self.db = db
         self.words: list[Word] = []
         self.state: Optional[FlashcardState] = None
 
     def load_words(self) -> None:
-        """Load all words into memory."""
+        """Fetch all vocabulary from the database into memory.
+
+        Storing words in memory (``self.words``) avoids repeated DB queries
+        during a session.  Called automatically by :meth:`start_session`.
+        """
 
         self.words = repo.list_words(self.db)
 
-    def start_session(
-        self,
-        mode: Mode,
-        direction: Direction,
-        difficulty: int,
-        show_config: ShowAnswerConfig,
-        question_limit: Optional[int] = None,
-        time_limit: Optional[int] = None,
-        wrong_penalty: int = PENALTY_POINTS,
-    ) -> FlashcardState:
-        """Initialize a new session and return its state."""
+    def start_session(self, config: SessionConfig) -> FlashcardState:
+        """Set up a brand-new session from the provided configuration.
+
+        Loads all words from the database into memory, then creates a fresh
+        :class:`FlashcardState` using the settings in ``config``.  Any
+        previous session data is discarded.
+
+        Parameters:
+            config: Session settings (mode, direction, difficulty, limits,
+                penalty rules).
+
+        Returns:
+            The newly created :class:`FlashcardState`.
+        """
 
         self.load_words()
         self.state = FlashcardState(
-            mode=mode,
-            direction=direction,
-            difficulty=difficulty,
-            question_limit=question_limit,
-            time_limit=time_limit,
-            show_config=show_config,
+            mode=config.mode,
+            direction=config.direction,
+            difficulty=config.difficulty,
+            question_limit=config.question_limit,
+            time_limit=config.time_limit,
+            show_config=config.show_config,
             current_word=None,
             score=0,
             asked=0,
             correct=0,
             started_at=datetime.utcnow(),
             finished=False,
-            wrong_answer_penalty=wrong_penalty,
+            wrong_answer_penalty=config.wrong_penalty,
         )
         return self.state
 

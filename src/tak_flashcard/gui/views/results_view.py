@@ -6,31 +6,13 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Callable
 
-from tak_flashcard.config import Direction, Mode
+from tak_flashcard.config import Mode
 from tak_flashcard.features.flashcard.states import SessionSummary
-
-_DIRECTION_DISPLAY: dict[Direction, str] = {
-    Direction.ENG_TO_VN: "English→Vietnamese",
-    Direction.VN_TO_ENG: "Vietnamese→English",
-    Direction.MIXED: "Mixed",
-}
-
-
-def _format_seconds(total: int) -> str:
-    """Convert a number of seconds to a human-readable ``Xm Ys`` string.
-
-    Parameters:
-        total: Duration in whole seconds.
-
-    Returns:
-        A string like ``"2m 5s"`` for values ≥ 60 seconds, or ``"42s"``
-        for shorter durations.
-    """
-
-    mins, secs = divmod(total, 60)
-    if mins:
-        return f"{mins}m {secs}s"
-    return f"{secs}s"
+from tak_flashcard.utils.formatters import (
+    format_direction,
+    format_mode,
+    format_seconds,
+)
 
 
 class ResultsView(ttk.Frame):
@@ -143,10 +125,7 @@ class ResultsView(ttk.Frame):
                 :meth:`FlashcardController.get_summary`.
         """
 
-        direction_label = _DIRECTION_DISPLAY.get(
-            summary.direction,
-            summary.direction.name.replace("_", " ").capitalize(),
-        )
+        direction_label = format_direction(summary.direction)
         if summary.show_limit_total is not None:
             show_desc = f"Show Answer limit: {summary.show_limit_total} uses"
         elif summary.show_time_penalty:
@@ -157,7 +136,7 @@ class ResultsView(ttk.Frame):
             show_desc = "Show Answer penalty: none"
         self._specs_var.set(
             " | ".join([
-                f"Mode: {summary.mode.name.title()}",
+                f"Mode: {format_mode(summary.mode)}",
                 f"Direction: {direction_label}",
                 show_desc,
                 f"Wrong Answer: -{summary.wrong_penalty} pts",
@@ -185,7 +164,7 @@ class ResultsView(ttk.Frame):
 
         if summary.mode == Mode.SPEED and summary.time_used is not None:
             self._time_var.set(
-                f"Time Used:        {_format_seconds(summary.time_used)}"
+                f"Time Used:        {format_seconds(summary.time_used)}"
             )
             self._time_label.pack(anchor=tk.W, pady=4)
         else:
