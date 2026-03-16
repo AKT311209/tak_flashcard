@@ -112,7 +112,16 @@ class FlashcardService:
         return self.state
 
     def _pick_word(self) -> Optional[Word]:
-        """Select the next word respecting direction and difficulty."""
+        """Choose the next word to put on the card.
+
+        Uses the word-selection logic in :mod:`core.selectors` (weighted
+        random draw based on difficulty) and then immediately builds the
+        four answer choices for the chosen word.
+
+        Returns:
+            The selected :class:`Word`, or ``None`` if the word list is
+            empty or no session is active.
+        """
 
         state = self.state
         if state is None or not self.words:

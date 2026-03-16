@@ -224,5 +224,3 @@ def update_word_stats(db: Session, word_id: int, is_correct: bool) -> None:
     word.difficulty = difficulty_score(
         word.display_count, word.correct_count)
     db.add(word)
-
-
