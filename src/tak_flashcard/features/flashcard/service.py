@@ -231,7 +231,24 @@ class FlashcardService:
         return word
 
     def submit_answer(self, answer: str) -> Optional[AnswerResult]:
-        """Validate an answer, update stats, and return result."""
+        """Check the user's answer, update stats, and return the result.
+
+        Steps performed:
+          1. Compare the submitted text to the correct answer
+             (case-insensitive, stripped of leading/trailing spaces).
+          2. Update ``display_count``, ``correct_count``, and ``difficulty``
+             in the database for the current word.
+          3. Apply the scoring rule (add or deduct points).
+          4. Commit the database changes.
+          5. Mark the session finished if the question limit is now reached.
+
+        Parameters:
+            answer: The text of the option the user selected.
+
+        Returns:
+            An :class:`AnswerResult` describing correctness, new score, and
+            point delta.  Returns ``None`` if no question is active.
+        """
 
         state = self.state
         if state is None or state.current_word is None:
@@ -260,7 +277,17 @@ class FlashcardService:
         )
 
     def show_answer_penalty(self) -> ShowAnswerOutcome:
-        """Apply a penalty for revealing an answer and report the outcome."""
+        """Handle a "Show Answer" request: apply penalties and report the outcome.
+
+        Checks whether revealing is permitted (feature enabled, uses not
+        exhausted).  If allowed, deducts the configured score penalty,
+        increments ``show_used``, and calculates any time penalty for Speed
+        mode.
+
+        Returns:
+            A :class:`ShowAnswerOutcome` with whether the reveal was allowed,
+            the score change, remaining uses, and any time penalty.
+        """
 
         if self.state is None:
             return ShowAnswerOutcome(False, 0, None, 0)
@@ -285,7 +312,16 @@ class FlashcardService:
         )
 
     def is_finished(self) -> bool:
-        """Return whether the session has reached an end condition."""
+        """Check whether the session has ended.
+
+        A session is considered finished when ``state.finished`` has been
+        set to ``True`` (by the question-limit check, a timer expiry, or an
+        explicit end triggered by the GUI).
+
+        Returns:
+            ``True`` if the session is over, ``False`` if it is still active.
+            Also returns ``True`` if no session has been started.
+        """
 
         if self.state is None:
             return True
