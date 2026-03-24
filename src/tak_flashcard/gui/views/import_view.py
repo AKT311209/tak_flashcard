@@ -50,7 +50,7 @@ class ImportView(ttk.Frame):
                 successful import when the view is in forced mode.
         """
 
-        super().__init__(master, padding=16)
+        super().__init__(master, padding=20, style="Page.TFrame")
         self.db = db
         self.on_back = on_back
         self._on_success = on_success
@@ -71,9 +71,15 @@ class ImportView(ttk.Frame):
     def _build_header(self) -> None:
         """Render the section title."""
 
-        ttk.Label(self, text="Import Vocabulary", font=("Arial", 15, "bold")).pack(
-            anchor=tk.W, pady=(0, 6)
-        )
+        header = ttk.Frame(self, padding=16, style="Glass.TFrame")
+        header.pack(fill="x", pady=(0, 10))
+        ttk.Label(header, text="Import Vocabulary",
+                  style="Title.TLabel").pack(anchor=tk.W)
+        ttk.Label(
+            header,
+            text="Map your CSV columns and import in Append or Replace mode.",
+            style="Subtitle.TLabel",
+        ).pack(anchor=tk.W, pady=(4, 0))
 
     def _build_forced_banner(self) -> None:
         """Render the notice shown when the database is empty and import is required."""
@@ -81,8 +87,7 @@ class ImportView(ttk.Frame):
         self._forced_banner = ttk.Label(
             self,
             text="",
-            foreground="#b85c00",
-            font=("Arial", 11),
+            style="Status.TLabel",
             justify=tk.LEFT,
         )
         self._forced_banner.pack(anchor=tk.W, pady=(0, 8))
@@ -90,8 +95,9 @@ class ImportView(ttk.Frame):
     def _build_guide(self) -> None:
         """Render the collapsible user guide panel."""
 
-        guide_frame = ttk.LabelFrame(self, text="Guide", padding=8)
-        ttk.Label(guide_frame, text=_GUIDE_TEXT, justify=tk.LEFT).pack(
+        guide_frame = ttk.LabelFrame(
+            self, text="Guide", padding=10, style="Glass.TLabelframe")
+        ttk.Label(guide_frame, text=_GUIDE_TEXT, justify=tk.LEFT, style="Muted.TLabel").pack(
             anchor=tk.W
         )
         guide_frame.pack(fill="x", pady=(0, 10))
@@ -99,9 +105,10 @@ class ImportView(ttk.Frame):
     def _build_file_row(self) -> None:
         """Render the file-picker row."""
 
-        row = ttk.LabelFrame(self, text="CSV File", padding=8)
+        row = ttk.LabelFrame(self, text="CSV File",
+                             padding=10, style="Glass.TLabelframe")
         self._path_var = tk.StringVar(value="No file selected")
-        ttk.Label(row, textvariable=self._path_var, foreground="gray").pack(
+        ttk.Label(row, textvariable=self._path_var, style="Muted.TLabel").pack(
             side=tk.LEFT, fill="x", expand=True
         )
         ttk.Button(row, text="Browse…", command=self._browse_file).pack(
@@ -118,7 +125,7 @@ class ImportView(ttk.Frame):
         """
 
         self._col_map_frame = ttk.LabelFrame(
-            self, text="Column Mapping", padding=8)
+            self, text="Column Mapping", padding=10, style="Glass.TLabelframe")
 
         eng_row = ttk.Frame(self._col_map_frame)
         ttk.Label(eng_row, text="English *", width=18,
@@ -157,14 +164,14 @@ class ImportView(ttk.Frame):
         ttk.Label(
             self._col_map_frame,
             text="* Required",
-            foreground="gray",
-            font=("Arial", 9),
+            style="Muted.TLabel",
         ).pack(anchor=tk.W, pady=(4, 0))
 
     def _build_mode_row(self) -> None:
         """Render import-mode radio buttons and Append-specific duplicate options."""
 
-        row = ttk.LabelFrame(self, text="Import Mode", padding=8)
+        row = ttk.LabelFrame(self, text="Import Mode",
+                             padding=10, style="Glass.TLabelframe")
         self._mode_frame = row
         self._mode_var = tk.StringVar(value="append")
         ttk.Radiobutton(
@@ -186,7 +193,7 @@ class ImportView(ttk.Frame):
         ttk.Label(
             self._append_options_frame,
             text="Duplicate words (same English):",
-            font=("Arial", 9),
+            style="Muted.TLabel",
         ).pack(anchor=tk.W, pady=(6, 2))
 
         self._overwrite_var = tk.BooleanVar(value=False)
@@ -213,9 +220,13 @@ class ImportView(ttk.Frame):
     def _build_action_row(self) -> None:
         """Render the Import and Back buttons."""
 
-        row = ttk.Frame(self)
+        row = ttk.Frame(self, style="Page.TFrame")
         self._import_btn = ttk.Button(
-            row, text="Import", command=self._run_import, state="disabled"
+            row,
+            text="Import",
+            style="Primary.TButton",
+            command=self._run_import,
+            state="disabled",
         )
         self._import_btn.pack(side=tk.LEFT, padx=(0, 8))
         self._back_btn = ttk.Button(row, text="Back", command=self.on_back)
@@ -227,7 +238,11 @@ class ImportView(ttk.Frame):
 
         self._status_var = tk.StringVar(value="")
         self._status_label = ttk.Label(
-            self, textvariable=self._status_var, wraplength=700, justify=tk.LEFT
+            self,
+            textvariable=self._status_var,
+            wraplength=760,
+            justify=tk.LEFT,
+            style="Status.TLabel",
         )
         self._status_label.pack(anchor=tk.W)
 

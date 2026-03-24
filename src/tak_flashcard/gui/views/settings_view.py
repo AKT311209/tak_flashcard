@@ -16,17 +16,28 @@ class SettingsView(ttk.Frame):
     def __init__(self, master: tk.Misc, manager: SettingsManager, on_back: Callable[[], None], on_apply: Optional[Callable[[Settings], None]] = None):
         """Create settings view with settings manager."""
 
-        super().__init__(master, padding=12)
+        super().__init__(master, padding=20, style="Page.TFrame")
         self.manager = manager
         self.settings: Settings = manager.settings
         self.on_apply = on_apply
 
-        ttk.Label(self, text="Appearance", font=(
-            "Arial", 12, "bold")).pack(anchor=tk.W)
-        appearance_frame = ttk.Frame(self)
+        header = ttk.Frame(self, padding=16, style="Glass.TFrame")
+        header.pack(fill="x", pady=(0, 12))
+        ttk.Label(header, text="Settings",
+                  style="Title.TLabel").pack(anchor=tk.W)
+        ttk.Label(
+            header,
+            text="Tune typography and palette preferences for your ideal learning environment.",
+            style="Subtitle.TLabel",
+        ).pack(anchor=tk.W, pady=(4, 0))
+
+        appearance_frame = ttk.LabelFrame(
+            self, text="Appearance", padding=12, style="Glass.TLabelframe")
+        appearance_frame.pack(fill="x", pady=(0, 10))
 
         # Font selector
-        ttk.Label(appearance_frame, text="Font").pack(anchor=tk.W, pady=(4, 0))
+        ttk.Label(appearance_frame, text="Font", style="Section.TLabel").pack(
+            anchor=tk.W, pady=(4, 0))
         self.font_var = tk.StringVar(value=self.settings.appearance.font_name)
         available_fonts = get_available_fonts()
         font_combo = ttk.Combobox(
@@ -34,7 +45,7 @@ class SettingsView(ttk.Frame):
         font_combo.pack(fill="x")
 
         # Font size selector (in pixels)
-        ttk.Label(appearance_frame, text="Font Size (pixels)").pack(
+        ttk.Label(appearance_frame, text="Font Size (pixels)", style="Section.TLabel").pack(
             anchor=tk.W, pady=(4, 0))
         self.font_size_px_var = tk.IntVar(
             value=self.settings.appearance.font_size_px)
@@ -42,7 +53,7 @@ class SettingsView(ttk.Frame):
                     textvariable=self.font_size_px_var).pack(fill="x")
 
         # Background color
-        ttk.Label(appearance_frame, text="Background Color (hex)").pack(
+        ttk.Label(appearance_frame, text="Background Color (hex)", style="Section.TLabel").pack(
             anchor=tk.W, pady=(4, 0))
         self.bg_color_var = tk.StringVar(
             value=self.settings.appearance.background_color)
@@ -50,7 +61,7 @@ class SettingsView(ttk.Frame):
                   textvariable=self.bg_color_var).pack(fill="x")
 
         # Text color
-        ttk.Label(appearance_frame, text="Text Color (hex)").pack(
+        ttk.Label(appearance_frame, text="Text Color (hex)", style="Section.TLabel").pack(
             anchor=tk.W, pady=(4, 0))
         self.text_color_var = tk.StringVar(
             value=self.settings.appearance.text_color)
@@ -58,25 +69,33 @@ class SettingsView(ttk.Frame):
                   textvariable=self.text_color_var).pack(fill="x")
 
         # Secondary color
-        ttk.Label(appearance_frame, text="Secondary Color (hex)").pack(
+        ttk.Label(appearance_frame, text="Secondary Color (hex)", style="Section.TLabel").pack(
             anchor=tk.W, pady=(4, 0))
         self.secondary_color_var = tk.StringVar(
             value=self.settings.appearance.secondary_color)
         ttk.Entry(appearance_frame,
                   textvariable=self.secondary_color_var).pack(fill="x")
 
-        appearance_frame.pack(fill="x", pady=6)
+        tip_frame = ttk.Frame(self, padding=12, style="Glass.TFrame")
+        tip_frame.pack(fill="x", pady=(0, 10))
+        ttk.Label(
+            tip_frame,
+            text="Tip: use high-contrast colors for readability (target at least 4.5:1).",
+            style="Muted.TLabel",
+        ).pack(anchor=tk.W)
 
-        btn_frame = ttk.Frame(self)
-        ttk.Button(btn_frame, text="Save", command=self.save).pack(
+        btn_frame = ttk.Frame(self, style="Page.TFrame")
+        ttk.Button(btn_frame, text="Save", style="Primary.TButton", command=self.save).pack(
             side=tk.LEFT, padx=4)
         ttk.Button(btn_frame, text="Back", command=on_back).pack(
             side=tk.LEFT, padx=4)
         btn_frame.pack(pady=8)
 
         self.status = tk.StringVar(value="")
-        ttk.Label(self, textvariable=self.status,
-                  foreground="green").pack(anchor=tk.W)
+        status_row = ttk.Frame(self, padding=10, style="Glass.TFrame")
+        status_row.pack(fill="x")
+        ttk.Label(status_row, textvariable=self.status,
+                  style="Status.TLabel").pack(anchor=tk.W)
 
     def save(self) -> None:
         """Persist updated settings to disk and apply immediately."""

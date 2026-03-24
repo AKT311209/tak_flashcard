@@ -157,9 +157,10 @@
            │               │      │
            ▼               ▼      │
 ┌─────────────────┐ ┌──────────────┐
-│  Submit Answer  │ │ Show Answer  │
-└────────┬────────┘ │ Apply Penalty│
-         │          └──────┬───────┘
+│ Select Choice   │ │ Show Answer  │
+│ (Auto Submit)   │ │ Apply Penalty│
+└────────┬────────┘ └──────┬───────┘
+         │                 │
          ▼                 │
 ┌─────────────────────┐    │
 │  Validate Answer    │    │
@@ -1071,9 +1072,10 @@ Show green success message:
     │    ┌────┴────┐         │
     │    │         │         │
     │    ▼         ▼         │
-    │ ┌──────┐ ┌──────────┐  │
-    │ │SUBMIT│ │SHOW_ANS  │  │
-    │ └──┬───┘ └────┬─────┘  │
+    │ ┌─────────────┐ ┌──────────┐  │
+    │ │AUTO_SUBMIT  │ │SHOW_ANS  │  │
+    │ │ON_SELECT    │ │          │  │
+    │ └──────┬──────┘ └────┬─────┘  │
     │    │          │        │
     │    └────┬─────┘        │
     │         │              │
@@ -1122,7 +1124,7 @@ Show green success message:
 |-------|-------|----------|
 | Import Failed | Invalid CSV format | Show error message, allow retry |
 | DB Empty | <1000 words | Force import on startup |
-| Invalid Input | No choice selected before submit | Show warning and stay on current question |
+| Invalid Input | No choice selected yet | Show warning and stay on current question |
 | Timer < 0 | Speed mode timeout | Auto-end session |
 
 ### 15.2 Validation Points

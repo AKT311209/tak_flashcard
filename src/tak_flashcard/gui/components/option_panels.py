@@ -30,7 +30,7 @@ class FlashcardOptions(ttk.Frame):
     ):
         """Initialize the options panel widgets."""
 
-        super().__init__(master, padding=8)
+        super().__init__(master, padding=10, style="Glass.TFrame")
         self.mode = tk.StringVar(value=Mode.ENDLESS.value)
         self.direction = tk.StringVar(value=Direction.ENG_TO_VN.value)
         self.difficulty = tk.IntVar(value=3)
@@ -49,13 +49,19 @@ class FlashcardOptions(ttk.Frame):
     def _build_widgets(self) -> None:
         """Construct the option controls."""
 
-        mode_frame = ttk.LabelFrame(self, text="Mode")
+        mode_frame = ttk.LabelFrame(
+            self, text="Mode", style="Glass.TLabelframe")
         for m in Mode:
-            ttk.Radiobutton(mode_frame, text=m.name.title(),
-                            variable=self.mode, value=m.value).pack(anchor=tk.W)
+            ttk.Radiobutton(
+                mode_frame,
+                text=m.name.title(),
+                variable=self.mode,
+                value=m.value,
+            ).pack(anchor=tk.W, pady=1)
         mode_frame.grid(row=0, column=0, sticky="nsew", padx=6, pady=4)
 
-        dir_frame = ttk.LabelFrame(self, text="Direction")
+        dir_frame = ttk.LabelFrame(
+            self, text="Direction", style="Glass.TLabelframe")
         for d in Direction:
             label = {
                 Direction.ENG_TO_VN: "English → Vietnamese",
@@ -66,7 +72,8 @@ class FlashcardOptions(ttk.Frame):
                 dir_frame, text=label, variable=self.direction, value=d.value).pack(anchor=tk.W)
         dir_frame.grid(row=0, column=1, sticky="nsew", padx=6, pady=4)
 
-        diff_frame = ttk.LabelFrame(self, text="Difficulty")
+        diff_frame = ttk.LabelFrame(
+            self, text="Difficulty", style="Glass.TLabelframe")
         self.difficulty_scale = tk.Scale(
             diff_frame,
             from_=min(DIFFICULTY_LEVELS),
@@ -78,10 +85,12 @@ class FlashcardOptions(ttk.Frame):
             showvalue=False,
         )
         self.difficulty_scale.pack(fill="x", padx=6, pady=6)
-        ttk.Label(diff_frame, textvariable=self.difficulty).pack()
+        ttk.Label(diff_frame, textvariable=self.difficulty,
+                  style="Muted.TLabel").pack()
         diff_frame.grid(row=1, column=0, sticky="nsew", padx=6, pady=4)
 
-        mode_opts = ttk.LabelFrame(self, text="Mode Options")
+        mode_opts = ttk.LabelFrame(
+            self, text="Mode Options", style="Glass.TLabelframe")
         self.question_frame = ttk.Frame(mode_opts)
         ttk.Label(self.question_frame,
                   text="Question Count (Testing)").pack(anchor=tk.W)

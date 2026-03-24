@@ -42,8 +42,8 @@ DATA_DIR = _get_data_dir()
 DB_PATH = DATA_DIR / "flashcard.db"
 SETTINGS_PATH = DATA_DIR / "user_settings.json"
 
-WINDOW_WIDTH = 960
-WINDOW_HEIGHT = 700
+WINDOW_WIDTH = 1000
+WINDOW_HEIGHT = 750
 
 STYLE_THEME = "clam"
 

@@ -38,15 +38,20 @@ class ResultsView(ttk.Frame):
             on_home: Callback to return to the application home screen.
         """
 
-        super().__init__(master, padding=24)
+        super().__init__(master, padding=24, style="Page.TFrame")
 
+        header = ttk.Frame(self, padding=16, style="Glass.TFrame")
+        header.pack(fill="x", pady=(0, 14))
+        ttk.Label(header, text="Session Summary",
+                  style="Title.TLabel").pack(anchor=tk.W)
         ttk.Label(
-            self,
-            text="Session Summary",
-            font=("Arial", 18, "bold"),
-        ).pack(pady=(0, 18))
+            header,
+            text="Review your latest run, then jump back in for the next streak.",
+            style="Subtitle.TLabel",
+        ).pack(anchor=tk.W, pady=(4, 0))
 
-        stats_frame = ttk.LabelFrame(self, text="Results", padding=16)
+        stats_frame = ttk.LabelFrame(
+            self, text="Results", padding=16, style="Glass.TLabelframe")
         stats_frame.pack(fill="x", padx=20, pady=8)
 
         self._specs_var = tk.StringVar(value="")
@@ -60,54 +65,55 @@ class ResultsView(ttk.Frame):
         self._specs_label = ttk.Label(
             stats_frame,
             textvariable=self._specs_var,
-            font=("Arial", 12, "bold"),
+            style="Section.TLabel",
         )
         self._specs_label.pack(anchor=tk.W, pady=(0, 6))
 
         self._correct_label = ttk.Label(
             stats_frame,
             textvariable=self._correct_var,
-            font=("Arial", 13),
+            style="Status.TLabel",
         )
         self._correct_label.pack(anchor=tk.W, pady=4)
 
-        score_row = ttk.Frame(stats_frame)
+        score_row = ttk.Frame(stats_frame, style="Glass.TFrame")
         self._score_label = ttk.Label(
             score_row,
             textvariable=self._score_var,
-            font=("Arial", 13),
+            style="Status.TLabel",
         )
         self._score_label.pack(side=tk.LEFT)
         self._show_limit_label = ttk.Label(
             score_row,
             textvariable=self._show_limit_var,
-            font=("Arial", 12),
+            style="Muted.TLabel",
         )
         score_row.pack(anchor=tk.W, pady=4)
 
         self._difficulty_label = ttk.Label(
             stats_frame,
             textvariable=self._difficulty_var,
-            font=("Arial", 13),
+            style="Status.TLabel",
         )
         self._difficulty_label.pack(anchor=tk.W, pady=4)
 
         self._time_label = ttk.Label(
             stats_frame,
             textvariable=self._time_var,
-            font=("Arial", 13),
+            style="Status.TLabel",
         )
 
         self._show_label = ttk.Label(
             stats_frame,
             textvariable=self._show_var,
-            font=("Arial", 13),
+            style="Status.TLabel",
         )
 
-        btn_frame = ttk.Frame(self)
+        btn_frame = ttk.Frame(self, style="Page.TFrame")
         ttk.Button(
             btn_frame,
             text="Play Again",
+            style="Primary.TButton",
             command=on_back,
         ).pack(side=tk.LEFT, padx=8)
         ttk.Button(

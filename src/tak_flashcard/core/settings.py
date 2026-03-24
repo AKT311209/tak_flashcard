@@ -45,13 +45,13 @@ class AppearanceSettings:
 
     theme: str = "light"
     font_size: str = "medium"
-    window_width: int = 960
-    window_height: int = 640
-    font_name: str = "Arial"
+    window_width: int = 1000
+    window_height: int = 750
+    font_name: str = "Segoe UI"
     font_size_px: int = 11
-    background_color: str = "#ffffff"
-    text_color: str = "#000000"
-    secondary_color: str = "#f0f0f0"
+    background_color: str = "#f8f9fa"
+    text_color: str = "#1a1a2e"
+    secondary_color: str = "#e8eef7"
 
 
 @dataclass
@@ -112,15 +112,15 @@ class Settings:
         appearance = AppearanceSettings(
             theme=appearance_payload.get("theme", "light"),
             font_size=appearance_payload.get("font_size", "medium"),
-            window_width=appearance_payload.get("window_width", 960),
-            window_height=appearance_payload.get("window_height", 640),
-            font_name=appearance_payload.get("font_name", "Arial"),
+            window_width=appearance_payload.get("window_width", 1000),
+            window_height=appearance_payload.get("window_height", 750),
+            font_name=appearance_payload.get("font_name", "Segoe UI"),
             font_size_px=int(appearance_payload.get("font_size_px", 11)),
             background_color=appearance_payload.get(
-                "background_color", "#ffffff"),
-            text_color=appearance_payload.get("text_color", "#000000"),
+                "background_color", "#f8f9fa"),
+            text_color=appearance_payload.get("text_color", "#1a1a2e"),
             secondary_color=appearance_payload.get(
-                "secondary_color", "#f0f0f0"),
+                "secondary_color", "#e8eef7"),
         )
         preferences = UserPreferences(
             sound_enabled=bool(

@@ -6,7 +6,7 @@ import tkinter as tk
 from tkinter import ttk
 from typing import cast
 
-from tak_flashcard.config import APP_NAME, WINDOW_HEIGHT, WINDOW_WIDTH, ensure_data_dirs
+from tak_flashcard.config import APP_NAME, ensure_data_dirs
 from tak_flashcard.core.settings import Settings, SettingsManager
 from tak_flashcard.db.repo import get_word_count
 from tak_flashcard.db.session import SessionLocal, init_db
@@ -32,7 +32,7 @@ class FlashcardApp(tk.Tk):
         super().__init__()
         ensure_data_dirs()
         self.title(APP_NAME)
-        self.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
+
         self.style = ttk.Style(self)
         self.style.theme_use("clam")
 
@@ -40,17 +40,29 @@ class FlashcardApp(tk.Tk):
         self.db = SessionLocal()
         self.settings_manager = SettingsManager()
 
-        apply_appearance_settings(
+        palette = apply_appearance_settings(
             self.style, self.settings_manager.settings.appearance)
+        self.configure(background=palette["bg"])
 
         self.controller = FlashcardController(self.db)
         self.dictionary_service = DictionaryService(self.db)
         self._current_view: str = ""
 
-        outer = ttk.Frame(self)
+        width = self.settings_manager.settings.appearance.window_width
+        height = self.settings_manager.settings.appearance.window_height
+        self.geometry(f"{width}x{height}")
+        self._center_window()
+
+        outer = ttk.Frame(self, style="App.TFrame")
         outer.pack(fill="both", expand=True)
 
-        self._canvas = tk.Canvas(outer, highlightthickness=0)
+        self._canvas = tk.Canvas(
+            outer,
+            highlightthickness=0,
+            background=palette["bg"],
+            bd=0,
+            relief=tk.FLAT,
+        )
         self._scrollbar = ttk.Scrollbar(
             outer, orient="vertical", command=self._canvas.yview)
         self._canvas.configure(yscrollcommand=self._scrollbar.set)
@@ -58,7 +70,7 @@ class FlashcardApp(tk.Tk):
         self._scrollbar.pack(side="right", fill="y")
         self._canvas.pack(side="left", fill="both", expand=True)
 
-        container = ttk.Frame(self._canvas)
+        container = ttk.Frame(self._canvas, style="Page.TFrame")
         self._canvas_window = self._canvas.create_window(
             (0, 0), window=container, anchor="nw")
 
@@ -66,6 +78,8 @@ class FlashcardApp(tk.Tk):
         self._canvas.bind("<Configure>", self._on_canvas_configure)
         self._canvas.bind("<Enter>", self._bind_mousewheel)
         self._canvas.bind("<Leave>", self._unbind_mousewheel)
+
+        container.grid_columnconfigure(0, weight=1)
 
         self.frames: dict[str, ttk.Frame] = {}
 
@@ -104,7 +118,18 @@ class FlashcardApp(tk.Tk):
 
     def apply_appearance(self, settings: Settings) -> None:
         """Apply appearance settings to the application immediately."""
-        apply_appearance_settings(self.style, settings.appearance)
+        palette = apply_appearance_settings(self.style, settings.appearance)
+        self.configure(background=palette["bg"])
+        self._canvas.configure(background=palette["bg"])
+
+    def _center_window(self) -> None:
+        """Center the window on the screen."""
+        self.update_idletasks()
+        width = self.winfo_width()
+        height = self.winfo_height()
+        x = max(0, (self.winfo_screenwidth() - width) // 2)
+        y = max(0, (self.winfo_screenheight() - height) // 2 - 40)
+        self.geometry(f"+{x}+{y}")
 
     def _on_session_end(self, summary) -> None:
         """Populate the results view with the session summary and navigate to it.
@@ -167,7 +192,8 @@ class FlashcardApp(tk.Tk):
             self.bind("<Escape>", lambda _e: self.navigate("home"))
 
         elif key == "flashcard_session":
-            session = cast(FlashcardSessionView, self.frames["flashcard_session"])
+            session = cast(FlashcardSessionView,
+                           self.frames["flashcard_session"])
             self.bind("<Return>", lambda _e: session.on_enter_key())
             self.bind("<space>", lambda _e: session.on_space_key())
             self.bind("<Escape>", lambda _e: session._handle_exit_session())

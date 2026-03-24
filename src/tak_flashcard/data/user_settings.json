@@ -1,21 +1,14 @@
 {
   "appearance": {
-    "theme": "dark",
-    "font_size": "large",
-    "window_width": 960,
-    "window_height": 640,
-    "font_name": "Monaspace Neon",
-    "font_size_px": 12,
-    "background_color": "#ffffff",
-    "text_color": "#111111",
-    "secondary_color": "#f0f0f0"
-  },
-  "defaults": {
-    "flashcard_mode": "endless",
-    "difficulty_level": 4,
-    "question_count": 20,
-    "time_limit": 300,
-    "direction": "eng_to_vn"
+    "theme": "light",
+    "font_size": "medium",
+    "window_width": 1000,
+    "window_height": 750,
+    "font_name": "DejaVu Sans Mono",
+    "font_size_px": 11,
+    "background_color": "#f8f9fa",
+    "text_color": "#1a1a2e",
+    "secondary_color": "#e8eef7"
   },
   "preferences": {
     "sound_enabled": false,

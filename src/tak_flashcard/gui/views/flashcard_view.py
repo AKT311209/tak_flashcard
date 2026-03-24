@@ -20,6 +20,7 @@ from tak_flashcard.features.flashcard.states import (
     ShowAnswerOutcome,
 )
 from tak_flashcard.gui.components.flashcard_card import FlashcardCard
+from tak_flashcard.gui.components.neumorphic import NeumorphicTimer
 from tak_flashcard.gui.components.option_panels import FlashcardOptions
 
 
@@ -40,25 +41,43 @@ class FlashcardView(ttk.Frame):
             on_back: Callback used to return to home.
         """
 
-        super().__init__(master, padding=10)
+        super().__init__(master, padding=20, style="Page.TFrame")
         self.on_start_session = on_start_session
         self.on_back = on_back
+
+        header = ttk.Frame(self, padding=16, style="Glass.TFrame")
+        header.pack(fill="x", pady=(0, 12))
+        ttk.Label(header, text="Flashcard Setup",
+                  style="Title.TLabel").pack(anchor=tk.W)
+        ttk.Label(
+            header,
+            text="Choose mode, direction, and penalties. Your learning logic stays exactly the same.",
+            style="Subtitle.TLabel",
+        ).pack(anchor=tk.W, pady=(4, 0))
+
         self.options = FlashcardOptions(
             self,
             default_question_count=DEFAULT_QUESTION_COUNT,
             default_time_limit=DEFAULT_TIME_LIMIT,
         )
-        self.options.pack(fill="x", pady=6)
+        self.options.pack(fill="x", pady=(0, 10))
 
-        info = ttk.LabelFrame(self, text="Session Setup", padding=8)
+        info = ttk.LabelFrame(self, text="Session Setup",
+                              padding=10, style="Glass.TLabelframe")
         ttk.Label(
             info,
             text="Adjust settings above, then click START SESSION to open the session screen.",
+            style="Muted.TLabel",
         ).pack(anchor=tk.W)
-        info.pack(fill="x", pady=6)
+        info.pack(fill="x", pady=(0, 10))
 
-        controls = ttk.Frame(self)
-        ttk.Button(controls, text="Start Session", command=self.start_session).pack(
+        controls = ttk.Frame(self, style="Page.TFrame")
+        ttk.Button(
+            controls,
+            text="Start Session",
+            style="Primary.TButton",
+            command=self.start_session,
+        ).pack(
             side=tk.LEFT, padx=4
         )
         ttk.Button(controls, text="Back", command=self.on_back).pack(
@@ -67,7 +86,10 @@ class FlashcardView(ttk.Frame):
         controls.pack(pady=6)
 
         self.status_var = tk.StringVar(value="Ready to start")
-        ttk.Label(self, textvariable=self.status_var).pack(anchor=tk.W)
+        status = ttk.Frame(self, padding=10, style="Glass.TFrame")
+        status.pack(fill="x", pady=(4, 0))
+        ttk.Label(status, textvariable=self.status_var,
+                  style="Status.TLabel").pack(anchor=tk.W)
 
     def start_session(self) -> None:
         """Start a new flashcard session using the configured options."""
@@ -93,43 +115,47 @@ class FlashcardSessionView(ttk.Frame):
                 session ends (natural completion or user exit).
         """
 
-        super().__init__(master, padding=10)
+        super().__init__(master, padding=20, style="Page.TFrame")
         self.controller = controller
         self.on_session_end = on_session_end
         self.timer_var = tk.StringVar(value="")
-        self.timer_label = ttk.Label(
-            self, textvariable=self.timer_var, font=("Arial", 11, "bold")
-        )
+
+        header = ttk.Frame(self, padding=14, style="Glass.TFrame")
+        header.pack(fill="x", pady=(0, 10))
+        ttk.Label(header, text="Active Session",
+                  style="Section.TLabel").pack(anchor=tk.W)
+
+        timer_container = ttk.Frame(self, style="Glass.TFrame")
+
+        self.timer_display: NeumorphicTimer | None = None
         self.timer: CountdownTimer | None = None
         self._timer_after_id: str | None = None
 
         self.card = FlashcardCard(
-            self, self.submit_answer, self.show_answer, self.next_card
+            self,
+            self.submit_answer,
+            self.show_answer,
+            self.next_card,
+            self._handle_exit_session,
         )
-        self.card.pack(fill="x", pady=(8, 4))
+        self.card.pack(fill="x", pady=(6, 4))
 
         self._loading_var = tk.StringVar(value="")
         self._loading_label = ttk.Label(
-            self, textvariable=self._loading_var, foreground="gray"
+            self, textvariable=self._loading_var, style="Muted.TLabel"
         )
         self._loading_label.pack(anchor=tk.W, padx=14)
 
-        gap = ttk.Frame(self, height=250)
-        gap.pack()
-
         self.status_var = tk.StringVar(value="Session not started")
+        status_card = ttk.Frame(self, padding=12, style="Glass.TFrame")
+        status_card.pack(fill="x", pady=(8, 6))
         ttk.Label(
-            self,
+            status_card,
             textvariable=self.status_var,
-        ).pack(anchor=tk.W, pady=(0, 6), padx=12)
+            style="Status.TLabel",
+        ).pack(anchor=tk.W)
 
-        controls = ttk.Frame(self)
-        ttk.Button(
-            controls,
-            text="End Session",
-            command=self._handle_exit_session,
-        ).pack(side=tk.LEFT, padx=4)
-        controls.pack(pady=(4, 12))
+        self._timer_container = timer_container
 
     def begin_session(
         self,
@@ -337,7 +363,8 @@ class FlashcardSessionView(ttk.Frame):
     def _update_timer_label(self, remaining: int) -> None:
         """Refresh the displayed timer text."""
 
-        self.timer_var.set(f"Time Remaining: {remaining}s")
+        if self.timer_display is not None:
+            self.timer_display.update_time(remaining)
 
     def _apply_time_penalty(self, seconds: int) -> None:
         """Deduct time from the running timer."""
@@ -391,13 +418,38 @@ class FlashcardSessionView(ttk.Frame):
     def _show_timer_label(self) -> None:
         """Display the timer label above the flashcard."""
 
-        if not self.timer_label.winfo_ismapped():
-            self.timer_label.pack(before=self.card, anchor=tk.N, pady=(0, 6))
+        if not self._timer_container.winfo_manager():
+            self._timer_container.pack(fill="x", pady=(0, 8), before=self.card)
+
+        if self.timer_display is None:
+            style = ttk.Style(self)
+            bg_color = style.lookup("Glass.TFrame", "background") or "#f0f0f0"
+            shadow_color = style.lookup(
+                "Neumorphic.TFrame", "background") or "#e0e0e0"
+            highlight_color = "#ffffff"
+            text_color = style.lookup(
+                "Section.TLabel", "foreground") or "#333333"
+
+            self.timer_display = NeumorphicTimer(
+                self._timer_container,
+                width=300,
+                height=140,
+                bg_color=bg_color,
+                shadow_color=shadow_color,
+                highlight_color=highlight_color,
+                text_color=text_color,
+            )
+
+        if not self.timer_display.winfo_manager():
+            self.timer_display.pack(anchor=tk.CENTER, pady=8)
 
     def _hide_timer_label(self) -> None:
         """Hide the timer label when Speed mode is not active."""
 
-        self.timer_label.pack_forget()
+        if self.timer_display is not None:
+            self.timer_display.pack_forget()
+        if self._timer_container.winfo_manager():
+            self._timer_container.pack_forget()
 
     # ── keyboard handlers ─────────────────────────────────────────────────────
 

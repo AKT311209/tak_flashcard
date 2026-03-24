@@ -6,6 +6,8 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Callable
 
+from tak_flashcard.gui.components.neumorphic import NeumorphicRadioButton
+
 
 class FlashcardCard(ttk.Frame):
     """Widget to display the current flashcard question and collect input."""
@@ -16,34 +18,74 @@ class FlashcardCard(ttk.Frame):
         on_submit: Callable[[str], None],
         on_show_answer: Callable[[], None],
         on_next: Callable[[], None],
+        on_end_session: Callable[[], None],
     ):
-        """Create card with callbacks for answer submission, show answer, and next actions."""
+        """Create card with callbacks for answer submission, reveal, next, and end-session actions.
 
-        super().__init__(master, padding=(12, 6))
+        Parameters:
+            master: Parent Tkinter widget.
+            on_submit: Callback for submitted selected answer text.
+            on_show_answer: Callback to reveal the answer.
+            on_next: Callback to move to the next card.
+            on_end_session: Callback to end the active session immediately.
+        """
+
+        super().__init__(master, padding=(16, 12), style="Glass.TFrame")
         self._on_submit = on_submit
         self._on_show_answer = on_show_answer
         self._on_next = on_next
+        self._on_end_session = on_end_session
         self._awaiting_next = False
         self._show_enabled = True
         self.prompt_var = tk.StringVar(value="Press Start to begin")
         self.choice_var = tk.StringVar(value="")
-        self._default_feedback_color = "black"
-        ttk.Label(self, textvariable=self.prompt_var,
-                  font=("Arial", 14)).pack(fill="x", pady=(4, 6))
-        self.choice_buttons: list[ttk.Radiobutton] = []
-        self.choices_frame = ttk.Frame(self)
-        self.choices_frame.pack(fill="x", pady=(0, 2))
-        self.show_button = ttk.Button(
+        self._default_feedback_color = "#334155"
+
+        ttk.Label(
             self,
+            textvariable=self.prompt_var,
+            style="Section.TLabel",
+            wraplength=900,
+        ).pack(fill="x", pady=(4, 10))
+
+        self.choice_buttons: list[NeumorphicRadioButton] = []
+        self.choices_frame = ttk.Frame(self, style="Glass.TFrame")
+        self.choices_frame.pack(fill="x", pady=(0, 8))
+
+        controls_frame = ttk.Frame(self, style="Glass.TFrame")
+        controls_frame.pack(fill="x", pady=(8, 4), expand=False)
+
+        buttons_container = ttk.Frame(controls_frame, style="Glass.TFrame")
+        buttons_container.pack(anchor="center")
+
+        self.show_button = ttk.Button(
+            buttons_container,
             text="Show Answer",
             command=self._handle_show_or_next,
             takefocus=0,
         )
-        self.show_button.pack(pady=(4, 2))
+        self.show_button.pack(side=tk.LEFT, padx=(0, 8))
+
+        self.end_session_button = ttk.Button(
+            buttons_container,
+            text="End Session",
+            style="Warning.TButton",
+            command=self._on_end_session,
+            takefocus=0,
+        )
+        self.end_session_button.pack(side=tk.LEFT, padx=(12, 0))
+
         self.feedback = tk.StringVar(value="")
-        self.feedback_label = tk.Label(self, textvariable=self.feedback,
-                                       fg=self._default_feedback_color)
-        self.feedback_label.pack(pady=0)
+        style = ttk.Style(self)
+        feedback_bg = style.lookup(
+            "Glass.TFrame", "background") or style.lookup("TFrame", "background")
+        self.feedback_label = tk.Label(
+            self,
+            textvariable=self.feedback,
+            fg=self._default_feedback_color,
+            bg=feedback_bg,
+        )
+        self.feedback_label.pack(pady=(4, 0))
 
     def set_question(self, text: str) -> None:
         """Update the displayed question text and prepare inputs for a new answer."""
@@ -52,7 +94,7 @@ class FlashcardCard(ttk.Frame):
         self.prompt_var.set(text)
 
     def set_choices(self, choices: list[str]) -> None:
-        """Render multiple-choice options for the current question.
+        """Render multiple-choice options with enhanced neumorphic shadow system.
 
         Parameters:
             choices: A list of answer options to display.
@@ -62,16 +104,32 @@ class FlashcardCard(ttk.Frame):
             button.destroy()
         self.choice_buttons = []
         self.choice_var.set("")
+        self.choices_frame.columnconfigure(0, weight=1)
+
+        style = ttk.Style(self)
+        bg_color = style.lookup("Glass.TFrame", "background") or "#f8f9fa"
+        shadow_color = style.lookup(
+            "button_shadow", "background") or "#6b7280"
+        highlight_color = style.lookup(
+            "button_highlight", "background") or "#ffffff"
+        text_color = style.lookup("Section.TLabel", "foreground") or "#1a1a2e"
+        accent_color = style.lookup(
+            "Primary.TButton", "background") or "#0891b2"
 
         for index, choice in enumerate(choices):
-            button = ttk.Radiobutton(
+            button = NeumorphicRadioButton(
                 self.choices_frame,
                 text=choice,
                 variable=self.choice_var,
                 value=choice,
                 command=self._handle_choice_selected,
+                bg_color=bg_color,
+                shadow_color=shadow_color,
+                highlight_color=highlight_color,
+                text_color=text_color,
+                accent_color=accent_color,
             )
-            button.grid(row=index, column=0, sticky="w", pady=2)
+            button.grid(row=index, column=0, sticky="ew", pady=6, padx=2)
             self.choice_buttons.append(button)
 
     def set_feedback(self, message: str, color: str | None = None) -> None:

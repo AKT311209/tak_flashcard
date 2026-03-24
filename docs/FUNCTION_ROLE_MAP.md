@@ -71,7 +71,7 @@ This document is written for non-technical readers and reviewers.
   - **Called when**: dictionary filtering.
 - `update_word_stats(db, word_id, is_correct)`
   - **Role**: increment counters and recalculate difficulty for a word.
-  - **Called when**: user submits answer.
+  - **Called when**: user selects an answer choice (auto-submitted).
 
 ---
 
@@ -87,7 +87,7 @@ This document is written for non-technical readers and reviewers.
 
 - `apply_scoring(current_score, correct, penalty_points)`
   - **Role**: return new score and delta.
-  - **Called when**: answer is submitted.
+  - **Called when**: an answer choice is auto-submitted.
 
 ### `src/tak_flashcard/core/selectors.py`
 
@@ -188,7 +188,7 @@ This document is written for non-technical readers and reviewers.
   - **Called when**: session view asks for new card.
 - `submit_answer(answer)`
   - **Role**: validate answer, update DB stats, update score.
-  - **Called when**: user submits/chooses answer.
+  - **Called when**: user chooses an answer option (auto-submit).
 - `show_answer_penalty()`
   - **Role**: apply show-answer limits and penalties.
   - **Called when**: user presses Show Answer.
@@ -209,7 +209,7 @@ This document is written for non-technical readers and reviewers.
   - **Called when**: session view advances.
 - `submit(answer)`
   - **Role**: submit answer through service.
-  - **Called when**: session UI submits choice.
+  - **Called when**: session UI auto-submits the selected choice.
 - `reveal()`
   - **Role**: request show-answer outcome.
   - **Called when**: Show Answer button used.
@@ -305,7 +305,7 @@ This document is written for non-technical readers and reviewers.
   - **Called when**: session starts or user goes next.
 - `submit_answer(answer)`
   - **Role**: process selected answer.
-  - **Called when**: user submits choice.
+  - **Called when**: user selects a choice (auto-submit).
 - `show_answer()`
   - **Role**: reveal answer with penalty logic.
   - **Called when**: user clicks Show Answer.

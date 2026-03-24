@@ -25,25 +25,39 @@ class DictionaryView(ttk.Frame):
     def __init__(self, master: tk.Misc, service: DictionaryService, on_back: Callable[[], None]):
         """Initialize dictionary view with service and navigation."""
 
-        super().__init__(master, padding=10)
+        super().__init__(master, padding=20, style="Page.TFrame")
         self.service = service
 
         self._sort_col: str | None = None
         self._sort_ascending: bool = True
 
-        search_frame = ttk.Frame(self)
-        ttk.Label(search_frame, text="Search").pack(side=tk.LEFT)
+        header = ttk.Frame(self, padding=16, style="Glass.TFrame")
+        header.pack(fill="x", pady=(0, 12))
+        ttk.Label(header, text="Dictionary",
+                  style="Title.TLabel").pack(anchor=tk.W)
+        ttk.Label(
+            header,
+            text="Search by English or Vietnamese, then click any column title to sort.",
+            style="Subtitle.TLabel",
+        ).pack(anchor=tk.W, pady=(4, 0))
+
+        search_frame = ttk.Frame(self, padding=14, style="Glass.TFrame")
+        ttk.Label(search_frame, text="Search",
+                  style="Section.TLabel").pack(side=tk.LEFT)
         self.search_var = tk.StringVar()
         entry = ttk.Entry(search_frame, textvariable=self.search_var)
         entry.pack(side=tk.LEFT, fill="x", expand=True, padx=4)
-        ttk.Button(search_frame, text="Go", command=self.perform_search).pack(
+        ttk.Button(search_frame, text="Go", style="Primary.TButton", command=self.perform_search).pack(
             side=tk.LEFT, padx=4)
         ttk.Button(search_frame, text="Back", command=on_back).pack(
             side=tk.LEFT, padx=4)
-        search_frame.pack(fill="x", pady=6)
+        search_frame.pack(fill="x", pady=(0, 10))
+
+        table_wrap = ttk.Frame(self, padding=12, style="Glass.TFrame")
+        table_wrap.pack(fill="both", expand=True)
 
         self.tree = ttk.Treeview(
-            self,
+            table_wrap,
             columns=tuple(col for col, _ in _COLUMNS),
             show="headings",
         )

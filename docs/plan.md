@@ -119,7 +119,7 @@
 - [ ] Create dedicated flashcard session view (`gui/views/flashcard_view.py` → `FlashcardSessionView`)
   - Display question
   - Multiple-choice options (4 choices: 1 correct + 3 random distractors)
-  - Submit button
+  - Auto-submit on choice selection (no separate Submit button)
   - Next button
   - Show Answer button (optional)
 - [ ] Implement state machine (`features/flashcard/states.py`)

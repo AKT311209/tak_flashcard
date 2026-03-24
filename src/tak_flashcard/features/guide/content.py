@@ -27,7 +27,7 @@ Flashcard Configuration Screen
   Escape     Back to Home
 
 Flashcard Session
-  1 / 2 / 3 / 4   Select and submit answer choice 1, 2, 3, or 4
+  1 / 2 / 3 / 4   Select answer choice 1, 2, 3, or 4 (auto-submit)
   Space            Show Answer (before answering) / Next card (after answering)
   Enter            Next card (after answering)
   Escape           End session early
