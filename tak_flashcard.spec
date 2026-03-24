@@ -5,7 +5,7 @@ a = Analysis(
     ['src/tak_flashcard/main.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('src/tak_flashcard/img/logo.png', 'tak_flashcard/img')],
     hiddenimports=[
         'sqlalchemy.dialects.sqlite',
         'tkinter',
@@ -36,6 +36,7 @@ exe = EXE(
     console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
+    icon='src/tak_flashcard/img/logo.png',
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,

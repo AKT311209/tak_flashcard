@@ -17,6 +17,7 @@ from pathlib import Path
 
 APP_NAME = "Tak Flashcard"
 PACKAGE_ROOT = Path(__file__).resolve().parent
+APP_ICON_PATH = PACKAGE_ROOT / "img" / "logo.png"
 
 
 def _get_data_dir() -> Path:

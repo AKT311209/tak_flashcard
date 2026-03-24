@@ -6,7 +6,7 @@ import tkinter as tk
 from tkinter import ttk
 from typing import cast
 
-from tak_flashcard.config import APP_NAME, ensure_data_dirs
+from tak_flashcard.config import APP_ICON_PATH, APP_NAME, ensure_data_dirs
 from tak_flashcard.core.settings import Settings, SettingsManager
 from tak_flashcard.db.repo import get_word_count
 from tak_flashcard.db.session import SessionLocal, init_db
@@ -32,6 +32,8 @@ class FlashcardApp(tk.Tk):
         super().__init__()
         ensure_data_dirs()
         self.title(APP_NAME)
+        self._icon_image: tk.PhotoImage | None = None
+        self._set_window_icon()
 
         self.style = ttk.Style(self)
         self.style.theme_use("clam")
@@ -115,6 +117,21 @@ class FlashcardApp(tk.Tk):
             self.navigate("import")
         else:
             self.navigate("home")
+
+    def _set_window_icon(self) -> None:
+        """Apply the application window icon when the image resource exists.
+
+        The icon setup is intentionally best-effort to avoid startup failures
+        on platforms/window managers that do not support custom icon formats.
+        """
+
+        if not APP_ICON_PATH.exists():
+            return
+        try:
+            self._icon_image = tk.PhotoImage(file=str(APP_ICON_PATH))
+            self.iconphoto(True, self._icon_image)
+        except tk.TclError:
+            self._icon_image = None
 
     def apply_appearance(self, settings: Settings) -> None:
         """Apply appearance settings to the application immediately."""
