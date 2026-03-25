@@ -112,6 +112,10 @@
 │  [START SESSION]  [Back]             │
 └──────────────────────────────────────┘
            │
+        ├── Invalid input detected
+        │      • Show error immediately in status row
+        │      • Keep Start Session disabled
+        │
            ▼
     Flashcard Session View
 ```
@@ -782,6 +786,13 @@ def validate_settings(settings):
     
     return len(errors) == 0, errors
 ```
+
+### Flashcard Setup Validation
+
+- All flashcard setup inputs are validated in `core/safeguard.py`.
+- Validation runs on each input change and again before session creation.
+- If any value is invalid, the setup view displays an error immediately and
+    blocks session start.
 
 ---
 

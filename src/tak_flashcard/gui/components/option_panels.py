@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import tkinter as tk
 from tkinter import ttk
+from typing import Callable, Optional
 
 from tak_flashcard.config import (
     DEFAULT_QUESTION_COUNT,
@@ -16,7 +17,8 @@ from tak_flashcard.config import (
     Direction,
     Mode,
 )
-from tak_flashcard.features.flashcard.states import SessionConfig, ShowAnswerConfig
+from tak_flashcard.core.safeguard import SessionConfigValidation, build_safe_session_config
+from tak_flashcard.features.flashcard.states import SessionConfig
 
 
 class FlashcardOptions(ttk.Frame):
@@ -27,6 +29,8 @@ class FlashcardOptions(ttk.Frame):
         master: tk.Misc,
         default_question_count: int = DEFAULT_QUESTION_COUNT,
         default_time_limit: int = DEFAULT_TIME_LIMIT,
+        on_validation_change: Optional[Callable[[
+            SessionConfigValidation], None]] = None,
     ):
         """Initialize the options panel widgets."""
 
@@ -34,17 +38,25 @@ class FlashcardOptions(ttk.Frame):
         self.mode = tk.StringVar(value=Mode.ENDLESS.value)
         self.direction = tk.StringVar(value=Direction.ENG_TO_VN.value)
         self.difficulty = tk.IntVar(value=3)
-        self.question_count = tk.IntVar(value=default_question_count)
-        self.time_limit = tk.IntVar(value=default_time_limit)
-        self.show_score_penalty = tk.IntVar(value=DEFAULT_SHOW_SCORE_PENALTY)
-        self.show_limit = tk.IntVar(value=DEFAULT_SHOW_LIMIT)
-        self.show_time_penalty = tk.IntVar(value=DEFAULT_SHOW_TIME_PENALTY)
+        self.question_count = tk.StringVar(value=str(default_question_count))
+        self.time_limit = tk.StringVar(value=str(default_time_limit))
+        self.show_score_penalty = tk.StringVar(
+            value=str(DEFAULT_SHOW_SCORE_PENALTY)
+        )
+        self.show_limit = tk.StringVar(value=str(DEFAULT_SHOW_LIMIT))
+        self.show_time_penalty = tk.StringVar(
+            value=str(DEFAULT_SHOW_TIME_PENALTY))
         self.endless_penalty_choice = tk.StringVar(value="score")
         self.speed_penalty_choice = tk.StringVar(value="score")
-        self.wrong_answer_penalty = tk.IntVar(
-            value=DEFAULT_WRONG_ANSWER_PENALTY)
+        self.wrong_answer_penalty = tk.StringVar(
+            value=str(DEFAULT_WRONG_ANSWER_PENALTY)
+        )
+        self._on_validation_change = on_validation_change
+        self._last_validation = SessionConfigValidation(config=None, issues=[])
 
         self._build_widgets()
+        self._setup_validation_traces()
+        self._emit_validation_state()
 
     def _build_widgets(self) -> None:
         """Construct the option controls."""
@@ -84,6 +96,7 @@ class FlashcardOptions(ttk.Frame):
             tickinterval=1,
             showvalue=False,
         )
+        self._apply_difficulty_scale_style()
         self.difficulty_scale.pack(fill="x", padx=6, pady=6)
         ttk.Label(diff_frame, textvariable=self.difficulty,
                   style="Muted.TLabel").pack()
@@ -188,59 +201,34 @@ class FlashcardOptions(ttk.Frame):
         for i in range(2):
             self.rowconfigure(i, weight=1)
 
-    def values(self) -> tuple[Mode, Direction, int, int, int, int, int, int, int]:
-        """Return the selected configuration values."""
-
-        return (
-            Mode(self.mode.get()),
-            Direction(self.direction.get()),
-            int(self.difficulty.get()),
-            int(self.question_count.get()),
-            int(self.time_limit.get()),
-            int(self.show_score_penalty.get()),
-            int(self.show_limit.get()),
-            int(self.show_time_penalty.get()),
-            int(self.wrong_answer_penalty.get()),
-        )
-
     def session_config(self) -> SessionConfig:
-        """Build a normalized :class:`SessionConfig` from widget values."""
+        """Build a normalized :class:`SessionConfig` from widget values.
 
-        (
-            mode,
-            direction,
-            difficulty,
-            question_count,
-            time_limit,
-            score_penalty,
-            show_limit,
-            time_penalty,
-            wrong_answer_penalty,
-        ) = self.values()
+        Raises:
+            ValueError: If one or more inputs are invalid.
+        """
 
-        max_uses = 0 if mode == Mode.TESTING else (
-            show_limit if show_limit > 0 else None)
-        show_config = ShowAnswerConfig(
-            enabled=mode != Mode.TESTING,
-            score_penalty=max(score_penalty, 0),
-            time_penalty=time_penalty if mode == Mode.SPEED else 0,
-            max_uses=max_uses,
-        )
-        q_limit: int | None = question_count if mode == Mode.TESTING else None
-        t_limit: int | None = time_limit if mode == Mode.SPEED else None
-        wrong_penalty = (
-            wrong_answer_penalty
-            if mode in (Mode.ENDLESS, Mode.SPEED)
-            else 0
-        )
-        return SessionConfig(
-            mode=mode,
-            direction=direction,
-            difficulty=difficulty,
-            show_config=show_config,
-            question_limit=q_limit,
-            time_limit=t_limit,
-            wrong_penalty=wrong_penalty,
+        validation = self.validation_result()
+        if validation.config is None:
+            first_error = validation.issues[0].message if validation.issues else "Invalid session configuration."
+            raise ValueError(first_error)
+        return validation.config
+
+    def validation_result(self) -> SessionConfigValidation:
+        """Return the current safeguard validation result for all inputs."""
+
+        return build_safe_session_config(
+            mode_value=self.mode.get(),
+            direction_value=self.direction.get(),
+            difficulty_value=self.difficulty.get(),
+            question_count_value=self.question_count.get(),
+            time_limit_value=self.time_limit.get(),
+            show_score_penalty_value=self.show_score_penalty.get(),
+            show_limit_value=self.show_limit.get(),
+            show_time_penalty_value=self.show_time_penalty.get(),
+            wrong_answer_penalty_value=self.wrong_answer_penalty.get(),
+            endless_penalty_choice=self.endless_penalty_choice.get(),
+            speed_penalty_choice=self.speed_penalty_choice.get(),
         )
 
     def _update_mode_specific_controls(self, *_: str) -> None:
@@ -271,6 +259,8 @@ class FlashcardOptions(ttk.Frame):
             self.time_frame.pack(fill="x", padx=4, pady=2)
             self._configure_wrong_penalty_field(True)
 
+        self._emit_validation_state()
+
     def _sync_endless_penalty_state(self) -> None:
         """Show the correct endless penalty field and disable the rest."""
 
@@ -297,6 +287,8 @@ class FlashcardOptions(ttk.Frame):
                 DEFAULT_SHOW_LIMIT,
             )
             self.limit_question_frame.pack(fill="x", padx=4, pady=2)
+
+        self._emit_validation_state()
 
     def _sync_speed_penalty_state(self) -> None:
         """Show the selected speed penalty field and disable the others."""
@@ -339,12 +331,52 @@ class FlashcardOptions(ttk.Frame):
             )
             self.penalty_time_frame.pack(fill="x", padx=4, pady=2)
 
+        self._emit_validation_state()
+
     def _disable_all_penalty_entries(self) -> None:
         """Disable every penalty input field."""
 
         self._disable_entry(self.penalty_score_entry, self.show_score_penalty)
         self._disable_entry(self.limit_spinbox, self.show_limit)
         self._disable_entry(self.penalty_time_entry, self.show_time_penalty)
+
+    def _apply_difficulty_scale_style(self) -> None:
+        """Apply glassmorphism-aligned colors to the difficulty slider."""
+
+        style = ttk.Style(self)
+        background = (
+            style.lookup("Glass.TLabelframe", "background")
+            or style.lookup("TLabelframe", "background")
+            or "#e8eef7"
+        )
+        slider_bg = (
+            style.lookup("Glass.TFrame", "background")
+            or style.lookup("TButton", "background")
+            or "#f2f6fc"
+        )
+        trough = (
+            style.lookup("Horizontal.TScale", "troughcolor")
+            or style.lookup("TLabelframe", "bordercolor")
+            or "#c7d3e3"
+        )
+        text = style.lookup("TLabel", "foreground") or "#1a1a2e"
+        accent = style.lookup("Primary.TButton", "background") or "#7bbad6"
+        border = style.lookup("TLabelframe", "bordercolor") or "#c7d3e3"
+
+        self.difficulty_scale.configure(
+            bg=background,
+            fg=text,
+            troughcolor=trough,
+            sliderlength=28,
+            width=14,
+            cursor="hand2",
+            bd=1,
+            background=slider_bg,
+            activebackground=accent,
+            highlightthickness=0,
+            relief=tk.GROOVE,
+            sliderrelief=tk.RAISED,
+        )
 
     def _configure_wrong_penalty_field(self, visible: bool) -> None:
         """Show or hide the wrong-answer penalty field."""
@@ -356,6 +388,37 @@ class FlashcardOptions(ttk.Frame):
             self.wrong_penalty_frame.pack_forget()
             self._set_entry_state(self.wrong_penalty_entry, False)
 
+    def _setup_validation_traces(self) -> None:
+        """Attach traces so validation updates immediately on any input change."""
+
+        variables: list[tk.Variable] = [
+            self.mode,
+            self.direction,
+            self.difficulty,
+            self.question_count,
+            self.time_limit,
+            self.show_score_penalty,
+            self.show_limit,
+            self.show_time_penalty,
+            self.wrong_answer_penalty,
+            self.endless_penalty_choice,
+            self.speed_penalty_choice,
+        ]
+        for variable in variables:
+            variable.trace_add("write", self._handle_value_change)
+
+    def _handle_value_change(self, *_: str) -> None:
+        """React to variable changes by emitting a fresh validation state."""
+
+        self._emit_validation_state()
+
+    def _emit_validation_state(self) -> None:
+        """Compute and publish the latest safeguard validation result."""
+
+        self._last_validation = self.validation_result()
+        if self._on_validation_change:
+            self._on_validation_change(self._last_validation)
+
     @staticmethod
     def _set_entry_state(entry: ttk.Entry, enabled: bool) -> None:
         """Configure the entry widget state without mutating its value."""
@@ -363,16 +426,17 @@ class FlashcardOptions(ttk.Frame):
         entry.config(state="normal" if enabled else "disabled")
 
     @staticmethod
-    def _enable_entry(entry: ttk.Entry, var: tk.IntVar, default_value: int) -> None:
+    def _enable_entry(entry: ttk.Entry, var: tk.Variable, default_value: int) -> None:
         """Enable the entry and ensure it has a default value."""
 
         entry.config(state="normal")
-        if var.get() <= 0:
-            var.set(default_value)
+        text = str(var.get()).strip()
+        if text == "" or text == "0":
+            var.set(str(default_value))
 
     @staticmethod
-    def _disable_entry(entry: ttk.Entry, var: tk.IntVar) -> None:
+    def _disable_entry(entry: ttk.Entry, var: tk.Variable) -> None:
         """Disable the entry and reset its value to zero."""
 
         entry.config(state="disabled")
-        var.set(0)
+        var.set("0")

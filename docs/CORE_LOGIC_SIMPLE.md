@@ -21,8 +21,10 @@ This file explains the app core logic step by step.
    - difficulty,
    - penalties,
    - time or question limit (mode-dependent).
-3. App builds one `SessionConfig` object.
-4. App starts Flashcard session view using that config.
+3. App validates all setup inputs through `core/safeguard.py`.
+4. If invalid, app shows the error immediately in setup status and does not start.
+5. App builds one safe `SessionConfig` object.
+6. App starts Flashcard session view using that config.
 
 ## 3. Card generation logic
 

@@ -48,6 +48,10 @@ Before import, the app creates a backup copy in `src/tak_flashcard/data/vocab/`.
 4. Answer cards
 5. See **Session Summary**
 
+Flashcard setup fields are validated in real time. If an input is invalid, an
+error appears in the setup status row immediately and **Start Session** stays
+disabled until the value is corrected.
+
 ## 5) Keyboard shortcuts
 
 | Screen | Key | Action |

@@ -314,7 +314,7 @@
 
 ### 7.2 Error Handling
 - [ ] Add try-catch blocks for file operations
-- [ ] Validate user inputs
+- [x] Validate flashcard setup inputs via `core/safeguard.py` with immediate UI error feedback
 - [ ] Handle edge cases:
   - No words in database
   - Invalid CSV format

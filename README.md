@@ -45,6 +45,12 @@ $$
 
 - The selected difficulty level (1–5) changes the chance of selecting easier vs harder words.
 
+## Input safeguards
+
+- Flashcard setup input values are validated through `src/tak_flashcard/core/safeguard.py`.
+- Invalid values are rejected before a session starts.
+- Validation errors are shown immediately in the setup status area as soon as input becomes invalid.
+
 ## Non-technical documentation
 
 If you want plain-language documentation for operations and internals:

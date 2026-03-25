@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import tkinter as tk
 from tkinter import ttk
-from typing import Callable
+from typing import Callable, Optional
 
 from tak_flashcard.config import (
     DEFAULT_QUESTION_COUNT,
@@ -12,6 +12,7 @@ from tak_flashcard.config import (
     Direction,
     Mode,
 )
+from tak_flashcard.core.safeguard import SessionConfigValidation
 from tak_flashcard.core.scheduler import CountdownTimer
 from tak_flashcard.features.flashcard.controller import FlashcardController
 from tak_flashcard.features.flashcard.states import (
@@ -44,6 +45,10 @@ class FlashcardView(ttk.Frame):
         super().__init__(master, padding=20, style="Page.TFrame")
         self.on_start_session = on_start_session
         self.on_back = on_back
+        self.status_var = tk.StringVar(value="Ready to start")
+        self._start_button: Optional[ttk.Button] = None
+        self._status_label: Optional[ttk.Label] = None
+        self._pending_validation: Optional[SessionConfigValidation] = None
 
         header = ttk.Frame(self, padding=16, style="Glass.TFrame")
         header.pack(fill="x", pady=(0, 12))
@@ -59,6 +64,7 @@ class FlashcardView(ttk.Frame):
             self,
             default_question_count=DEFAULT_QUESTION_COUNT,
             default_time_limit=DEFAULT_TIME_LIMIT,
+            on_validation_change=self._handle_validation_change,
         )
         self.options.pack(fill="x", pady=(0, 10))
 
@@ -72,29 +78,68 @@ class FlashcardView(ttk.Frame):
         info.pack(fill="x", pady=(0, 10))
 
         controls = ttk.Frame(self, style="Page.TFrame")
-        ttk.Button(
+        self._start_button = ttk.Button(
             controls,
             text="Start Session",
             style="Primary.TButton",
             command=self.start_session,
-        ).pack(
-            side=tk.LEFT, padx=4
         )
+        self._start_button.pack(side=tk.LEFT, padx=4)
         ttk.Button(controls, text="Back", command=self.on_back).pack(
             side=tk.LEFT, padx=4
         )
         controls.pack(pady=6)
 
-        self.status_var = tk.StringVar(value="Ready to start")
         status = ttk.Frame(self, padding=10, style="Glass.TFrame")
         status.pack(fill="x", pady=(4, 0))
-        ttk.Label(status, textvariable=self.status_var,
-                  style="Status.TLabel").pack(anchor=tk.W)
+        self._status_label = ttk.Label(
+            status,
+            textvariable=self.status_var,
+            style="Status.TLabel",
+        )
+        self._status_label.pack(anchor=tk.W)
+
+        if self._pending_validation is not None:
+            self._handle_validation_change(self._pending_validation)
+        else:
+            self._handle_validation_change(self.options.validation_result())
+
+    def _handle_validation_change(self, validation: SessionConfigValidation) -> None:
+        """Update setup status and button state when input validity changes."""
+
+        if self._status_label is None or self._start_button is None:
+            self._pending_validation = validation
+            return
+
+        self._pending_validation = None
+
+        if validation.is_valid:
+            self.status_var.set("Ready to start")
+            self._status_label.config(foreground="black")
+            self._start_button.config(state="normal")
+            return
+
+        self.status_var.set(validation.issues[0].message)
+        self._status_label.config(foreground="red")
+        self._start_button.config(state="disabled")
 
     def start_session(self) -> None:
         """Start a new flashcard session using the configured options."""
 
-        self.on_start_session(self.options.session_config())
+        validation = self.options.validation_result()
+        if not validation.is_valid or validation.config is None:
+            message = validation.issues[0].message if validation.issues else "Invalid session configuration."
+            self.status_var.set(message)
+            if self._status_label is not None:
+                self._status_label.config(foreground="red")
+            if self._start_button is not None:
+                self._start_button.config(state="disabled")
+            return
+        if self._status_label is not None:
+            self._status_label.config(foreground="black")
+        if self._start_button is not None:
+            self._start_button.config(state="normal")
+        self.on_start_session(validation.config)
 
 
 class FlashcardSessionView(ttk.Frame):

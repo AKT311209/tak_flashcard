@@ -25,6 +25,7 @@ tak_flashcard/
 │       │
 │       ├── core/                   # Core business logic
 │       │   ├── difficulty.py       # Difficulty calculation
+│       │   ├── safeguard.py        # Flashcard setup input validation and normalization
 │       │   ├── scheduler.py        # Timer/speed logic
 │       │   ├── scoring.py          # Scoring, penalty system
 │       │   ├── selectors.py        # Question selection by difficulty/direction
