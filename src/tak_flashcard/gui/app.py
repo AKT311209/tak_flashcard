@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 import tkinter as tk
 from tkinter import ttk
 from typing import cast
@@ -128,8 +129,11 @@ class FlashcardApp(tk.Tk):
         if not APP_ICON_PATH.exists():
             return
         try:
-            self._icon_image = tk.PhotoImage(file=str(APP_ICON_PATH))
-            self.iconphoto(True, self._icon_image)
+            if sys.platform.startswith("win"):
+                self.iconbitmap(default=str(APP_ICON_PATH))
+            else:
+                self._icon_image = tk.PhotoImage(file=str(APP_ICON_PATH))
+                self.iconphoto(True, self._icon_image)
         except tk.TclError:
             self._icon_image = None
 
