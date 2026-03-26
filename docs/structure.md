@@ -34,7 +34,7 @@ tak_flashcard/
 │       ├── features/               # Feature modules
 │       │   ├── flashcard/
 │       │   │   ├── controller.py   # Flashcard mode controller
-│       │   │   ├── service.py      # Business logic
+│       │   │   ├── service.py      # Business logic with pre-rendering optimization
 │       │   │   └── states.py       # State machine
 │       │   ├── dictionary/
 │       │   │   ├── controller.py   # Dictionary controller
@@ -132,6 +132,13 @@ Store flashcard session history:
 - Time limit (Speed mode)
 - Show Answer feature with penalty system
 - Penalty types: score deduction, timeout, HP limit
+
+### Performance Optimizations
+- **Card Pre-rendering**: Questions are prepared in memory before session start
+  - Testing mode: All cards pre-rendered upfront
+  - Endless/Speed modes: Batch pre-rendering with automatic queue refill
+  - Implemented in `FlashcardService._prepare_next_card()` and related methods
+  - Uses `collections.deque` for efficient queue management
 
 -### User Settings (Appearance & Preferences)
 - Font selection and pixel size controls

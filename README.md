@@ -16,6 +16,19 @@ It is made for learners first: pick a mode, answer quick multiple-choice cards, 
 - Import your own CSV vocabulary file
 - Save UI preferences (font/colors/window size)
 
+## Recent Improvements
+
+### Performance Optimization
+- **Pre-rendering**: Cards are now prepared in memory before each session for instant delivery
+  - Testing mode pre-renders all questions upfront
+  - Endless/Speed modes maintain a queue of pre-rendered cards
+  - Eliminates per-card preparation delay
+
+### Input Validation & UI Feedback
+- Real-time input validation for flashcard setup
+- Enhanced UI feedback for invalid configurations
+- Comprehensive error messages through `core/safeguard.py`
+
 ## Run in 3 steps
 
 1. Install dependencies

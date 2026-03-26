@@ -28,7 +28,16 @@ This file explains the app core logic step by step.
 
 ## 3. Card generation logic
 
-For each card:
+### Performance optimization: Pre-rendering
+
+Before the first card is shown, the app pre-renders multiple cards in memory:
+
+- **Testing mode**: All questions are prepared upfront at session start.
+- **Endless/Speed modes**: A batch of 30 cards is pre-rendered initially, then refilled when the queue drops below 10.
+
+This eliminates per-card preparation delay and provides instant question delivery.
+
+### For each card:
 
 1. Resolve direction (if Mixed, choose random direction).
 2. Select one word by weighted difficulty.
