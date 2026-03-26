@@ -27,8 +27,10 @@ Calling order (typical session):
 from __future__ import annotations
 
 import random
+from collections import deque
+from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
+from typing import Deque, Optional
 
 from sqlalchemy.orm import Session
 
@@ -44,6 +46,21 @@ from tak_flashcard.features.flashcard.states import (
     SessionSummary,
     ShowAnswerOutcome,
 )
+
+
+@dataclass
+class _PreparedCard:
+    """Pre-rendered question payload used for fast card delivery.
+
+    Attributes:
+        word: The selected vocabulary record for this card.
+        direction: The resolved direction for this specific question.
+        choices: The shuffled answer options to render.
+    """
+
+    word: Word
+    direction: Direction
+    choices: list[str]
 
 
 class FlashcardService:
@@ -68,6 +85,7 @@ class FlashcardService:
         self.db = db
         self.words: list[Word] = []
         self.state: Optional[FlashcardState] = None
+        self._pre_rendered_cards: Deque[_PreparedCard] = deque()
 
     def load_words(self) -> None:
         """Fetch all vocabulary from the database into memory.
@@ -109,7 +127,73 @@ class FlashcardService:
             finished=False,
             wrong_answer_penalty=config.wrong_penalty,
         )
+        self._pre_rendered_cards = deque()
+        self._prime_pre_rendered_cards()
         return self.state
+
+    def _target_pre_render_count(self) -> int:
+        """Return how many cards should be pre-rendered for the active session.
+
+        Testing sessions pre-render all questions upfront. Endless and Speed
+        sessions pre-render a fixed batch and refill as the queue shrinks.
+
+        Returns:
+            Number of card payloads to keep prepared in memory.
+        """
+
+        state = self.state
+        if state is None:
+            return 0
+        if state.mode == Mode.TESTING:
+            return max(state.question_limit or 0, 0)
+        return 30
+
+    def _prime_pre_rendered_cards(self) -> None:
+        """Build the initial pre-rendered card queue before session play starts.
+
+        This method is called during session startup so the first set of
+        questions can be shown immediately without per-card preparation delay.
+        """
+
+        target = self._target_pre_render_count()
+        if target <= 0:
+            return
+        while len(self._pre_rendered_cards) < target:
+            prepared = self._prepare_next_card()
+            if prepared is None:
+                break
+            self._pre_rendered_cards.append(prepared)
+
+    def _maybe_refill_pre_rendered_cards(self) -> None:
+        """Top up pre-rendered cards for non-testing modes during a session.
+
+        Endless and Speed sessions can be long-running, so this keeps a small
+        queue warm by refilling it when capacity drops.
+        """
+
+        state = self.state
+        if state is None or state.mode == Mode.TESTING:
+            return
+        if len(self._pre_rendered_cards) >= 10:
+            return
+        self._prime_pre_rendered_cards()
+
+    def _prepare_next_card(self) -> Optional[_PreparedCard]:
+        """Create one fully prepared card payload from current word inventory.
+
+        Returns:
+            A prepared card payload, or ``None`` when no words are available.
+        """
+
+        state = self.state
+        if state is None or not self.words:
+            return None
+        direction = self._resolve_direction(state.direction)
+        word = select_next_word(self.words, state.difficulty, direction)
+        if word is None:
+            return None
+        choices = self._build_choices(word, direction)
+        return _PreparedCard(word=word, direction=direction, choices=choices)
 
     def _pick_word(self) -> Optional[Word]:
         """Choose the next word to put on the card.
@@ -126,13 +210,21 @@ class FlashcardService:
         state = self.state
         if state is None or not self.words:
             return None
-        direction = self._resolve_direction(state.direction)
-        word = select_next_word(self.words, state.difficulty, direction)
-        if word is not None:
-            state.current_word = word
-            state.current_direction = direction
-            state.current_choices = self._build_choices(word, direction)
-        return word
+
+        if not self._pre_rendered_cards:
+            prepared = self._prepare_next_card()
+            if prepared is not None:
+                self._pre_rendered_cards.append(prepared)
+
+        if not self._pre_rendered_cards:
+            return None
+
+        prepared = self._pre_rendered_cards.popleft()
+        state.current_word = prepared.word
+        state.current_direction = prepared.direction
+        state.current_choices = prepared.choices
+        self._maybe_refill_pre_rendered_cards()
+        return prepared.word
 
     @staticmethod
     def _resolve_direction(direction: Direction) -> Direction:

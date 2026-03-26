@@ -209,7 +209,11 @@ class FlashcardSessionView(ttk.Frame):
         """Start a new session and render the first card."""
 
         self._stop_timer()
+        self._loading_var.set("Preparing questions…")
+        self.status_var.set("Preparing session...")
+        self.update_idletasks()
         self.controller.start(config)
+        self._loading_var.set("")
         self.status_var.set(
             f"Mode: {config.mode.name.title()} | Direction: {config.direction.name} | Score: 0"
         )
