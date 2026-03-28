@@ -4,12 +4,24 @@ This guide helps you open and use Tak Flashcard quickly.
 
 ## 1) Start the app
 
-From the project folder, run the app module.
+### Setup (one-time)
 
-- Preferred command path: `src/tak_flashcard/main.py`
-- Main module name: `tak_flashcard.main`
+```bash
+pip install -r requirements.txt
+pip install -e .
+```
 
-If needed, follow the same launch style documented in `README.md`.
+### Run the app
+
+```bash
+python src/tak_flashcard/main.py
+```
+
+**Alternative** (without `pip install -e .`):
+
+```bash
+PYTHONPATH=src python src/tak_flashcard/main.py
+```
 
 ## 2) First launch behavior
 
