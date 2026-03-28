@@ -81,3 +81,7 @@ If you want plain-language documentation for operations and internals:
 ## Project entry point
 
 - Main module: `src/tak_flashcard/main.py`
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
