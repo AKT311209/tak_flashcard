@@ -45,6 +45,8 @@ Your CSV must include these columns:
 - `vietnamese`
 - `part_of_speech`
 
+**A sample CSV** (`sample_vocab_source.csv`) is included in the project. You can use it directly or as a template for your own vocabulary list.
+
 Import modes:
 
 - **Append**: keep existing words, add/update from file.
