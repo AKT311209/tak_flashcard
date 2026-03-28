@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tak_flashcard"
+version = "1.0.0"
+description = "A flashcard application for vocabulary learning"
+requires-python = ">=3.9"
+dependencies = [
+    "sqlalchemy>=2.0",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pyinstaller>=6.0",
+]
+
+[tool.setuptools]
+packages = ["tak_flashcard"]
+package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+tak_flashcard = ["img/*", "data/**/*"]
