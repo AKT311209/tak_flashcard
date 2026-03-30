@@ -58,5 +58,4 @@ Thumbs.db
 # Vocabulary data
 src/tak_flashcard/data/vocab/
 
-# Database files
-src/tak_flashcard/db/
+/src/tak_flashcard/data/flashcard.db/

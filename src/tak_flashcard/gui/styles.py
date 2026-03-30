@@ -187,6 +187,7 @@ def apply_appearance_settings(style: ttk.Style, settings: AppearanceSettings) ->
         borderwidth=1,
     )
     style.configure("Card.TFrame", background=palette["surface_alt"])
+    style.configure("Surface.TFrame", background=palette["surface"])
 
     style.configure(
         "TLabel", background=palette["bg"], foreground=palette["text"], font=font)

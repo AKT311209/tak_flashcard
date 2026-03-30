@@ -61,7 +61,7 @@ class HomeView(ttk.Frame):
                 anchor=tk.W, pady=(0, 14)
             )
 
-            spacer = ttk.Frame(card)
+            spacer = ttk.Frame(card, style="Surface.TFrame")
             spacer.pack(fill="both", expand=True)
 
             btn_style = "Primary.TButton" if key == "flashcard" else "Glass.TButton"
