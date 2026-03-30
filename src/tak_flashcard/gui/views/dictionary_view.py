@@ -64,9 +64,28 @@ class DictionaryView(ttk.Frame):
         for col, text in _COLUMNS:
             self.tree.heading(
                 col, text=text, command=lambda c=col: self._on_heading_click(c))
-            self.tree.column(col, width=150, anchor=tk.W)
+            self.tree.column(col, width=150, anchor=tk.W,
+                             stretch=False, minwidth=150)
+        self.tree.bind("<Button-1>", self._prevent_column_resize, add="+")
+        self.tree.bind("<B1-Motion>", self._prevent_column_resize, add="+")
         self.tree.pack(fill="both", expand=True)
         self.refresh()
+
+    def _prevent_column_resize(self, event: tk.Event) -> str | None:
+        """Block Treeview separator interactions to disable column resizing.
+
+        Parameters:
+            event: Tkinter mouse event fired on button press or drag.
+
+        Returns:
+            ``"break"`` when pointer is on a column separator, otherwise ``None``
+            to allow normal Treeview behavior such as heading-click sorting.
+        """
+
+        region = self.tree.identify_region(event.x, event.y)
+        if region == "separator":
+            return "break"
+        return None
 
     def _on_heading_click(self, col: str) -> None:
         """Handle a column heading click: toggle direction on the same column,
